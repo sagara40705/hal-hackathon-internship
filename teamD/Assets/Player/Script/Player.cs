@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
 /// グリッドに沿って自動前進するプレイヤー
+/// 作成者：石田怜
 /// </summary>
 public class Player : MonoBehaviour
 {

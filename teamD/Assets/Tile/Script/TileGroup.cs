@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// 複数のタイルセルをまとめて管理する
+/// 作成者：石田怜
 /// </summary>
 public class TileGroup : MonoBehaviour
 {

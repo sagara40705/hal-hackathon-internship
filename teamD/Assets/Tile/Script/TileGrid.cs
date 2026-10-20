@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
 /// タイルのグリッド管理
+/// 作成者：石田怜
 /// </summary>
 public class TileGrid : MonoBehaviour
 {

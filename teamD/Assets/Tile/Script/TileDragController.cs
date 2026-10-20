@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
 /// マウスによるタイルグループの操作
+/// 作成者：石田怜
 /// </summary>
 public class TileGridController : MonoBehaviour
 {

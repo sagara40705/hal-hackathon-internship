@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+/// <summary>
+/// プレイヤーの移動方向を変更する
+/// 作成者：石田怜
+/// </summary>
 public class ChangeDirection : MonoBehaviour
 {
 	[SerializeField, Tooltip("移動方向")]

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲームのリトライ処理
+/// 作成者：石田怜
 /// </summary>
 public class GameRetryController : MonoBehaviour
 {
