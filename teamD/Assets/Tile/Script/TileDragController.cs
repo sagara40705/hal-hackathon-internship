@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
 /// マウスによるタイルグループの操作
+/// 作成者：石田怜
 /// </summary>
 public class TileGridController : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class TileGridController : MonoBehaviour
 
 		// タイルグループを取得
 		TileGroup group = hit.collider.GetComponentInParent<TileGroup>();
-		if (group == null || !group.IsMovable)
+		if (group == null || group.IsStatic)
 			return;
 
 		if (IsGroupReserved(group))

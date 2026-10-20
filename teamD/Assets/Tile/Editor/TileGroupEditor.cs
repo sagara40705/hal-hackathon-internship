@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// TileGroupのカスタムInspector
+/// TileGroupのカスタムGUI
+/// 作成者：石田怜
 /// </summary>
 [CustomEditor(typeof(TileGroup))]
-public class TileGroupInspectorGUI : Editor
+public class TileGroupEditor : Editor
 {
 	private Material _material;
 
