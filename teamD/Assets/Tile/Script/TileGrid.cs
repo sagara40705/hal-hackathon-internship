@@ -197,6 +197,43 @@ public class TileGrid : MonoBehaviour
         return false;
     }
 
+    // 実行中に新しいタイルを生成して、グリッドへ登録する
+    public bool TryCreateAndPlaceTile(GameObject prefab, Vector3 worldPosition)
+    {
+        if (prefab == null)
+            return false;
+
+        // 生成したタイルをグリッドの子にする
+        GameObject instance = Instantiate
+        (
+            prefab,
+            worldPosition,
+            Quaternion.identity,
+            transform
+        );
+
+        // PrefabのルートにTileGroupがあることを確認する
+        TileGroup group = instance.GetComponent<TileGroup>();
+        if (group == null)
+        {
+            Debug.LogWarning("PrefabのルートにTileGroupがありません。", instance);
+            Destroy(instance);
+            return false;
+        }
+
+        // TileCellを取得して初期化する
+        group.InitGroup(_tileSize);
+
+        Vector2Int gridPosition = WorldToGrid(worldPosition);
+        if (!SetTile(group, gridPosition))
+        {
+            // 配置できなければ、未登録のPrefabを残さない
+            Destroy(instance);
+            return false;
+        }
+        return true;
+    }
+
     // 指定座標のタイルグループを破壊
     public bool DestroyTile(Vector2Int gridPosition)
     {
