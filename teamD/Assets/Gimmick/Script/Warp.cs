@@ -29,7 +29,7 @@ public class Warp : MonoBehaviour
 
         Color previousColor = Gizmos.color;
         Matrix4x4 previousMatrix = Gizmos.matrix;
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.magenta;
         Gizmos.matrix = grid.transform.localToWorldMatrix;
         Gizmos.DrawLine(start, destination);
         Gizmos.DrawWireCube(destination, new Vector3(tileSize * 0.9f, 0.05f, tileSize * 0.9f));
