@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -236,4 +236,6 @@ public class TileGridController : MonoBehaviour
 		_selectedGroup = null;
 		_selectedRenderers = null;
 	}
+
+
 }
