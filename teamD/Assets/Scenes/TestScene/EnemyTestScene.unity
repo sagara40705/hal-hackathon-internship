@@ -613,6 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRondomAttack
   _tileGrid: {fileID: 1650181587}
+  _attackIndicator: {fileID: 454279901}
   _startupTime: 3
   _recoveryTime: 3
   _attackCount: 3
@@ -660,6 +661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRondomAttack
   _tileGrid: {fileID: 1650181587}
+  _attackIndicator: {fileID: 454279901}
   _startupTime: 6
   _recoveryTime: 3
   _attackCount: 5
@@ -1142,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187f6a97aed12434ca66080a2fb6ad69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileGrid
-  _gridSize: {x: 21, y: 21}
+  _gridSize: {x: 11, y: 11}
   _tileSize: 1
   _tileHeight: 1
 --- !u!4 &1650181588

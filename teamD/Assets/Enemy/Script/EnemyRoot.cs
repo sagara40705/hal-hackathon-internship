@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// 敵の行動を管理するクラス
+/// 作成者：石田怜
 /// </summary>
 public class EnemyRoot : MonoBehaviour
 {
@@ -37,7 +39,6 @@ public class EnemyRoot : MonoBehaviour
 
         // アクション間の待機
         _actionTimer += Time.deltaTime;
-
         if (_actionTimer < _actionInterval)
             return;
 
@@ -51,30 +52,20 @@ public class EnemyRoot : MonoBehaviour
         if (_actions == null || _actions.Length == 0)
             return;
 
-        // 有効なアクションからランダムに選択
-        int validCount = 0;
+        // 有効なアクションをリストに追加
+        List<EnemyAction> validActions = new List<EnemyAction>();
         foreach (EnemyAction action in _actions)
         {
             if (action != null && action.isActiveAndEnabled)
-                validCount++;
+                validActions.Add(action);
         }
-
-        if (validCount == 0)
+        if (validActions.Count == 0)
             return;
 
-        int randomIndex = Random.Range(0, validCount);
-        foreach (EnemyAction action in _actions)
-        {
-            if (action == null || !action.isActiveAndEnabled)
-                continue;
-
-            if (randomIndex-- > 0)
-                continue;
-
-            _currentAction = action;
-            _currentAction.StartAction();
-            _actionTimer = 0.0f;
-            return;
-        }
+        // 有効なアクションからランダムに選択
+        int randomIndex = Random.Range(0, validActions.Count);
+        _currentAction = validActions[randomIndex];
+        _currentAction.StartAction();
+        _actionTimer = 0.0f;
     }
 }

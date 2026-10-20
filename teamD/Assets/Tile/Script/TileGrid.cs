@@ -20,6 +20,7 @@ public class TileGrid : MonoBehaviour
 	private readonly Dictionary<Vector2Int, TileCell> _cells = new();
 
     public Vector2Int GridSize => _gridSize;
+    public float TileHeight => _tileHeight;
 
 
     private void Awake()
@@ -168,7 +169,7 @@ public class TileGrid : MonoBehaviour
     // タイルグループを移動
     public bool MoveTile(TileGroup group, Vector2Int newPosition)
     {
-        if (group == null || !group.IsMovable)
+        if (group == null || group.IsStatic)
             return false;
 
         Vector2Int oldPosition = group.GridPosition;
@@ -193,7 +194,7 @@ public class TileGrid : MonoBehaviour
     {
         TileGroup group = GetTileGroup(gridPosition);
 
-        if (group == null)
+        if (group == null || group.IsStatic)
             return false;
 
         // グリッドから登録解除

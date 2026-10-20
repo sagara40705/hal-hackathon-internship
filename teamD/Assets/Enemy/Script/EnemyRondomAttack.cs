@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// ランダムにマスを攻撃する敵のアクション
+/// 作成者：石田怜
+/// </summary>
 public class EnemyRondomAttack : EnemyAction
 {
     enum State
@@ -60,6 +64,7 @@ public class EnemyRondomAttack : EnemyAction
         }
     }
 
+    // 攻撃の発生状態を更新
     private void UpdateStartUp()
     {
         if (_stateTimer >= _startupTime)
@@ -71,6 +76,7 @@ public class EnemyRondomAttack : EnemyAction
         }
     }
 
+    // 攻撃の硬直状態を更新
     private void UpdateRecovery()
     {
         if (_stateTimer >= _recoveryTime)
@@ -81,6 +87,7 @@ public class EnemyRondomAttack : EnemyAction
         }
     }
 
+    // 攻撃対象を設定
     private void SetTarget()
     {
         _targetPosList.Clear();
@@ -88,23 +95,28 @@ public class EnemyRondomAttack : EnemyAction
         if (_tileGrid == null)
             return;
 
-        // 攻撃対象をランダムに選択
-        int maxAttempts = 100;
-        int attempts = 0;
-
-        while (_targetPosList.Count < _attackCount && attempts < maxAttempts)
+        // グリッド内の全ての座標を候補として取得
+        Vector2Int gridSize = _tileGrid.GridSize;
+        List<Vector2Int> candidates = new();
+        for (int x = 0; x < gridSize.x; x++)
         {
-            attempts++;
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                candidates.Add(new Vector2Int(x, y));
+            }
+        }
 
-            Vector2Int position = new Vector2Int(
-                Random.Range(0, _tileGrid.GridSize.x),
-                Random.Range(0, _tileGrid.GridSize.y)
-            );
+        // 攻撃対象をランダムに選択
+        int count = Mathf.Min(_attackCount, candidates.Count);
+        for (int i = 0; i < count; i++)
+        {
+            int randomIndex = Random.Range(i, candidates.Count);
 
-            if (_targetPosList.Contains(position))
-                continue;
+            Vector2Int temp = candidates[i];
+            candidates[i] = candidates[randomIndex];
+            candidates[randomIndex] = temp;
 
-            _targetPosList.Add(position);
+            _targetPosList.Add(candidates[i]);
         }
 
         // 攻撃予告を表示
