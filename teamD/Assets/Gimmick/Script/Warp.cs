@@ -11,4 +11,29 @@ public class Warp : MonoBehaviour
     {
         player.MoveByGridOffset(_warpAmount);
     }
+
+    private void OnDrawGizmos()
+    {
+        TileGrid grid = GetComponentInParent<TileGrid>();
+        if (grid == null)
+            return;
+
+        Vector2Int source = grid.WorldToGrid(transform.position);
+        Vector3 start = grid.transform.InverseTransformPoint(grid.GridToWorld(source));
+        Vector3 destination = grid.transform.InverseTransformPoint(grid.GridToWorld(source + _warpAmount));
+        float tileSize = grid.transform.InverseTransformPoint(grid.GridToWorld(Vector2Int.right)).x
+            - grid.transform.InverseTransformPoint(grid.GridToWorld(Vector2Int.zero)).x;
+
+        // タイルの上面より少し上に表示する。
+        start.y = destination.y = 0.6f;
+
+        Color previousColor = Gizmos.color;
+        Matrix4x4 previousMatrix = Gizmos.matrix;
+        Gizmos.color = Color.cyan;
+        Gizmos.matrix = grid.transform.localToWorldMatrix;
+        Gizmos.DrawLine(start, destination);
+        Gizmos.DrawWireCube(destination, new Vector3(tileSize * 0.9f, 0.05f, tileSize * 0.9f));
+        Gizmos.matrix = previousMatrix;
+        Gizmos.color = previousColor;
+    }
 }
