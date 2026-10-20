@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
 
     // #2-gimmick(sagara)
     // ============================
-    // 通常移動の処理を変更せず、進行方向の1マス先を飛び越える。
+    // 通常移動の処理を変更せず、進行方向の1マス先を飛び越える(sagara)
     public IEnumerator JumpForward(float duration, float height)
     {
         // 空中・着地イベント中の再ジャンプも抑止する。
@@ -200,6 +200,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // ダメージを受けたときの処理(sagara)
     public void Damage()
     {
         OnFailed();

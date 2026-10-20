@@ -10,6 +10,7 @@ public class Warp : MonoBehaviour
     public void OnEnterPlayer(Player player)
     {
         player.MoveByGridOffset(_warpAmount);
+        PeriodicBlockContacts.OnTeleported(player);
     }
 
     private void OnDrawGizmos()
