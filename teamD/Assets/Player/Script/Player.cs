@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
@@ -146,4 +146,17 @@ public class Player : MonoBehaviour
 
 		_onGameOverEvent?.Invoke();
 	}
+
+    // #2-gimmick(sagara)
+    // ============================
+
+    // 速度を取得(sagara)
+    public float MoveSpeed => _moveSpeed;
+
+    // 速度を変更(sagara)
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = speed;
+    }
+    // ============================
 }
