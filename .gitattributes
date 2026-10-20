@@ -1,3 +1,71 @@
+# Applies to Unity projects at any depth in this repository.
+# Normalize detected text to LF; leave binary contents untouched.
+* text=auto eol=lf
+
+# C# source and Unity text configuration.
+*.cs text diff=csharp
+*.shader text
+*.hlsl text
+*.cginc text
+*.compute text
+*.shadergraph text
+*.shadersubgraph text
+*.json text
+*.asmdef text
+*.asmref text
+*.inputactions text
+*.xml text
+*.csproj text
+*.props text
+*.targets text
+*.md text
+*.yml text
+*.yaml text
+
+# Unity assets may be YAML or binary: detect the format instead of forcing text.
+# Keep these outside LFS so YAML changes remain reviewable and mergeable.
+*.unity text=auto
+*.prefab text=auto
+*.asset text=auto
+*.meta text=auto
+*.mat text=auto
+*.anim text=auto
+*.controller text=auto
+*.overrideController text=auto
+
+# Match .editorconfig for Windows scripts and Visual Studio solutions.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.sln text eol=crlf
+*.sh text eol=lf
+
+# Binary assets stored in regular Git.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tga binary
+*.hdr binary
+*.ico binary
+*.blend binary
+*.glb binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.aiff binary
+*.webm binary
+*.ttf binary
+*.otf binary
+*.dll binary
+*.exe binary
+*.pdb binary
+*.zip binary
+*.7z binary
+*.gz binary
+*.unitypackage binary
+
+# Large source assets stored in Git LFS (requires Git LFS on each machine).
 *.psd filter=lfs diff=lfs merge=lfs -text
 *.psb filter=lfs diff=lfs merge=lfs -text
 *.wav filter=lfs diff=lfs merge=lfs -text
@@ -7,4 +75,3 @@
 *.exr filter=lfs diff=lfs merge=lfs -text
 *.tif filter=lfs diff=lfs merge=lfs -text
 *.tiff filter=lfs diff=lfs merge=lfs -text
-*.asset filter=lfs diff=lfs merge=lfs -text
