@@ -40,9 +40,7 @@ public class BreakableTile : MonoBehaviour
     {
         Renderer tileRenderer = GetComponent<Renderer>();
         MaterialPropertyBlock properties = new MaterialPropertyBlock();
-        Color originalColor = tileRenderer != null
-            ? tileRenderer.sharedMaterial.GetColor(BaseColorId)
-            : Color.white;
+        Color originalColor = (tileRenderer != null) ? tileRenderer.sharedMaterial.GetColor(BaseColorId) : Color.white;
         float destroyAt = Time.time + Mathf.Max(0f, _destroyDelay);
         bool highlight = true;
 
