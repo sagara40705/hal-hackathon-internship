@@ -16,17 +16,25 @@ public class TileGrid : MonoBehaviour
 	[SerializeField, Tooltip("タイルの高さ")]
 	private float _tileHeight = 1.0f;
 
-	// グリッド上の各セル
-	private readonly Dictionary<Vector2Int, TileCell> _cells = new();
+    [SerializeField, Tooltip("配置可能なグリッド座標")]
+    private List<Vector2Int> _placementPositions = new();
+
+    private HashSet<Vector2Int> _placementPositionSet;
+
+    // グリッド上の各セル
+    private readonly Dictionary<Vector2Int, TileCell> _cells = new();
 
     public Vector2Int GridSize => _gridSize;
+    public float TileSize => _tileSize;
     public float TileHeight => _tileHeight;
 
 
     private void Awake()
 	{
-		// 初期タイルグループを登録
-		TileGroup[] groups = GetComponentsInChildren<TileGroup>();
+        _placementPositionSet = new HashSet<Vector2Int>(_placementPositions);
+
+        // 初期タイルグループを登録
+        TileGroup[] groups = GetComponentsInChildren<TileGroup>();
 		foreach (TileGroup group in groups)
 		{
 			group.InitGroup(_tileSize);
@@ -107,7 +115,7 @@ public class TileGrid : MonoBehaviour
 
 			Vector2Int cellPosition = gridPosition + cell.LocalPosition;
 
-			if (!IsInGrid(cellPosition))
+			if (!IsInPlacementArea(cellPosition))
 				return false;
 
 			if (!positions.Add(cellPosition))
@@ -205,18 +213,85 @@ public class TileGrid : MonoBehaviour
         return true;
     }
 
+    // 配置可能範囲内か判定
+    public bool IsInPlacementArea(Vector2Int gridPosition)
+    {
+        if (!IsInGrid(gridPosition))
+            return false;
+
+        if (_placementPositionSet != null)
+            return _placementPositionSet.Contains(gridPosition);
+
+        return _placementPositions.Contains(gridPosition);
+    }
+
+    // 指定マスの配置可否を設定
+    public void SetPlacementAllowed(Vector2Int gridPosition, bool allowed)
+    {
+        if (!IsInGrid(gridPosition))
+            return;
+
+        if (allowed)
+        {
+            if (!_placementPositions.Contains(gridPosition))
+                _placementPositions.Add(gridPosition);
+        }
+        else
+        {
+            _placementPositions.RemoveAll(pos => pos == gridPosition);
+        }
+
+        RefreshPlacementArea();
+    }
+
+    // 全マスの配置可否を設定
+    public void SetAllPlacementAllowed(bool allowed)
+    {
+        _placementPositions.Clear();
+
+        if (allowed)
+        {
+            for (int x = 0; x < _gridSize.x; x++)
+            {
+                for (int y = 0; y < _gridSize.y; y++)
+                {
+                    _placementPositions.Add(new Vector2Int(x, y));
+                }
+            }
+        }
+
+        _placementPositionSet = new HashSet<Vector2Int>(_placementPositions);
+    }
+
+    // 配置可能範囲の更新
+    public void RefreshPlacementArea()
+    {
+        _placementPositionSet = new HashSet<Vector2Int>(_placementPositions);
+    }
+
     private void OnDrawGizmos()
-	{
-		// グリッドのワイヤーフレームを描画
-		Gizmos.color = Color.gray;
-		for (int x = 0; x < _gridSize.x; x++)
-		{
-			for (int y = 0; y < _gridSize.y; y++)
-			{
-				Vector3 center = GridToWorld(new Vector2Int(x, y));
-				center += transform.up * (_tileHeight * 0.5f);
-				Gizmos.DrawWireCube(center, new Vector3(_tileSize, 0.01f, _tileSize));
-			}
-		}
-	}
+    {
+        if (_tileSize <= 0.0f)
+            return;
+
+        for (int x = 0; x < _gridSize.x; x++)
+        {
+            for (int y = 0; y < _gridSize.y; y++)
+            {
+                Vector2Int gridPosition = new Vector2Int(x, y);
+                Vector3 center = GridToWorld(gridPosition);
+                center += transform.up * (_tileHeight * 0.5f);
+
+                // 配置可能状態に応じて色を変更
+                Gizmos.color = IsInPlacementArea(gridPosition) ?
+                    Color.white : Color.gray1;
+
+                float size = _tileSize * 0.9f;
+                Gizmos.DrawWireCube(
+                    center,
+                    new Vector3(size, 0.01f, size)
+                );
+            }
+        }
+    }
 }

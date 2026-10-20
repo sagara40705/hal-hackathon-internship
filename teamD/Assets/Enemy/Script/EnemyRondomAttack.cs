@@ -105,7 +105,8 @@ public class EnemyRondomAttack : EnemyAction
         {
             for (int y = 0; y < gridSize.y; y++)
             {
-                candidates.Add(new Vector2Int(x, y));
+                if (_tileGrid.IsInPlacementArea(new Vector2Int(x, y)))
+                    candidates.Add(new Vector2Int(x, y));
             }
         }
 
