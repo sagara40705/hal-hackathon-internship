@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
 /// プレイヤーのゲームオーバー演出
+/// 作成者：石田怜
 /// </summary>
 public class PlayerGameOverEffect : MonoBehaviour
 {

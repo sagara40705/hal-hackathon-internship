@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
 /// グリッドに沿って自動前進するプレイヤー
+/// 作成者：石田怜
 /// </summary>
 public class Player : MonoBehaviour
 {
@@ -20,10 +21,13 @@ public class Player : MonoBehaviour
 	private Vector2Int _startDirection = Vector2Int.right;
 
 	[Header("イベント")]
-	[SerializeField, Tooltip("ゲームオーバー時のイベント")]
-	private UnityEvent _onGameOverEvent;
+	[SerializeField, Tooltip("落下時のイベント")]
+	private UnityEvent _onFallEvent;
 
-	private Vector2Int _currentPosition;        // 現在のグリッド座標
+    [SerializeField, Tooltip("被弾時のイベント")]
+    private UnityEvent _onDamageEvent;
+
+    private Vector2Int _currentPosition;        // 現在のグリッド座標
 	private Vector2Int _nextPosition;           // 次のグリッド座標
 	private Vector2Int _direction;              // 移動方向
 
@@ -52,7 +56,7 @@ public class Player : MonoBehaviour
 		TileCell cell = _tileGrid.GetCell(_currentPosition);
 		if (cell == null)
 		{
-			OnFailed();
+			OnFall();
 			return;
 		}
 		cell.OnEnterPlayer(this);
@@ -107,7 +111,7 @@ public class Player : MonoBehaviour
 		// 床が存在しない場合
 		if (cell == null)
 		{
-			OnFailed();
+			OnFall();
 			return;
 		}
 
@@ -135,8 +139,21 @@ public class Player : MonoBehaviour
 		return gridPosition == _currentPosition;
 	}
 
-	// ゲームオーバー
-	private void OnFailed()
+    // プレイヤーへの攻撃処理
+    public void TryAttack(Vector2Int gridPos)
+    {
+        if (_isGameOver)
+            return;
+
+        if (gridPos == _currentPosition)
+        {
+            _isGameOver = true;
+            _onDamageEvent?.Invoke();
+        }
+    }
+
+    // 落下時の処理
+    private void OnFall()
 	{
 		if (_isGameOver)
 			return;
@@ -144,6 +161,6 @@ public class Player : MonoBehaviour
 		_isGameOver = true;
 		_isMoving = false;
 
-		_onGameOverEvent?.Invoke();
+		_onFallEvent?.Invoke();
 	}
 }
