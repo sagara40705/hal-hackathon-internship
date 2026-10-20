@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 1650181588}
   - component: {fileID: 1650181587}
   - component: {fileID: 1650181586}
+  - component: {fileID: 1650181589}
   m_Layer: 0
   m_Name: TileGrid
   m_TagString: Untagged
@@ -1047,6 +1048,20 @@ MonoBehaviour:
   _gridSize: {x: 21, y: 21}
   _tileSize: 1
   _tileHeight: 1
+--- !u!114 &1650181589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650181585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84e65a0d035433f967bf6ec51a1b690, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SlowTileSpeedController
+  _player: {fileID: 1625371377}
+  _tileGrid: {fileID: 1650181587}
 --- !u!4 &1650181588
 Transform:
   m_ObjectHideFlags: 0
