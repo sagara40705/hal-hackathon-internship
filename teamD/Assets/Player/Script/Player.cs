@@ -158,5 +158,36 @@ public class Player : MonoBehaviour
     {
         _moveSpeed = speed;
     }
+
+    // 移動中フラグ(sagara)
+    private bool _isProcessingMove;
+
+    // 座標を移動(sagara)
+    public void MoveByGridOffset(Vector2Int gridOffset)
+    {
+        // 移動中は無視する
+        if (_isProcessingMove)
+            return;
+
+        // 移動先の座標を計算
+        Vector2Int destination = _currentPosition + gridOffset;
+        TileCell cell = _tileGrid.GetCell(destination);
+        if (cell == null)
+            return;
+
+        // 移動中フラグを立てる
+        _isProcessingMove = true;
+        try
+        {
+            // 座標を移動し、到着イベントを発火する
+            _currentPosition = destination;
+            transform.position = _tileGrid.GridToWorld(destination);
+            cell.OnEnterPlayer(this);
+        }
+        finally
+        {
+            _isProcessingMove = false;
+        }
+    }
     // ============================
 }
