@@ -19,8 +19,10 @@ public class TileGrid : MonoBehaviour
 	// グリッド上の各セル
 	private readonly Dictionary<Vector2Int, TileCell> _cells = new();
 
+    public Vector2Int GridSize => _gridSize;
 
-	private void Awake()
+
+    private void Awake()
 	{
 		// 初期タイルグループを登録
 		TileGroup[] groups = GetComponentsInChildren<TileGroup>();
@@ -161,32 +163,49 @@ public class TileGrid : MonoBehaviour
 		}
 
 		return true;
-	}
+    }
 
-	// タイルグループを移動
-	public bool MoveTile(TileGroup group, Vector2Int newPosition)
-	{
-		if (group == null || !group.IsMovable)
-			return false;
+    // タイルグループを移動
+    public bool MoveTile(TileGroup group, Vector2Int newPosition)
+    {
+        if (group == null || !group.IsMovable)
+            return false;
 
-		Vector2Int oldPosition = group.GridPosition;
+        Vector2Int oldPosition = group.GridPosition;
 
-		if (oldPosition == newPosition)
-			return true;
+        if (oldPosition == newPosition)
+            return true;
 
-		if (!RemoveTile(group))
-			return false;
+        if (!RemoveTile(group))
+            return false;
 
-		if (SetTile(group, newPosition))
-			return true;
+        if (SetTile(group, newPosition))
+            return true;
 
-		// 移動先に配置できなければ元に戻す
-		SetTile(group, oldPosition);
+        // 移動先に配置できなければ元に戻す
+        SetTile(group, oldPosition);
 
-		return false;
-	}
+        return false;
+    }
 
-	private void OnDrawGizmos()
+    // 指定座標のタイルグループを破壊
+    public bool DestroyTile(Vector2Int gridPosition)
+    {
+        TileGroup group = GetTileGroup(gridPosition);
+
+        if (group == null)
+            return false;
+
+        // グリッドから登録解除
+        if (!RemoveTile(group))
+            return false;
+
+        Destroy(group.gameObject);
+        return true;
+    }
+
+    private void OnDrawGizmos()
+
 	{
 		// グリッドのワイヤーフレームを描画
 		Gizmos.color = Color.gray;
