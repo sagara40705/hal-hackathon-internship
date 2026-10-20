@@ -149,6 +149,10 @@ public class Player : MonoBehaviour
 
     // #2-gimmick(sagara)
     // ============================
+    public void Damage()
+    {
+        OnFailed();
+    }
 
     // 速度を取得(sagara)
     public float MoveSpeed => _moveSpeed;
