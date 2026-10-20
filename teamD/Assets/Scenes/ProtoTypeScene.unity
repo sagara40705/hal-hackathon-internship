@@ -1257,6 +1257,7 @@ MonoBehaviour:
   _gridSize: {x: 21, y: 21}
   _tileSize: 1
   _tileHeight: 1
+  _placementPositions: []
 --- !u!4 &1650181588
 Transform:
   m_ObjectHideFlags: 0

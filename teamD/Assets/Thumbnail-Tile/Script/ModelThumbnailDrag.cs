@@ -49,6 +49,10 @@ public class ModelThumbnailDrag : MonoBehaviour,
         if (modelPrefab == null || placementController == null)
             return;
 
-        placementController.EndPreviewAndPlace(modelPrefab, eventData.position);
+        bool placed = placementController.EndPreviewAndPlace(modelPrefab, eventData.position);
+
+        // 配置に成功したらサムネイルを非表示にする
+        if (placed)
+        gameObject.SetActive(false); 
     }
 }
