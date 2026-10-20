@@ -14,6 +14,9 @@ public class EnemyRondomAttack : EnemyAction
         RECOVERY    // 硬直
     }
 
+    [SerializeField, Tooltip("プレイヤー")]
+    private Player _player;
+
     [SerializeField, Tooltip("タイルグリッド")]
     private TileGrid _tileGrid;
 
@@ -125,15 +128,13 @@ public class EnemyRondomAttack : EnemyAction
 
     private void Attack()
     {
-        if (_tileGrid == null)
-            return;
-
         if (_targetPosList == null || _targetPosList.Count == 0)
             return;
 
         foreach (Vector2Int pos in _targetPosList)
         {
-            _tileGrid.DestroyTile(pos);
+            _tileGrid?.DestroyTile(pos);
+            _player?.TryAttack(pos);
         }
 
         // 攻撃予告を非表示
