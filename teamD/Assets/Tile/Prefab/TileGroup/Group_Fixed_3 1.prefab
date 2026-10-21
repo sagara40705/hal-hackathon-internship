@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2595998190613165464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8717360432738629577}
+  - component: {fileID: 1607446159090343335}
+  m_Layer: 0
+  m_Name: Group_Fixed_3 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8717360432738629577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595998190613165464}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6338041170441958279}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607446159090343335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595998190613165464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b891422e4384c949b77f0566dc4c9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileGroup
+  _isStatic: 1
+--- !u!1001 &6695450970742900413
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8717360432738629577}
+    m_Modifications:
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156780619171513259, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3155c5036adbc43449897a1a4e442695, type: 2}
+    - target: {fileID: 7580375582259545971, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      propertyPath: m_Name
+      value: Cell_Attack
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580375582259545971, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 251829395906572622}
+    - targetCorrespondingSourceObject: {fileID: 7580375582259545971, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8826359247279206211}
+  m_SourcePrefab: {fileID: 100100000, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+--- !u!1 &3880381330920096206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7580375582259545971, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+  m_PrefabInstance: {fileID: 6695450970742900413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &251829395906572622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880381330920096206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee858ae50cded3447b13cb0c14c7734c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileCell
+  _onEnterPlayerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8826359247279206211}
+        m_TargetAssemblyTypeName: TriggerObject, Assembly-CSharp
+        m_MethodName: OnEnterPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8826359247279206211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880381330920096206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d880fe69a90d39346b83fedfc0e1a3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerObject
+  attackPrefab: {fileID: 396296157679001473, guid: 5baa51fcf5a73d345bc18d620522fdf4, type: 3}
+  spawnPoint: {fileID: 0}
+  speed: 10
+--- !u!4 &6338041170441958279 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+  m_PrefabInstance: {fileID: 6695450970742900413}
+  m_PrefabAsset: {fileID: 0}
