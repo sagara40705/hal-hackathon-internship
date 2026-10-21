@@ -478,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
   duration: 0.2
-  magnitude: 0.2
+  magnitude: 0.1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
