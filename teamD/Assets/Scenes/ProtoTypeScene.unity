@@ -219,8 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e39863bc35dd44ea04de49fcaadb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailDrag
-  modelPrefab: {fileID: 1450840916}
-  placementController: {fileID: 2058617533}
 --- !u!1 &124463836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5889857819418468119, guid: 0a974ca04503ac348900b65088cb3c2b, type: 3}
@@ -243,8 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e39863bc35dd44ea04de49fcaadb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailDrag
-  modelPrefab: {fileID: 1089689935}
-  placementController: {fileID: 2058617533}
 --- !u!1001 &181010156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -633,11 +629,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1752795392174476023, guid: 04df5505acc636a4d81f3ca6d715c858, type: 3}
   m_PrefabInstance: {fileID: 930005594}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &603515356 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7311764058634754372, guid: 04df5505acc636a4d81f3ca6d715c858, type: 3}
-  m_PrefabInstance: {fileID: 930005594}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &769640356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -816,11 +807,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5344553881933382547, guid: 6baa12a280981064d84a81435baf6949, type: 3}
   m_PrefabInstance: {fileID: 8611592222170071589}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1089689935 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7311764058634754372, guid: 708680f5eccf5ee479573e5832e90ffc, type: 3}
-  m_PrefabInstance: {fileID: 181010156}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1126501408
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,8 +908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e39863bc35dd44ea04de49fcaadb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailDrag
-  modelPrefab: {fileID: 1667995970}
-  placementController: {fileID: 2058617533}
 --- !u!1 &1275668327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3264895072627643900, guid: b91b75233bb3fa64a9ed494de826b152, type: 3}
@@ -946,8 +930,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e39863bc35dd44ea04de49fcaadb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailDrag
-  modelPrefab: {fileID: 603515356}
-  placementController: {fileID: 2058617533}
 --- !u!1001 &1285003773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1032,8 +1014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e39863bc35dd44ea04de49fcaadb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailDrag
-  modelPrefab: {fileID: 1828863689}
-  placementController: {fileID: 2058617533}
 --- !u!1 &1443696411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,11 +1092,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1450840916 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7311764058634754372, guid: dda7b9592401cc249b55b8ca22734da6, type: 3}
-  m_PrefabInstance: {fileID: 23003042}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1552962839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,16 +1255,6 @@ Transform:
   - {fileID: 1067362096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1667995970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7311764058634754372, guid: 695f9fa7ed0536640b9122b69c8a78bb, type: 3}
-  m_PrefabInstance: {fileID: 2022103439}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1828863689 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7311764058634754372, guid: e5b201f5f605c9a44967b51572f7c686, type: 3}
-  m_PrefabInstance: {fileID: 1285003773}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1959718511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,13 +1474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0126480d2c45c6d459e604afade25cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelPlacementController
-  placementCamera: {fileID: 330585545}
-  placementSurfaceLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  maxDistance: 1000
-  previewMaterial: {fileID: 2100000, guid: 5f72af9da2dc2ae4d8c2bcb8b3813b9b, type: 2}
-  tileGrid: {fileID: 1650181587}
 --- !u!1001 &1022053477403985105
 PrefabInstance:
   m_ObjectHideFlags: 0
