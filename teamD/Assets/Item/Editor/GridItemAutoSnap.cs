@@ -16,11 +16,14 @@ internal static class GridItemAutoSnap
         EditorApplication.update += ApplyPending;
     }
 
+    // UndoでTransformの位置が変更されたときに呼ばれる
     private static UndoPropertyModification[] OnModified(UndoPropertyModification[] modifications)
     {
         if (_applying || EditorApplication.isPlayingOrWillChangePlaymode)
+        {
             return modifications;
-
+        }
+           
         foreach (var modification in modifications)
         {
             var value = modification.currentValue;
@@ -32,9 +35,11 @@ internal static class GridItemAutoSnap
                 Pending[item] = Undo.GetCurrentGroup();
             }
         }
+
         return modifications;
     }
 
+    // 移動ツールの操作終了後に確定する
     private static void ApplyPending()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -43,7 +48,10 @@ internal static class GridItemAutoSnap
             return;
         }
         if (Pending.Count == 0 || GUIUtility.hotControl != 0)
+        {
             return;
+        }
+            
 
         var pending = new Dictionary<GridItem, int>(Pending);
         Pending.Clear();
@@ -53,13 +61,19 @@ internal static class GridItemAutoSnap
             foreach (var entry in pending)
             {
                 if (entry.Key == null)
+                {
                     continue;
+                }
+                    
                 // ユーザーの移動とセル更新を1回のUndoで戻す。
                 bool sameGroup = Undo.GetCurrentGroup() == entry.Value;
                 GridItemEditor.SetCellFromCurrentPosition(entry.Key);
                 Undo.FlushUndoRecordObjects();
                 if (sameGroup)
+                {
                     Undo.CollapseUndoOperations(entry.Value);
+                }
+                   
             }
         }
         finally
