@@ -283,5 +283,13 @@ public class Player : MonoBehaviour
         if (!_isGameOver)
             CellArrived?.Invoke(this, _currentPosition);
     }
+
+    // Playerを停止させる
+    public void Stop()
+    {
+        _isGameOver = true;
+        _isMoving = false;
+    }
+
     // ============================
 }
