@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 /// <summary>
 /// グリッドに沿って自動前進するプレイヤー
@@ -163,4 +164,103 @@ public class Player : MonoBehaviour
 
 		_onFallEvent?.Invoke();
 	}
+
+    // #2-gimmick(sagara)
+    // ============================
+    // 通常移動の処理を変更せず、進行方向の1マス先を飛び越える(sagara)
+    public IEnumerator JumpForward(float duration, float height)
+    {
+        // 空中・着地イベント中の再ジャンプも抑止する。
+        if (!isActiveAndEnabled || _isGameOver)
+            yield break;
+
+        Vector2Int destination = _currentPosition + _direction * 2;
+        Vector3 start = transform.position;
+        Vector3 end = _tileGrid.GridToWorld(destination);
+        float elapsed = 0f;
+        duration = Mathf.Max(0.01f, duration);
+        height = Mathf.Max(0f, height);
+
+        // MonoBehaviourを無効化しても、このコルーチンは継続する。
+        enabled = false;
+        try
+        {
+            while (elapsed < duration)
+            {
+                if (_isGameOver)
+                    yield break;
+
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                transform.position = Vector3.Lerp(start, end, t)
+                    + _tileGrid.transform.up * (4f * height * t * (1f - t));
+                yield return null;
+            }
+
+            if (_isGameOver)
+                yield break;
+
+            _currentPosition = destination;
+            _isMoving = false;
+            transform.position = end;
+
+            // 空中に通過したセルの効果は発動せず、着地先だけを確認する。
+            TileCell cell = _tileGrid.GetCell(destination);
+            if (cell == null)
+                OnFall();
+            else
+                cell.OnEnterPlayer(this);
+        }
+        finally
+        {
+            enabled = true;
+        }
+    }
+
+    // ダメージを受けたときの処理(sagara)
+    public void Damage()
+    {
+        OnFall();
+    }
+
+    // 速度を取得(sagara)
+    public float MoveSpeed => _moveSpeed;
+
+    // 速度を変更(sagara)
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = speed;
+    }
+
+    // 移動中フラグ(sagara)
+    private bool _isProcessingMove;
+
+    // 座標を移動(sagara)
+    public void MoveByGridOffset(Vector2Int gridOffset)
+    {
+        // 移動中は無視する
+        if (_isProcessingMove)
+            return;
+
+        // 移動先の座標を計算
+        Vector2Int destination = _currentPosition + gridOffset;
+        TileCell cell = _tileGrid.GetCell(destination);
+        if (cell == null)
+            return;
+
+        // 移動中フラグを立てる
+        _isProcessingMove = true;
+        try
+        {
+            // 座標を移動し、到着イベントを発火する
+            _currentPosition = destination;
+            transform.position = _tileGrid.GridToWorld(destination);
+            cell.OnEnterPlayer(this);
+        }
+        finally
+        {
+            _isProcessingMove = false;
+        }
+    }
+    // ============================
 }
