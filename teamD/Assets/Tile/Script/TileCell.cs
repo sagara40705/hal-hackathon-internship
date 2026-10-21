@@ -29,21 +29,6 @@ public class TileCell : MonoBehaviour
 		);
 	}
 
-	// セルのTransformを更新
-	public void UpdateTransform(float tileSize)
-	{
-		if (_parentGroup == null)
-			return;
-
-		Vector3 localPosition = new Vector3(
-			_localPosition.x * tileSize,
-			0.0f,
-			_localPosition.y * tileSize
-		);
-
-		transform.position = _parentGroup.transform.TransformPoint(localPosition);
-	}
-
 	// プレイヤーがマスに進入したときの処理
 	public void OnEnterPlayer(Player player)
 	{

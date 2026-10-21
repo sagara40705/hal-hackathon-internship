@@ -7,6 +7,12 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class TileGridController : MonoBehaviour
 {
+	enum DragType
+	{
+		MOVE,		// 移動
+		PLACE		// 配置
+	}
+
 	[SerializeField, Tooltip("操作に使用するカメラ")]
 	private Camera _camera;
 
@@ -32,12 +38,21 @@ public class TileGridController : MonoBehaviour
 	private Vector2Int _originalPosition;			// 移動前のグリッド座標
 	private Vector2Int _targetPosition;				// 移動先のグリッド座標
 	private Vector3 _grabOffset;					// マウスとグループ基準位置の差
+	private DragType _dragType;                     // ドラッグの種類
+    private Vector3 _originalWorldPosition;         // 移動前のワールド座標   
 
-	private Renderer[] _selectedRenderers;			// 選択中のレンダラー
-	private MaterialPropertyBlock _propertyBlock;	// マテリアルパラメータ変更用
+    private Renderer[] _selectedRenderers;			// 選択中のレンダラー
+	private MaterialPropertyBlock _propertyBlock;   // マテリアルパラメータ変更用
 
 
-	private void Awake()
+    // 外部から指定したタイルのドラッグ開始
+    public bool BeginDragTile(TileGroup group)
+    {
+        return StartDragging(group);
+    }
+
+
+    private void Awake()
 	{
 		_propertyBlock = new MaterialPropertyBlock();
 
@@ -63,59 +78,82 @@ public class TileGridController : MonoBehaviour
 			EndDrag();
 	}
 
-	// ドラッグ開始
-	private void BeginDrag()
+    // マウスによるドラッグ開始
+    private void BeginDrag()
+    {
+        // マウス位置からレイを飛ばしてタイルを取得
+        Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 1000.0f, _tileLayer))
+            return;
+
+        // タイルグループを取得
+        TileGroup group = hit.collider.GetComponentInParent<TileGroup>();
+
+        StartDragging(group);
+    }
+
+    // ドラッグ開始の共通処理
+    private bool StartDragging(TileGroup group)
+    {
+        if (_selectedGroup != null || group == null || group.IsStatic)
+            return false;
+
+        // グループが初期化されていなければ初期化
+        if (!group.IsInitialized)
+            group.InitGroup(_tileGrid.TileSize);
+
+        // グリッドへの登録状態を確認して、移動か新規配置かを判定
+        DragType dragType = DragType.MOVE;
+
+        foreach (TileCell cell in group.Cells)
+        {
+            Vector2Int cellPosition = group.GridPosition + cell.LocalPosition;
+
+            if (_tileGrid.GetCell(cellPosition) != cell)
+            {
+                dragType = DragType.PLACE;
+                break;
+            }
+        }
+
+        // プレイヤーが使用中のマスが含まれるか判定
+        if (IsGroupReserved(group))
+            return false;
+
+        if (!TryGetMouseWorldPosition(out Vector3 mousePosition))
+            return false;
+
+        // 既存タイルの場合はグリッドから登録解除
+        if (dragType == DragType.MOVE)
+        {
+            if (!_tileGrid.RemoveTile(group))
+                return false;
+        }
+
+        // 選択情報を保存
+        _selectedGroup = group;
+        _dragType = dragType;
+        _originalPosition = group.GridPosition;
+        _targetPosition = _originalPosition;
+        _grabOffset = group.transform.position - mousePosition;
+        _originalWorldPosition = group.transform.position;
+
+        _selectedRenderers = group.GetComponentsInChildren<Renderer>();
+
+        UpdateDrag();
+
+        return true;
+    }
+
+    // ドラッグ中
+    private void UpdateDrag()
 	{
-		// マウス位置からレイを飛ばしてタイルを取得
-		Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-		if (!Physics.Raycast(ray, out RaycastHit hit, 1000.0f, _tileLayer))
-			return;
-
-		// タイルグループを取得
-		TileGroup group = hit.collider.GetComponentInParent<TileGroup>();
-		if (group == null || group.IsStatic)
-			return;
-
-		if (IsGroupReserved(group))
-			return;
-
-		// グリッドへの登録状態を確認
-		foreach (TileCell cell in group.Cells)
-		{
-			Vector2Int cellPosition = group.GridPosition + cell.LocalPosition;
-			if (_tileGrid.GetCell(cellPosition) != cell)
-				return;
-		}
-
 		if (!TryGetMouseWorldPosition(out Vector3 mousePosition))
 			return;
 
-		// 選択情報を保存
-		_selectedGroup = group;
-		_originalPosition = group.GridPosition;
-		_targetPosition = _originalPosition;
-		_grabOffset = group.transform.position - mousePosition;
-
-		_selectedRenderers = group.GetComponentsInChildren<Renderer>();
-
-		// グリッドから登録解除
-		if (!_tileGrid.RemoveTile(group))
-		{
-			_selectedGroup = null;
-			_selectedRenderers = null;
-			return;
-		}
-
-		UpdateDrag();
-	}
-
-	// ドラッグ中
-	private void UpdateDrag()
-	{
-		if (!TryGetMouseWorldPosition(out Vector3 mousePosition))
-			return;
-
-		Vector3 targetWorldPosition = mousePosition + _grabOffset;
+        // ターゲット位置を計算
+        Vector3 targetWorldPosition = mousePosition + _grabOffset;
 		_targetPosition = _tileGrid.WorldToGrid(targetWorldPosition);
 
 		// グリッド位置へスナップ
@@ -138,7 +176,14 @@ public class TileGridController : MonoBehaviour
 
 		if (canPlace && _tileGrid.SetTile(_selectedGroup, _targetPosition))
 		{
-			ClearSelection();
+            // 新規配置時の処理
+            if( _dragType == DragType.PLACE)
+            {
+                _selectedGroup.transform.parent = _tileGrid.transform;
+                _selectedGroup.SetPlaced();
+            }
+
+            ClearSelection();
 			return;
 		}
 
@@ -149,18 +194,30 @@ public class TileGridController : MonoBehaviour
 	// 元の位置へ戻す
 	private void RestoreGroup()
 	{
-		if (!_tileGrid.SetTile(_selectedGroup, _originalPosition))
-		{
-			Debug.LogError("タイルグループを元の位置へ戻せませんでした", _selectedGroup);
-		}
+        if (_selectedGroup.IsPlaced)
+        {
+            if (!_tileGrid.SetTile(_selectedGroup, _originalPosition))
+            {
+                Debug.LogError("タイルグループを元の位置へ戻せませんでした", _selectedGroup);
+            }
+        }
+        else
+        {
+            _selectedGroup.transform.position = _originalWorldPosition;
+        }
 
-		ClearSelection();
+        ClearSelection();
 	}
 
 	// グループ内のセルがプレイヤーに使用されているか判定
 	private bool IsGroupReserved(TileGroup group)
 	{
-		foreach (TileCell cell in group.Cells)
+        // グループが配置されていない場合は使用中判定を行わない
+        if (!group.IsPlaced)
+            return false;
+
+        // グループ内のセルがプレイヤーに使用されているか判定
+        foreach (TileCell cell in group.Cells)
 		{
 			Vector2Int cellPosition = group.GridPosition + cell.LocalPosition;
 
@@ -237,6 +294,4 @@ public class TileGridController : MonoBehaviour
 		_selectedGroup = null;
 		_selectedRenderers = null;
 	}
-
-
 }
