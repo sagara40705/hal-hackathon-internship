@@ -56,4 +56,14 @@ public class ModelThumbnailDrag : MonoBehaviour,
         if (placed)
         gameObject.SetActive(false); 
     }
+
+    /// <summary>
+    /// 生成したサムネイルに、配置するPrefabとコントローラーを設定する
+    /// </summary>
+    public void Initialize(GameObject prefab, ModelPlacementController controller)
+    {
+        modelPrefab = prefab;
+        placementController = controller;
+    }
+
 }

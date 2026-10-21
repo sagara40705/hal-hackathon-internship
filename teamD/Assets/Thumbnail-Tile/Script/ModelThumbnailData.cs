@@ -13,9 +13,9 @@ using UnityEngine;
 public class ModelThumbnailData : ScriptableObject
 {
     [SerializeField]
-    private List<ModelThumbnailEntry> entries =
-        new List<ModelThumbnailEntry>();
+    private List<ModelThumbnailEntry> entries = new List<ModelThumbnailEntry>();
 
+    public IReadOnlyList<ModelThumbnailEntry> Entries => entries;
     /// <summary>
     /// サムネイル画像と対応するPrefabの一組
     /// </summary>
