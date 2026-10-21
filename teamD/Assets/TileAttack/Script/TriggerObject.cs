@@ -18,10 +18,6 @@ public class TriggerObject : MonoBehaviour
 
     public void OnEnterPlayer(Player player)
     {
-
-
-        
-
         hasTriggered = true;
 
         // 敵を探す
