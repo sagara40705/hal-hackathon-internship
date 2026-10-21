@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 /// <summary>
 /// UIサムネイルのドラッグを受け取り、モデル配置処理へ伝えるクラス。
+/// 作成者 : 酒井康佑
 /// </summary>
 public class ModelThumbnailDrag : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -49,6 +50,20 @@ public class ModelThumbnailDrag : MonoBehaviour,
         if (modelPrefab == null || placementController == null)
             return;
 
-        placementController.EndPreviewAndPlace(modelPrefab, eventData.position);
+        bool placed = placementController.EndPreviewAndPlace(modelPrefab, eventData.position);
+
+        // 配置に成功したらサムネイルを非表示にする
+        if (placed)
+        gameObject.SetActive(false); 
     }
+
+    /// <summary>
+    /// 生成したサムネイルに、配置するPrefabとコントローラーを設定する
+    /// </summary>
+    public void Initialize(GameObject prefab, ModelPlacementController controller)
+    {
+        modelPrefab = prefab;
+        placementController = controller;
+    }
+
 }

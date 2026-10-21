@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// 配置位置の判定、配置プレビューの表示、Prefabの生成を管理するクラス。
+/// 作成者 : 酒井康佑
 /// </summary>
 public class ModelPlacementController : MonoBehaviour
 {
