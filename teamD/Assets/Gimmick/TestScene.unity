@@ -1366,6 +1366,124 @@ MonoBehaviour:
   _gridSize: {x: 21, y: 21}
   _tileSize: 1
   _tileHeight: 1
+  _placementPositions:
+  - {x: 15, y: 16}
+  - {x: 15, y: 15}
+  - {x: 15, y: 14}
+  - {x: 15, y: 13}
+  - {x: 15, y: 12}
+  - {x: 14, y: 12}
+  - {x: 14, y: 11}
+  - {x: 14, y: 10}
+  - {x: 14, y: 9}
+  - {x: 14, y: 8}
+  - {x: 15, y: 11}
+  - {x: 15, y: 10}
+  - {x: 15, y: 9}
+  - {x: 15, y: 8}
+  - {x: 15, y: 7}
+  - {x: 15, y: 6}
+  - {x: 15, y: 5}
+  - {x: 15, y: 4}
+  - {x: 14, y: 4}
+  - {x: 13, y: 4}
+  - {x: 12, y: 4}
+  - {x: 11, y: 4}
+  - {x: 10, y: 4}
+  - {x: 9, y: 4}
+  - {x: 8, y: 4}
+  - {x: 7, y: 4}
+  - {x: 7, y: 5}
+  - {x: 7, y: 6}
+  - {x: 7, y: 7}
+  - {x: 7, y: 8}
+  - {x: 7, y: 9}
+  - {x: 7, y: 10}
+  - {x: 8, y: 10}
+  - {x: 8, y: 11}
+  - {x: 8, y: 12}
+  - {x: 8, y: 13}
+  - {x: 8, y: 14}
+  - {x: 8, y: 15}
+  - {x: 7, y: 15}
+  - {x: 7, y: 16}
+  - {x: 7, y: 14}
+  - {x: 7, y: 13}
+  - {x: 7, y: 12}
+  - {x: 7, y: 11}
+  - {x: 14, y: 16}
+  - {x: 13, y: 16}
+  - {x: 12, y: 16}
+  - {x: 11, y: 16}
+  - {x: 10, y: 16}
+  - {x: 9, y: 16}
+  - {x: 8, y: 16}
+  - {x: 10, y: 15}
+  - {x: 11, y: 15}
+  - {x: 12, y: 15}
+  - {x: 12, y: 14}
+  - {x: 13, y: 14}
+  - {x: 14, y: 14}
+  - {x: 14, y: 15}
+  - {x: 13, y: 15}
+  - {x: 10, y: 14}
+  - {x: 11, y: 14}
+  - {x: 13, y: 13}
+  - {x: 14, y: 13}
+  - {x: 11, y: 13}
+  - {x: 12, y: 13}
+  - {x: 13, y: 12}
+  - {x: 12, y: 12}
+  - {x: 11, y: 12}
+  - {x: 10, y: 12}
+  - {x: 10, y: 13}
+  - {x: 11, y: 11}
+  - {x: 10, y: 11}
+  - {x: 12, y: 11}
+  - {x: 13, y: 11}
+  - {x: 13, y: 9}
+  - {x: 13, y: 10}
+  - {x: 12, y: 10}
+  - {x: 12, y: 9}
+  - {x: 11, y: 10}
+  - {x: 13, y: 8}
+  - {x: 13, y: 7}
+  - {x: 12, y: 8}
+  - {x: 11, y: 8}
+  - {x: 11, y: 9}
+  - {x: 10, y: 10}
+  - {x: 13, y: 6}
+  - {x: 12, y: 7}
+  - {x: 11, y: 7}
+  - {x: 14, y: 7}
+  - {x: 14, y: 6}
+  - {x: 14, y: 5}
+  - {x: 12, y: 6}
+  - {x: 11, y: 6}
+  - {x: 11, y: 5}
+  - {x: 12, y: 5}
+  - {x: 13, y: 5}
+  - {x: 10, y: 5}
+  - {x: 10, y: 6}
+  - {x: 9, y: 6}
+  - {x: 8, y: 6}
+  - {x: 8, y: 5}
+  - {x: 9, y: 5}
+  - {x: 9, y: 7}
+  - {x: 9, y: 8}
+  - {x: 9, y: 9}
+  - {x: 10, y: 9}
+  - {x: 10, y: 8}
+  - {x: 10, y: 7}
+  - {x: 9, y: 15}
+  - {x: 9, y: 14}
+  - {x: 9, y: 13}
+  - {x: 9, y: 12}
+  - {x: 9, y: 11}
+  - {x: 9, y: 10}
+  - {x: 8, y: 9}
+  - {x: 8, y: 8}
+  - {x: 8, y: 7}
 --- !u!4 &1650181588
 Transform:
   m_ObjectHideFlags: 0
@@ -1784,9 +1902,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1650181587}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1443696413}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _onGameOverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1443696413}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerGameOverEffect, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4618278131466255927, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: m_Name
       value: Player
