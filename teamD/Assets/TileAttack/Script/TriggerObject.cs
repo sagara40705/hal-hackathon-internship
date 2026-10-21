@@ -1,5 +1,8 @@
 using UnityEngine;
-
+/// <summary>
+/// Playerがタイルに触れたとき指定したObjectを飛ばす
+/// 作成者：牛田大翔
+/// </summary>
 public class TriggerObject : MonoBehaviour
 {
     [Header("発射するオブジェクト")]

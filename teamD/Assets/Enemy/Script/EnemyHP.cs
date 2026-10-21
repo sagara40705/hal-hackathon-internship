@@ -33,7 +33,16 @@ public class EnemyHP : MonoBehaviour
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         UpdateHPBar();
-
+        // カメラシェイク
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake();
+        }
+        // ヒットストップ
+        if (HitStop.Instance != null)
+        {
+            HitStop.Instance.Stop();
+        }
         if (currentHP <= 0)
         {
             Destroy(gameObject);

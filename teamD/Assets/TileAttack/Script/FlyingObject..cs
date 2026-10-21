@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.WSA;
 using static UnityEngine.GraphicsBuffer;
-
+/// <summary>
+/// TriggerObjectで指定した物が、敵に向かって飛んでいきダメージを与える
+/// 作成者：牛田大翔
+/// </summary>
 public class FlyingObject: MonoBehaviour
 {
     public float flightDuration = 1.5f;
@@ -66,6 +69,10 @@ public class FlyingObject: MonoBehaviour
 
             Destroy(gameObject);
         }
+
+       
+
+       
     }
 
     private EnemyHP FindEnemyHPAtTarget()
