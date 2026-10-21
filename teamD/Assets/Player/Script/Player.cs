@@ -207,7 +207,7 @@ public class Player : MonoBehaviour
             // 空中に通過したセルの効果は発動せず、着地先だけを確認する。
             TileCell cell = _tileGrid.GetCell(destination);
             if (cell == null)
-                OnFailed();
+                OnFall();
             else
                 cell.OnEnterPlayer(this);
         }
@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
     // ダメージを受けたときの処理(sagara)
     public void Damage()
     {
-        OnFailed();
+        OnFall();
     }
 
     // 速度を取得(sagara)
