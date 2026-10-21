@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 作成者 : 酒井康佑
+/// </summary>
 public class ThumbnailRestoreController : MonoBehaviour
 {
     [SerializeField, Tooltip("補充させるサムネイル一覧")]

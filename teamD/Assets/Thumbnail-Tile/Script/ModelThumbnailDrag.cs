@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 /// <summary>
 /// UIサムネイルのドラッグを受け取り、モデル配置処理へ伝えるクラス。
+/// 作成者 : 酒井康佑
 /// </summary>
 public class ModelThumbnailDrag : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler

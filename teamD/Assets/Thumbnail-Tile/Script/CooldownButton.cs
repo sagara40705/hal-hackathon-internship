@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+///  作成者 : 酒井康佑
+/// </summary>
 public class CooldownButton : MonoBehaviour
 {
     [SerializeField] private Button button;
