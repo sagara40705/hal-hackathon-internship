@@ -17,9 +17,7 @@ public class TriggerObject : MonoBehaviour
     {
 
 
-        // 何度も発射しない
-        if (hasTriggered)
-            return;
+        
 
         hasTriggered = true;
 
