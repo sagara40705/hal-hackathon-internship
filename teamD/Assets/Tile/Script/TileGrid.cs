@@ -19,7 +19,7 @@ public class TileGrid : MonoBehaviour
     [SerializeField, Tooltip("配置可能なグリッド座標")]
     private List<Vector2Int> _placementPositions = new();
 
-    private HashSet<Vector2Int> _placementPositionSet;
+    private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
 
     // グリッド上の各セル
     private readonly Dictionary<Vector2Int, TileCell> _cells = new();
@@ -31,6 +31,7 @@ public class TileGrid : MonoBehaviour
 
     private void Awake()
 	{
+        // 配置可能なグリッド座標のハッシュセットを作成
         _placementPositionSet = new HashSet<Vector2Int>(_placementPositions);
 
         // 初期タイルグループを登録
@@ -38,7 +39,8 @@ public class TileGrid : MonoBehaviour
 		foreach (TileGroup group in groups)
 		{
 			group.InitGroup(_tileSize);
-			Vector2Int gridPosition = WorldToGrid(group.transform.position);
+            group.SetPlaced();
+            Vector2Int gridPosition = WorldToGrid(group.transform.position);
 
 			if (!SetTile(group, gridPosition))
 			{
@@ -174,29 +176,6 @@ public class TileGrid : MonoBehaviour
 		return true;
     }
 
-    // タイルグループを移動
-    public bool MoveTile(TileGroup group, Vector2Int newPosition)
-    {
-        if (group == null || group.IsStatic)
-            return false;
-
-        Vector2Int oldPosition = group.GridPosition;
-
-        if (oldPosition == newPosition)
-            return true;
-
-        if (!RemoveTile(group))
-            return false;
-
-        if (SetTile(group, newPosition))
-            return true;
-
-        // 移動先に配置できなければ元に戻す
-        SetTile(group, oldPosition);
-
-        return false;
-    }
-
     // 実行中に新しいタイルを生成して、グリッドへ登録する
     public bool TryCreateAndPlaceTile(GameObject prefab, Vector3 worldPosition)
     {
@@ -278,6 +257,7 @@ public class TileGrid : MonoBehaviour
             _placementPositions.RemoveAll(pos => pos == gridPosition);
         }
 
+        // 配置可能範囲の更新
         RefreshPlacementArea();
     }
 
@@ -285,7 +265,6 @@ public class TileGrid : MonoBehaviour
     public void SetAllPlacementAllowed(bool allowed)
     {
         _placementPositions.Clear();
-
         if (allowed)
         {
             for (int x = 0; x < _gridSize.x; x++)
@@ -297,7 +276,8 @@ public class TileGrid : MonoBehaviour
             }
         }
 
-        _placementPositionSet = new HashSet<Vector2Int>(_placementPositions);
+        // 配置可能範囲の更新
+        RefreshPlacementArea();
     }
 
     // 配置可能範囲の更新
