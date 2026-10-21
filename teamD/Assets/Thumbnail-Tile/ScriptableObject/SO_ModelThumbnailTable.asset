@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4aa0545361bba4084668631625d2c9, type: 3}
   m_Name: SO_ModelThumbnailTable
   m_EditorClassIdentifier: Assembly-CSharp::ModelThumbnailData
-  entries: []
+  _tileGroupTable:
+  - {fileID: 8902515791421906557, guid: 695f9fa7ed0536640b9122b69c8a78bb, type: 3}
+  - {fileID: 8902515791421906557, guid: 04df5505acc636a4d81f3ca6d715c858, type: 3}
+  - {fileID: 8902515791421906557, guid: dda7b9592401cc249b55b8ca22734da6, type: 3}
+  - {fileID: 8902515791421906557, guid: e5b201f5f605c9a44967b51572f7c686, type: 3}
+  - {fileID: 8902515791421906557, guid: 708680f5eccf5ee479573e5832e90ffc, type: 3}

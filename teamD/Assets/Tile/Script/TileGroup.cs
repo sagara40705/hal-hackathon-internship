@@ -9,6 +9,9 @@ public class TileGroup : MonoBehaviour
 	[SerializeField, Tooltip("固定フラグ")]
 	private bool _isStatic = true;
 
+    [SerializeField, Tooltip("プレビューの配置オフセット")]
+    private Vector3 _previewOffset = Vector3.zero;
+
 	private TileCell[] _cells;			    // グループ内セル情報
 	private Vector2Int _gridPosition;       // グリッド上の基準座標
     private bool _isInitialized = false;    // 初期化済みかどうかのフラグ
@@ -19,6 +22,7 @@ public class TileGroup : MonoBehaviour
 	public Vector2Int GridPosition => _gridPosition;
     public bool IsInitialized => _isInitialized;
     public bool IsPlaced => _isPlaced;
+    public Vector3 PreviewOffset => _previewOffset;
 
     // タイルグループの初期化
     public void InitGroup(float tileSize)

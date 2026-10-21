@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -39,15 +40,16 @@ public class TileGridController : MonoBehaviour
 	private Vector2Int _targetPosition;				// 移動先のグリッド座標
 	private Vector3 _grabOffset;					// マウスとグループ基準位置の差
 	private DragType _dragType;                     // ドラッグの種類
-    private Vector3 _originalWorldPosition;         // 移動前のワールド座標   
 
     private Renderer[] _selectedRenderers;			// 選択中のレンダラー
 	private MaterialPropertyBlock _propertyBlock;   // マテリアルパラメータ変更用
+    private UnityAction<bool> _onDragEndCallback;   // ドラッグ終了時のコールバック
 
 
     // 外部から指定したタイルのドラッグ開始
-    public bool BeginDragTile(TileGroup group)
+    public bool BeginDragTile(TileGroup group, UnityAction<bool> onEndDrag)
     {
+        _onDragEndCallback = onEndDrag;
         return StartDragging(group);
     }
 
@@ -137,7 +139,12 @@ public class TileGridController : MonoBehaviour
         _originalPosition = group.GridPosition;
         _targetPosition = _originalPosition;
         _grabOffset = group.transform.position - mousePosition;
-        _originalWorldPosition = group.transform.position;
+
+        // ドラッグ開始時のグループ位置をマウス位置に合わせるため、新規配置時はオフセットをゼロにする
+        if (dragType == DragType.PLACE)
+        {
+            _grabOffset = Vector3.zero;
+        }
 
         _selectedRenderers = group.GetComponentsInChildren<Renderer>();
 
@@ -181,6 +188,10 @@ public class TileGridController : MonoBehaviour
             {
                 _selectedGroup.transform.parent = _tileGrid.transform;
                 _selectedGroup.SetPlaced();
+
+                // ドラッグ終了時のコールバックを呼び出す
+                _onDragEndCallback?.Invoke(true);
+                _onDragEndCallback = null;
             }
 
             ClearSelection();
@@ -203,8 +214,12 @@ public class TileGridController : MonoBehaviour
         }
         else
         {
-            _selectedGroup.transform.position = _originalWorldPosition;
+            Destroy(_selectedGroup.gameObject);
         }
+
+        // ドラッグ終了時のコールバックを呼び出す
+        _onDragEndCallback?.Invoke(false);
+        _onDragEndCallback = null;
 
         ClearSelection();
 	}
@@ -293,5 +308,6 @@ public class TileGridController : MonoBehaviour
 
 		_selectedGroup = null;
 		_selectedRenderers = null;
-	}
+        _onDragEndCallback = null;
+    }
 }
