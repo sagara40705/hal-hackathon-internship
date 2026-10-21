@@ -23,12 +23,6 @@ public sealed class GridItemEditor : Editor
 
         using (new EditorGUI.DisabledScope(true)) EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
 
-
-        EditorGUILayout.HelpBox(
-            "配置手順：GridItems の子に Item_Key を置き、Sceneで鍵のルートを移動してください。ドラッグを離すとセル中央にスナップし、Grid Positionも更新されます。\n" +
-            "配置できないセルへ移動すると元のセルに戻ります。Grid Position はワールド座標ではなくセル番号です。床がないセルにも配置できます。",
-            MessageType.Info);
-
         using (new EditorGUI.DisabledScope(true)) EditorGUILayout.ObjectField("配置先 Grid", grid, typeof(TileGrid), true);
 
         EditorGUI.BeginChangeCheck();
@@ -85,7 +79,6 @@ public sealed class GridItemEditor : Editor
         }
 
         DrawSetupStatus(item, map, grid);
-        EditorGUILayout.HelpBox("取得すると自動で非表示になります。On Collected はSEや演出などの追加処理用です。", MessageType.Info);
     }
 
     // Scene GUI
