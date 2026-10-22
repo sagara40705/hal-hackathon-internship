@@ -11,6 +11,9 @@ public class TilePlacementEffect : MonoBehaviour
     [SerializeField, Tooltip("幅1・高さ1、原点が下辺中央の光のPrefab")]
     private GameObject _edgeEffectPrefab;
 
+    [SerializeField, Tooltip("外周の一辺から出す光の粒のPrefab")]
+    private ParticleSystem _sparkEffectPrefab;
+
     [SerializeField, Min(0.01f), Tooltip("光の板の高さ")]
     private float _effectHeight = 0.2f;
 
@@ -103,6 +106,9 @@ public class TilePlacementEffect : MonoBehaviour
 
                 renderers.AddRange(edge.GetComponentsInChildren<Renderer>());
 
+                // この外周の辺から光の粒も出す
+                PlayEdgeSparks(grid, edgePosition, angle);
+
             }
             
         }
@@ -112,6 +118,42 @@ public class TilePlacementEffect : MonoBehaviour
         Destroy(effectRoot, _duration + 0.1f);
         StartCoroutine(FadeOut(effectRoot, renderers));
     }
+
+
+    /// <summary>
+    /// 外周の一辺に光の粒を生成する
+    /// </summary>>
+    private void PlayEdgeSparks(TileGrid grid, Vector3 localPosition, float angle)
+    {
+        if (_sparkEffectPrefab == null)
+            return;
+
+        // 輪郭の親とは別に生成し、輪郭が消えた後も粒を残す
+        ParticleSystem sparks = Instantiate(
+            _sparkEffectPrefab,
+            grid.transform,
+            false
+        );
+
+        // 輪郭と同じ位置・向きに配置する
+        sparks.transform.localPosition = localPosition + Vector3.up * 0.02f;
+        sparks.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+        sparks.transform.localScale = Vector3.one;
+
+        // 粒が出る範囲を一マスの幅に合わせる。
+        // 両端を少し開け、角で粒が密集しすぎないようにする。
+        var shape = sparks.shape;
+        shape.scale = new Vector3(
+            grid.TileSize * 0.85f,
+            0.02f,
+            grid.TileSize * 0.06f
+        );
+
+        // 位置と犯意を設定してから、一度だけ再生する。
+        sparks.Play();
+
+    }
+
 
 
     /// <summary>
