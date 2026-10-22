@@ -85,21 +85,6 @@ public class FlyingObject: MonoBehaviour
 
     private EnemyHP FindEnemyHPAtTarget()
     {
-        Collider[] hits = Physics.OverlapSphere(
-            targetPosition, 1f
-        );
-
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag("Enemy"))
-            {
-                EnemyHP hp = hit.GetComponentInParent<EnemyHP>();
-
-                if (hp != null)
-                    return hp;
-            }
-        }
-
-        return null;
+        return FindAnyObjectByType<EnemyHP>();
     }
 }

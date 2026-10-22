@@ -238,6 +238,8 @@ public class TileGrid : MonoBehaviour
         if (!RemoveTile(group))
             return false;
 
+        PlayBreakEffect(group);
+
         Destroy(group.gameObject);
         return true;
     }
