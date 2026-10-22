@@ -11,6 +11,12 @@ public class FlyingObject: MonoBehaviour
     public float arcHeight = 3f;
     public int damage = 10;
 
+    [SerializeField, Tooltip("弾エフェクト")]
+    private ParticleSystem _bulletEffect;
+
+    [SerializeField, Tooltip("ヒットエフェクト")]
+    private GameObject _hitEffect;
+
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private float elapsedTime;
@@ -33,7 +39,7 @@ public class FlyingObject: MonoBehaviour
         elapsedTime = 0f;
         launched = true;
 
-        Destroy(gameObject, flightDuration + 2f);
+        Destroy(gameObject, flightDuration + 5.0f);
     }
 
     void Update()
@@ -67,7 +73,9 @@ public class FlyingObject: MonoBehaviour
             if (enemyHP != null)
                 enemyHP.TakeDamage(damage);
 
-            Destroy(gameObject);
+            _bulletEffect.Stop();
+            Instantiate(_hitEffect, this.transform.position, Quaternion.identity);
+            this.enabled = false;
         }
 
        

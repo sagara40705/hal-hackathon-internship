@@ -59,7 +59,8 @@ public class BreakableTile : MonoBehaviour
         }
 
         // Destroyだけではグリッドの登録が残り、再配置できなくなる。
-        grid.RemoveTile(group);
+        if (grid != null && grid.RemoveTile(group))
+            grid.PlayBreakEffect(group);
         if (player != null && player.IsTileReserved(group.GridPosition + cell.LocalPosition))
             player.Damage();
 

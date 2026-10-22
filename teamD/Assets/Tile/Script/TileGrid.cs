@@ -19,6 +19,9 @@ public class TileGrid : MonoBehaviour
     [SerializeField, Tooltip("配置可能なグリッド座標")]
     private List<Vector2Int> _placementPositions = new();
 
+    [SerializeField, Tooltip("ギズモを表示")]
+    private bool _drawGizmos = true;
+
     private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
 
     // --- 新しく追加 ---
@@ -298,6 +301,9 @@ public class TileGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!_drawGizmos)
+            return;
+
         if (_tileSize <= 0.0f)
             return;
 
@@ -322,7 +328,6 @@ public class TileGrid : MonoBehaviour
         }
     }
 
-    // --- 新しく追加 ---
     /// <summary>
     /// 指定したTileGroupの形に沿って設置エフェクトを再生する
     /// </summary>>
@@ -332,4 +337,12 @@ public class TileGrid : MonoBehaviour
             _placementEffect.Play(group, this);
     }
 
+    // タイル破壊演出
+    // 制作: sagara
+    public event System.Action<TileGroup> BreakEffectRequested;
+
+    public void PlayBreakEffect(TileGroup group)
+    {
+        BreakEffectRequested?.Invoke(group);
+    }
 }
