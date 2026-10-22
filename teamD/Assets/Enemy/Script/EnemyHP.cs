@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -13,6 +14,9 @@ public class EnemyHP : MonoBehaviour
 
     [Header("HPバー")]
     public Slider hpSlider;
+
+    [SerializeField, Tooltip("Enemyが倒されたときに呼ばれるイベント")]
+    private UnityEvent _onDestroy;
 
     void Start()
     {
@@ -46,6 +50,7 @@ public class EnemyHP : MonoBehaviour
         if (currentHP <= 0)
         {
             Destroy(gameObject);
+            _onDestroy?.Invoke();
         }
     }
 
