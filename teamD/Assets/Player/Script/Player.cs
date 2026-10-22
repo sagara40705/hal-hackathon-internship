@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
 			OnFall();
 			return;
 		}
+		NotifyCellArrived();
 		cell.OnEnterPlayer(this);
 	}
 
@@ -117,6 +118,7 @@ public class Player : MonoBehaviour
 		}
 
 		// セルの効果を発動
+		NotifyCellArrived();
 		cell.OnEnterPlayer(this);
 	}
 
@@ -209,7 +211,10 @@ public class Player : MonoBehaviour
             if (cell == null)
                 OnFall();
             else
+            {
+                NotifyCellArrived();
                 cell.OnEnterPlayer(this);
+            }
         }
         finally
         {
@@ -255,6 +260,7 @@ public class Player : MonoBehaviour
             // 座標を移動し、到着イベントを発火する
             _currentPosition = destination;
             transform.position = _tileGrid.GridToWorld(destination);
+            NotifyCellArrived();
             cell.OnEnterPlayer(this);
         }
         finally
@@ -262,5 +268,28 @@ public class Player : MonoBehaviour
             _isProcessingMove = false;
         }
     }
+    // ============================
+
+    // #9-stage-Item(sagara)
+    // ============================
+    // アイテム取得用の到着通知。既存の移動・床判定・セル効果は各関数に残す。
+    public TileGrid Grid => _tileGrid;
+    public event System.Action<Player, Vector2Int> CellArrived;
+
+    // セル到着通知を発火する。床の存在を確認できた到着箇所からだけ呼び出す。
+    private void NotifyCellArrived()
+    {
+        // 床の存在を確認できた到着箇所からだけ呼び出す。
+        if (!_isGameOver)
+            CellArrived?.Invoke(this, _currentPosition);
+    }
+
+    // Playerを停止させる
+    public void Stop()
+    {
+        _isGameOver = true;
+        _isMoving = false;
+    }
+
     // ============================
 }
