@@ -28,16 +28,19 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("被弾時のイベント")]
     private UnityEvent _onDamageEvent;
 
+  
+
     private Vector2Int _currentPosition;        // 現在のグリッド座標
 	private Vector2Int _nextPosition;           // 次のグリッド座標
 	private Vector2Int _direction;              // 移動方向
 
 	private float _startTimer;                  // 開始時の遅延タイマー
 
-	private bool _isMoving;						// 移動中フラグ
-	private bool _isGameOver;                   // ゲームオーバーフラグ
+	private bool _isMoving;                     // 移動中フラグ
+    private bool _isGameOver;                   // ゲームオーバーフラグ
 
-	public Vector2Int CurrnetPosition => _currentPosition;
+
+    public Vector2Int CurrnetPosition => _currentPosition;
 	public Vector2Int Direction => _direction;
 
 
@@ -93,9 +96,9 @@ public class Player : MonoBehaviour
 	private void UpdateMove()
 	{
 		Vector3 targetPosition = _tileGrid.GridToWorld(_nextPosition);
-
-		// 次のマスへ移動
-		transform.position = Vector3.MoveTowards(
+     
+        // 次のマスへ移動
+        transform.position = Vector3.MoveTowards(
 			transform.position,
 			targetPosition,
 			_moveSpeed * Time.deltaTime
