@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.WSA;
-using static UnityEngine.GraphicsBuffer;
+//using UnityEngine.WSA;
+//using static UnityEngine.GraphicsBuffer;
 /// <summary>
 /// TriggerObjectで指定した物が、敵に向かって飛んでいきダメージを与える
 /// 作成者：牛田大翔
