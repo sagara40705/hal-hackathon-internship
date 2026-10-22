@@ -1525,8 +1525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e6edb5b919ed242b8db98750acac51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePlacementEffect
-  cellEffectPrefab: {fileID: 2155357423816782595, guid: 341278f10c1ee51469d1be3fe5d9b05f, type: 3}
-  surfaceOffset: 0.02
+  _edgeEffectPrefab: {fileID: 3562233178002230849, guid: 31663f5019f72304a90504749292ed41, type: 3}
+  _effectHeight: 0.3
+  _surfaceHeight: -0.52
+  _duration: 0.4
 --- !u!1 &1959718511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,63 +1790,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
---- !u!1001 &4283239779299471908
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2221006964584181117, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3562233178002230849, guid: 31663f5019f72304a90504749292ed41, type: 3}
-      propertyPath: m_Name
-      value: VFB_TilePlacementEdge
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 31663f5019f72304a90504749292ed41, type: 3}
 --- !u!1001 &8611592222170071589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1899,7 +1844,19 @@ PrefabInstance:
       objectReference: {fileID: 1650181587}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _onGameOverEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1926,4 +1883,3 @@ SceneRoots:
   - {fileID: 1959718515}
   - {fileID: 1126501411}
   - {fileID: 1443696414}
-  - {fileID: 4283239779299471908}
