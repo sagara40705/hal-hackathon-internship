@@ -10,6 +10,9 @@ public class EnemyRoot : MonoBehaviour
     [SerializeField, Tooltip("敵のアクション一覧")]
     private EnemyAction[] _actions;
 
+    [SerializeField, Tooltip("開始時遅延")]
+    private float _startDelay = 5.0f;
+
     [SerializeField, Tooltip("アクション間の待機時間")]
     private float _actionInterval = 1.0f;
 
@@ -22,6 +25,8 @@ public class EnemyRoot : MonoBehaviour
         // アクションを取得
         if (_actions == null || _actions.Length == 0)
             _actions = GetComponents<EnemyAction>();
+
+        _actionTimer = _startDelay;
     }
 
     private void Update()
@@ -34,12 +39,12 @@ public class EnemyRoot : MonoBehaviour
 
             // アクション終了
             _currentAction = null;
-            _actionTimer = 0.0f;
+            _actionTimer = _actionInterval;
         }
 
         // アクション間の待機
-        _actionTimer += Time.deltaTime;
-        if (_actionTimer < _actionInterval)
+        _actionTimer -= Time.deltaTime;
+        if (_actionTimer < 0.0f)
             return;
 
         // 次のアクションを実行
@@ -66,6 +71,5 @@ public class EnemyRoot : MonoBehaviour
         int randomIndex = Random.Range(0, validActions.Count);
         _currentAction = validActions[randomIndex];
         _currentAction.StartAction();
-        _actionTimer = 0.0f;
     }
 }
