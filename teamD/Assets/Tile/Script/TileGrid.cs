@@ -317,4 +317,13 @@ public class TileGrid : MonoBehaviour
             }
         }
     }
+
+    // タイル破壊演出
+    // 制作: sagara
+    public event System.Action<TileGroup> BreakEffectRequested;
+
+    public void PlayBreakEffect(TileGroup group)
+    {
+        BreakEffectRequested?.Invoke(group);
+    }
 }
