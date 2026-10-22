@@ -1,5 +1,9 @@
 using UnityEngine;
 using System.Collections;
+/// <summary>
+/// プレイヤーが転がるスクリプト
+/// 作成者：牛田大翔
+/// </summary>
 public class Playerrolling : MonoBehaviour
 {
     [Header("転がるオブジェクト")]
