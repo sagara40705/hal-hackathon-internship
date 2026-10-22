@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8717360432738629577}
   - component: {fileID: 1607446159090343335}
   m_Layer: 0
-  m_Name: Group_Fixed_3 1
+  m_Name: Group_Fixed_Attack_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileGroup
   _isStatic: 1
+  _previewOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &6695450970742900413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,7 +57,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -64,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
       propertyPath: m_LocalRotation.w
