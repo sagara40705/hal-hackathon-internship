@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TeamD.Effects
 {
@@ -10,6 +11,11 @@ namespace TeamD.Effects
         private bool playOnEnable = true;
         [SerializeField, Tooltip("再生終了後に非アクティブにする")]
         private bool disableWhenFinished;
+        [SerializeField, Tooltip("すべてのパーティクルの再生終了時に一度呼ばれる。途中停止時には呼ばれない。")]
+        private UnityEvent onFinished = new UnityEvent();
+
+        public UnityEvent OnFinished => onFinished;
+
         private ParticleSystem[] systems;
         private bool playing;
 
@@ -76,6 +82,8 @@ namespace TeamD.Effects
                 if (system.IsAlive(false)) return;
             playing = false;
             if (disableWhenFinished) gameObject.SetActive(false);
+            // 非アクティブ化を先に済ませ、イベント側からの再生を妨げない。
+            onFinished.Invoke();
         }
     }
 }
