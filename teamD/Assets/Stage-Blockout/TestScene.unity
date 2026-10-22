@@ -1317,9 +1317,6 @@ MonoBehaviour:
   - {x: 6, y: 7}
   - {x: 6, y: 6}
   - {x: 6, y: 5}
-  - {x: 6, y: 4}
-  - {x: 6, y: 3}
-  - {x: 7, y: 3}
   - {x: 8, y: 3}
   - {x: 9, y: 3}
   - {x: 10, y: 3}
@@ -1353,6 +1350,7 @@ MonoBehaviour:
   - {x: 8, y: 17}
   - {x: 7, y: 17}
   - {x: 6, y: 17}
+  - {x: 6, y: 4}
 --- !u!4 &1650181588
 Transform:
   m_ObjectHideFlags: 0
