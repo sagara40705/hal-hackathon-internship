@@ -134,11 +134,7 @@ public class EnemyRondomAttack : EnemyAction
 
         foreach (Vector2Int pos in _targetPosList)
         {
-            TileGroup group = _tileGrid.GetTileGroup(pos);
-            if (_tileGrid.DestroyTile(pos))
-            {
-                _tileGrid.PlayBreakEffect(group);
-            }
+            _tileGrid?.DestroyTile(pos);
             _player?.TryAttack(pos);
         }
 
