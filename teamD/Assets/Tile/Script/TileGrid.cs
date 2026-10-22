@@ -19,6 +19,9 @@ public class TileGrid : MonoBehaviour
     [SerializeField, Tooltip("配置可能なグリッド座標")]
     private List<Vector2Int> _placementPositions = new();
 
+    [SerializeField, Tooltip("ギズモを表示")]
+    private bool _drawGizmos = true;
+
     private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
 
     // グリッド上の各セル
@@ -288,6 +291,9 @@ public class TileGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!_drawGizmos)
+            return;
+
         if (_tileSize <= 0.0f)
             return;
 

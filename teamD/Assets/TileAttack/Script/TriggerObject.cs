@@ -52,6 +52,7 @@ public class TriggerObject : MonoBehaviour
         if (flying != null)
         {
             flying.Launch(enemy.transform, speed);
+            Debug.Log("", enemy);
         }
         else
         {
