@@ -976,6 +976,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hold_TileUI
       objectReference: {fileID: 0}
+    - target: {fileID: 566749187251482168, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1231546812669182764, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: _tilePreviewSlot
       value: 
@@ -1667,6 +1671,10 @@ PrefabInstance:
     - target: {fileID: 4141353722140965948, guid: 71be7a15268a27c44907c3764f0ed976, type: 3}
       propertyPath: m_Name
       value: Preview
+      objectReference: {fileID: 0}
+    - target: {fileID: 4141353722140965948, guid: 71be7a15268a27c44907c3764f0ed976, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6113878624391706364, guid: 71be7a15268a27c44907c3764f0ed976, type: 3}
       propertyPath: m_LocalPosition.x
