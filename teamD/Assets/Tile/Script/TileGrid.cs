@@ -24,6 +24,11 @@ public class TileGrid : MonoBehaviour
 
     private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
 
+    // --- 新しく追加 ---
+    [SerializeField, Tooltip("タイル設置時のエフェクト")]
+    private TilePlacementEffect _placementEffect;
+    // ------------------
+
     // グリッド上の各セル
     private readonly Dictionary<Vector2Int, TileCell> _cells = new();
 
@@ -213,6 +218,11 @@ public class TileGrid : MonoBehaviour
             Destroy(instance);
             return false;
         }
+
+        //--- 新しく追加 ---
+        PlayPlacementEffect(group);
+        //------------------
+
         return true;
     }
 
@@ -316,6 +326,15 @@ public class TileGrid : MonoBehaviour
                 );
             }
         }
+    }
+
+    /// <summary>
+    /// 指定したTileGroupの形に沿って設置エフェクトを再生する
+    /// </summary>>
+    public void PlayPlacementEffect(TileGroup group)
+    {
+        if (_placementEffect != null)
+            _placementEffect.Play(group, this);
     }
 
     // タイル破壊演出

@@ -183,8 +183,12 @@ public class TileGridController : MonoBehaviour
 
 		if (canPlace && _tileGrid.SetTile(_selectedGroup, _targetPosition))
 		{
+            //--- 新しく追加 ---
+            _tileGrid.PlayPlacementEffect(_selectedGroup);
+            //------------------
+
             // 新規配置時の処理
-            if( _dragType == DragType.PLACE)
+            if ( _dragType == DragType.PLACE)
             {
                 _selectedGroup.transform.parent = _tileGrid.transform;
                 _selectedGroup.SetPlaced();
