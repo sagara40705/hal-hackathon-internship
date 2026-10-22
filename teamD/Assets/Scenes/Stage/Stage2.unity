@@ -297,11 +297,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569756390417488449, guid: e86d35966c0b4a059a2c6f01bcdf535e, type: 3}
       propertyPath: _moveSpeed
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6566784583204965015, guid: e86d35966c0b4a059a2c6f01bcdf535e, type: 3}
       propertyPath: _moveSpeed
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7311764058634754372, guid: e86d35966c0b4a059a2c6f01bcdf535e, type: 3}
       propertyPath: m_Name
@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: _tileGrid
       value: 
       objectReference: {fileID: 1209963418}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _moveSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1

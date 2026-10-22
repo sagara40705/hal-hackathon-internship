@@ -1431,6 +1431,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 160913306765504706, guid: 3a489b444c179b94184b9bb65d844d83, type: 3}
+      propertyPath: maxHP
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 160913306765504706, guid: 3a489b444c179b94184b9bb65d844d83, type: 3}
       propertyPath: hpSlider
       value: 
       objectReference: {fileID: 926808034}
