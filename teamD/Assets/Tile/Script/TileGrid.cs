@@ -314,14 +314,10 @@ public class TileGrid : MonoBehaviour
 
     // タイル破壊演出
     // 制作: sagara
-    [SerializeField, Tooltip("タイル破壊演出")]
-    private TileBreakEffectPlayer _breakEffectPlayer;
+    public event System.Action<TileGroup> BreakEffectRequested;
 
     public void PlayBreakEffect(TileGroup group)
     {
-        if (_breakEffectPlayer != null)
-            _breakEffectPlayer.Play(group);
-        else
-            Debug.LogWarning("TileBreakEffectPlayerが設定されていません。");
+        BreakEffectRequested?.Invoke(group);
     }
 }

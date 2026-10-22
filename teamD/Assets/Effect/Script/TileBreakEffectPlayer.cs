@@ -3,6 +3,25 @@ using UnityEngine;
 /// <summary>破壊されたセルの破片を、元のタイルから独立して再生する。</summary>
 public class TileBreakEffectPlayer : MonoBehaviour
 {
+    [SerializeField, Tooltip("破壊演出イベントの購読先")]
+    private TileGrid _tileGrid;
+
+    private TileGrid _subscribedGrid;
+
+    private void OnEnable()
+    {
+        _subscribedGrid = _tileGrid;
+        if (_subscribedGrid != null)
+            _subscribedGrid.BreakEffectRequested += Play;
+    }
+
+    private void OnDisable()
+    {
+        if (_subscribedGrid != null)
+            _subscribedGrid.BreakEffectRequested -= Play;
+        _subscribedGrid = null;
+    }
+
     [SerializeField, Range(1, 32), Tooltip("セルごとの破片の数")]
     private int _fragmentsPerCell = 10;
 
