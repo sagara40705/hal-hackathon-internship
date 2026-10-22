@@ -1080,6 +1080,7 @@ GameObject:
   - component: {fileID: 1209963419}
   - component: {fileID: 1209963418}
   - component: {fileID: 1209963417}
+  - component: {fileID: 1209963420}
   m_Layer: 0
   m_Name: TileGrid
   m_TagString: Untagged
@@ -1464,6 +1465,7 @@ MonoBehaviour:
   - {x: 17, y: 21}
   - {x: 18, y: 22}
   _drawGizmos: 1
+  _placementEffect: {fileID: 1209963420}
 --- !u!4 &1209963419
 Transform:
   m_ObjectHideFlags: 0
@@ -1482,6 +1484,23 @@ Transform:
   - {fileID: 1109450085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1209963420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209963416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e6edb5b919ed242b8db98750acac51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TilePlacementEffect
+  _edgeEffectPrefab: {fileID: 3562233178002230849, guid: 31663f5019f72304a90504749292ed41, type: 3}
+  _sparkEffectPrefab: {fileID: 1428802360921463696, guid: 036c460c66dafcf40bcc9af3879b4d82, type: 3}
+  _effectHeight: 0.3
+  _surfaceHeight: -0.52
+  _duration: 0.4
 --- !u!1 &1499414731
 GameObject:
   m_ObjectHideFlags: 0
