@@ -2,66 +2,83 @@ using UnityEngine;
 using System.Collections;
 public class Playerrolling : MonoBehaviour
 {
-    [Header("転がる設定")]
-    [SerializeField] private float rollDuration = 0.3f;
+    [Header("転がるオブジェクト")]
+    [SerializeField] private Transform rollingObject;
 
+    [Header("転がる設定")]
     [SerializeField] private float tileSize = 1f;
 
-    private bool isRolling = false;
+    [Header("立方体の一辺の長さ")]
+    [SerializeField] private float cubeSize = 1f;
 
-    public bool IsRolling => isRolling;
+    private Vector3 previousPosition;
+    private Vector3 initialLocalPosition;
 
-    // 指定方向に1マス転がる
-    public void Roll(Vector3 direction)
+    // 現在の1マス内での回転角度
+    private float currentAngle = 0f;
+
+    private void Start()
     {
-        if (isRolling)
-            return;
+        previousPosition = transform.position;
 
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude < 0.001f)
-            return;
-
-        StartCoroutine(RollCoroutine(direction.normalized));
+        if (rollingObject != null)
+        {
+            initialLocalPosition = rollingObject.localPosition;
+        }
     }
 
-    private IEnumerator RollCoroutine(Vector3 direction)
+    private void LateUpdate()
     {
-        isRolling = true;
+        if (rollingObject == null || tileSize <= 0f)
+            return;
 
-        // 転がる方向に対する回転軸
-        Vector3 axis = Vector3.Cross(
-            Vector3.up,
-            direction
-        );
+        // 前フレームからの移動量
+        Vector3 movement =
+            transform.position - previousPosition;
 
-        // 接地している辺を支点にする
-        Vector3 pivot = transform.position
-            + direction * (tileSize / 2f)
-            - Vector3.up * (tileSize / 2f);
+        movement.y = 0f;
 
-        float rotatedAngle = 0f;
+        float distance = movement.magnitude;
 
-        while (rotatedAngle < 90f)
+        if (distance > 0.0001f)
         {
-            float angle = Mathf.Min(
-                90f - rotatedAngle,
-                90f / Mathf.Max(rollDuration, 0.01f)
-                    * Time.deltaTime
+            // 移動距離に応じた回転角度
+            float deltaAngle =
+                distance / tileSize * 90f;
+
+            // 回転軸
+            Vector3 axis = Vector3.Cross(
+                Vector3.up,
+                movement.normalized
             );
 
-            transform.RotateAround(
-                pivot,
+            // 回転
+            rollingObject.Rotate(
                 axis,
-                angle
+                deltaAngle,
+                Space.World
             );
 
-            rotatedAngle += angle;
+            // 現在の回転角度
+            currentAngle =
+                (currentAngle + deltaAngle) % 90f;
 
-            yield return null;
+            // 回転途中の持ち上げ量
+            float rad = currentAngle * Mathf.Deg2Rad;
+
+            float heightOffset =
+                cubeSize * 0.5f *
+                (Mathf.Abs(Mathf.Cos(rad)) +
+                 Mathf.Abs(Mathf.Sin(rad)) - 1f);
+
+            // めり込み防止
+            Vector3 localPos = initialLocalPosition;
+            localPos.y += heightOffset;
+
+            rollingObject.localPosition = localPos;
         }
 
-        isRolling = false;
+        previousPosition = transform.position;
     }
 }
 

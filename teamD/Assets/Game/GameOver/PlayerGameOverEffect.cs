@@ -69,7 +69,7 @@ public class PlayerGameOverEffect : MonoBehaviour
 			_model.Rotate(
 				Vector3.forward,
 				_rotationSpeed * deltaTime,
-				Space.Self
+				Space.World
 			);
 
 			// モデルの縮小
