@@ -1526,6 +1526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePlacementEffect
   _edgeEffectPrefab: {fileID: 3562233178002230849, guid: 31663f5019f72304a90504749292ed41, type: 3}
+  _sparkEffectPrefab: {fileID: 1428802360921463696, guid: 036c460c66dafcf40bcc9af3879b4d82, type: 3}
   _effectHeight: 0.3
   _surfaceHeight: -0.52
   _duration: 0.4
