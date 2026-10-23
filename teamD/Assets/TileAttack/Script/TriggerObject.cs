@@ -30,9 +30,13 @@ public class TriggerObject : MonoBehaviour
             return;
         }
 
-        // 発射位置を決める
-        Vector3 position = spawnPoint != null
-            ? spawnPoint.position
+        // 大砲が指定されている場合は砲口から発射する。
+        CannonFireAnimation cannon = spawnPoint != null
+            ? spawnPoint.GetComponentInParent<CannonFireAnimation>()
+            : null;
+        Transform shotOrigin = cannon != null ? cannon.Muzzle : spawnPoint;
+        Vector3 position = shotOrigin != null
+            ? shotOrigin.position
             : transform.position;
 
         // 攻撃オブジェクトを生成
@@ -48,6 +52,8 @@ public class TriggerObject : MonoBehaviour
         if (flying != null)
         {
             flying.Launch(enemy.transform, speed);
+            if (cannon != null)
+                cannon.PlayFire();
         }
         else
         {
