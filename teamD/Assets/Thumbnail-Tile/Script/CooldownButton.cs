@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,37 +9,90 @@ using UnityEngine.UI;
 /// </summary>
 public class CooldownButton : MonoBehaviour
 {
-    [SerializeField] private Button button;
-    [SerializeField, Min(0f)] private float cooldownSeconds = 5f;
-    [SerializeField] private UnityEvent onPressed = new UnityEvent();
+    [SerializeField, Tooltip("操作する補充ボタン")]
+    private Button _button;
 
-    private bool isCoolingDown;
+    [SerializeField, Min(0f), Tooltip("再び押せるまでの秒数")]
+    private float _cooldownSeconds = 5f;
+
+    [SerializeField, Tooltip("ボタンを押したときに実行する処理")]
+    private UnityEvent _onPressed = new UnityEvent();
+
+    [SerializeField, Tooltip("ボタン自身についてるImage")]
+    private Image _buttonImage;
+
+    private bool _isCoolingDown;
+
+
+    private void Awake()
+    {
+        // Imageが未設定なら、指定されたボタンから取得する
+        if(_buttonImage == null && _button != null)
+            _buttonImage = _button.GetComponent<Image>();
+
+        // 起動時は満タンにする
+        if (_buttonImage != null)
+            _buttonImage.fillAmount = 1f;
+    }
 
     // ButtonのOnClickから呼び出す
     public void Press()
     {
-        if (isCoolingDown || button == null)
+        if (_isCoolingDown || _button == null)
             return;
 
-        isCoolingDown = true;
-        button.interactable = false;
+        _isCoolingDown = true;
+        _button.interactable = false;
+
+        // 押した瞬間にボタン画像を空にする
+        if (_buttonImage != null)
+            _buttonImage.fillAmount = 0f;
 
         //ボタンを押したときの処理を実行する
-        onPressed.Invoke();
+        _onPressed.Invoke();
 
         StartCoroutine(CooldownRoutine());
 
 
     }
 
-    // クールダウン終了後にボタンを再び有効にする
+    /// <summary>
+    /// 時間の経過に合わせて、ボタン画像を0から1へ戻す
+    /// </summary>    
     private IEnumerator CooldownRoutine()
     {
-        // ゲームが一時停止していても時間を数える
-        yield return new WaitForSecondsRealtime(cooldownSeconds);
+        float duration = Mathf.Max(0f, _cooldownSeconds);
+        float startTime = Time.realtimeSinceStartup;
 
-        isCoolingDown = false;
-        button.interactable = true;
+        if(duration > 0f)
+        {
+            while(true)
+            {
+                // ゲームの一時停止中も経過時間を数える
+                float elapsed = Time.realtimeSinceStartup - startTime;
+
+                if (elapsed >= duration)
+                    break;
+
+                // 経過時間に応じて、カラカラ満タンへ戻す
+                if(_buttonImage != null)
+                {
+                    _buttonImage.fillAmount = Mathf.Clamp01(elapsed / duration);
+                }
+
+                yield return null;
+              
+            }
+        }
+
+        // 終了時は確実に満タンにする
+        if (_buttonImage != null)
+            _buttonImage.fillAmount = 1f;
+
+        _isCoolingDown = false;
+
+        if (_button != null)
+            _button.interactable = true;
 
     }
 
