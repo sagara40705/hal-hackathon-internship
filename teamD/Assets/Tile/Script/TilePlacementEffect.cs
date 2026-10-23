@@ -26,6 +26,9 @@ public class TilePlacementEffect : MonoBehaviour
     [SerializeField, Min(0.01f), Tooltip("光の板の高さ")]
     private float _sparkHeight = 0.2f;
 
+    [SerializeField, Tooltip("外周に沿って広がる波紋エフェクト")]
+    private TileOutlineWave _outlineWave;
+
     // Shader GraphのOpacityプロパティを指定する
     private static readonly int OpacityId = Shader.PropertyToID("_Opacity");
 
@@ -120,6 +123,11 @@ public class TilePlacementEffect : MonoBehaviour
         // 生成したエフェクトが残らないようにする。
         Destroy(effectRoot, _duration + 0.1f);
         StartCoroutine(FadeOut(effectRoot, renderers));
+
+        if(_outlineWave != null)
+        {
+            _outlineWave.Play(group, grid, _surfaceHeight + 0.01f);
+        }
     }
 
 
