@@ -90,13 +90,16 @@ public class TileGridController : MonoBehaviour
         if (_camera == null)
             _camera = Camera.main;
 
-        // Renderer Featureを取得
-        foreach (ScriptableRendererFeature feature in _rendererData.rendererFeatures)
+        if (_rendererData != null)
         {
-            if (feature is OutlineRendererFeature outlineFeature)
+            // Renderer Featureを取得
+            foreach (ScriptableRendererFeature feature in _rendererData.rendererFeatures)
             {
-                _outlineRendererFeature = outlineFeature;
-                break;
+                if (feature is OutlineRendererFeature outlineFeature)
+                {
+                    _outlineRendererFeature = outlineFeature;
+                    break;
+                }
             }
         }
     }
