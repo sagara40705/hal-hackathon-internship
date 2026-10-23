@@ -8,6 +8,9 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class TileGridController : MonoBehaviour
 {
+	/// <summary>タイルをドラッグしているか(sagara)</summary>
+	public bool IsDragging => _selectedGroup != null;
+
 	enum DragType
 	{
 		MOVE,		// 移動
