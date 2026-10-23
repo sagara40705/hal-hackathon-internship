@@ -10,11 +10,14 @@ using UnityEngine.Rendering.Universal;
 /// </summary>
 public class TileGridController : MonoBehaviour
 {
-    enum DragType
-    {
-        MOVE,       // 移動
-        PLACE       // 配置
-    }
+	/// <summary>タイルをドラッグしているか(sagara)</summary>
+	public bool IsDragging => _selectedGroup != null;
+
+	enum DragType
+	{
+		MOVE,		// 移動
+		PLACE		// 配置
+	}
 
     [SerializeField, Tooltip("操作に使用するカメラ")]
     private Camera _camera;
