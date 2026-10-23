@@ -163,13 +163,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21966603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6679245, g: 0.6679245, b: 0.6679245, a: 1}
+  m_Color: {r: 0.4490565, g: 0.4490565, b: 0.4490565, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -976,7 +976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2032069114267427117, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: m_FillAmount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2032069114267427117, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: m_FillOrigin
@@ -1094,6 +1094,10 @@ PrefabInstance:
       propertyPath: _buttonImage
       value: 
       objectReference: {fileID: 617450617}
+    - target: {fileID: 7900283247766282193, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
+      propertyPath: _completionEffect
+      value: 
+      objectReference: {fileID: 617450619}
     - target: {fileID: 7900283247766282193, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.size
       value: 1

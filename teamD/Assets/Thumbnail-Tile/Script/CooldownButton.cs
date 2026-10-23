@@ -20,6 +20,9 @@ public class CooldownButton : MonoBehaviour
     [SerializeField, Tooltip("クールタイムを表示するImage")]
     private Image _buttonImage;
 
+    [SerializeField, Tooltip("クールタイム完了時に再生するエフェクト")]
+    private ButtonClickEffect _completionEffect;
+
     private bool _isCoolingDown;
 
 
@@ -29,9 +32,9 @@ public class CooldownButton : MonoBehaviour
         if(_buttonImage == null && _button != null)
             _buttonImage = _button.GetComponent<Image>();
 
-        // 起動時は満タンにする
+        // 起動時は空にする
         if (_buttonImage != null)
-            _buttonImage.fillAmount = 1f;
+            _buttonImage.fillAmount = 0f;
 
         if(_button != null)
             _button.interactable = false;
@@ -86,13 +89,19 @@ public class CooldownButton : MonoBehaviour
             yield return null;
 
         }
-        
 
-        // 終了時は確実に満タンにする
+
+        // 終了時は確実に満タンにする。
         if (_buttonImage != null)
-            _buttonImage.fillAmount = 1f;
+            _buttonImage.fillAmount = 0f;
 
         _isCoolingDown = false;
+
+        // サムネイルを補充する。
         onCompleted?.Invoke();
+
+        // 満タンになったことを知らせるエフェクトを再生する。
+        if (_completionEffect != null)
+            _completionEffect.Play();
     }
 }
