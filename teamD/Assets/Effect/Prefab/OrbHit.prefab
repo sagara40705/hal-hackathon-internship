@@ -9809,7 +9809,7 @@ GameObject:
   - component: {fileID: 2561178806557859912}
   - component: {fileID: 6705423407349021838}
   m_Layer: 0
-  m_Name: VFX_OrbHit
+  m_Name: OrbHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

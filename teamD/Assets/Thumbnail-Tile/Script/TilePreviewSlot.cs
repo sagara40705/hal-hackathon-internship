@@ -24,7 +24,7 @@ public class TilePreviewSlot : MonoBehaviour
         Destroy(_previewObject);
 
         _previewObject = Instantiate(obj, transform);
-        _previewObject.transform.localPosition = -offset;
+        _previewObject.transform.localPosition = offset;
         _previewObject.transform.localRotation = Quaternion.identity;
         SetLayerHierarchy(_previewObject, LayerMask.NameToLayer(_previewLayerName));
     }

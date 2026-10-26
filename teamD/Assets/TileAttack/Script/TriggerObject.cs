@@ -14,8 +14,11 @@ public class TriggerObject : MonoBehaviour
     [Header("発射速度")]
     public float speed = 10f;
 
+    private bool hasTriggered = false;
+
     public void OnEnterPlayer(Player player)
     {
+        hasTriggered = true;
 
         // 敵を探す
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -23,6 +26,7 @@ public class TriggerObject : MonoBehaviour
         if (enemy == null)
         {
             Debug.Log("Enemyタグの敵が見つかりません");
+            hasTriggered = false;
             return;
         }
 

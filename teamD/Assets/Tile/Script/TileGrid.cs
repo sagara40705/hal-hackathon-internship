@@ -19,9 +19,6 @@ public class TileGrid : MonoBehaviour
     [SerializeField, Tooltip("配置可能なグリッド座標")]
     private List<Vector2Int> _placementPositions = new();
 
-    [SerializeField, Tooltip("配置可能範囲の外周エフェクト")]
-    private PlacementBoundaryEffect _placementBoundaryEffect;
-
     [SerializeField, Tooltip("ギズモを表示")]
     private bool _drawGizmos = true;
 
@@ -58,10 +55,7 @@ public class TileGrid : MonoBehaviour
 				Debug.LogWarning($"タイルグループの登録に失敗: {group.name}", group);
 			}
 		}
-
-        // 配置可能範囲の外周エフェクトを更新
-        RefreshPlacementBoundary();
-    }
+	}
 
 	// ワールド座標をグリッド座標に変換
 	public Vector2Int WorldToGrid(Vector3 worldPosition)
@@ -352,16 +346,5 @@ public class TileGrid : MonoBehaviour
     public void PlayBreakEffect(TileGroup group)
     {
         BreakEffectRequested?.Invoke(group);
-    }
-
-    private void RefreshPlacementBoundary()
-    {
-        if (_placementBoundaryEffect == null)
-            return;
-
-        float halfWidth = (_gridSize.x - 1) * _tileSize * 0.5f;
-        float halfHeight = (_gridSize.y - 1) * _tileSize * 0.5f;
-        Vector3 offset = new Vector3(-halfWidth, 0.0f, -halfHeight);
-        _placementBoundaryEffect.Rebuild(_placementPositions, offset, _tileSize);
     }
 }
