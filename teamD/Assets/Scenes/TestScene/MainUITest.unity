@@ -754,6 +754,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 714685412}
     m_Modifications:
+    - target: {fileID: 267186275807465704, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 69140069e2b2cf54f8fa06d44f87e224, type: 2}
     - target: {fileID: 469552155477113341, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: _tilePreviewSlot
       value: 
@@ -766,10 +770,18 @@ PrefabInstance:
       propertyPath: _tilePreviewSlot
       value: 
       objectReference: {fileID: 60279059}
+    - target: {fileID: 1451925991198763577, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 7b22751d0e045e44287939ee80a03a10, type: 2}
     - target: {fileID: 2966438130901208792, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: _tilePreviewSlot
       value: 
       objectReference: {fileID: 60279060}
+    - target: {fileID: 3178402729893308365, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: dd8b1ffb729fd8b4988a514bdcd2c0dc, type: 2}
     - target: {fileID: 5294354333347252302, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: _tileGridController
       value: 
@@ -800,7 +812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6734536202100346524, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 400
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 6734536202100346524, guid: 4b44eaa99e268ea4cbf1849d843c189c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1762,6 +1774,7 @@ GameObject:
   - component: {fileID: 1650181587}
   - component: {fileID: 1650181586}
   - component: {fileID: 1650181589}
+  - component: {fileID: 1650181590}
   m_Layer: 0
   m_Name: TileGrid
   m_TagString: Untagged
@@ -2145,6 +2158,24 @@ MonoBehaviour:
   _effectHeight: 0.2
   _surfaceHeight: -0.52
   _duration: 0.4
+  _sparkHeight: 0.2
+  _outlineWave: {fileID: 1650181590}
+--- !u!114 &1650181590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650181585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef63c3c148f6524b933ae4335063c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileOutlineWave
+  _waveMaterial: {fileID: 2100000, guid: 23a788fe14e12d6419b7dc2239144fb1, type: 2}
+  _duration: 0.45
+  _expandDistance: 0.25
+  _lineWidth: 0.035
 --- !u!1001 &1679769766
 PrefabInstance:
   m_ObjectHideFlags: 0
