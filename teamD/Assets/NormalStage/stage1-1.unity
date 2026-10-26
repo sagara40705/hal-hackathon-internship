@@ -367,11 +367,11 @@ PrefabInstance:
       objectReference: {fileID: 1209963418}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _moveSpeed
-      value: 0.85
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _startDelay
-      value: 6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   - {x: 16, y: 8}
   - {x: 16, y: 9}
   - {x: 16, y: 10}
-  _drawGizmos: 0
+  _drawGizmos: 1
   _placementEffect: {fileID: 1209963420}
 --- !u!4 &1209963419
 Transform:
