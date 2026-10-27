@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// プレイヤーの近くのタイルを攻撃するプログラム
+/// 作成者：牛田大翔
+/// </summary>
 public class EnemyActionRandam : EnemyAction
 {
     enum State
@@ -34,13 +38,13 @@ public class EnemyActionRandam : EnemyAction
     private List<Vector2Int> _targetPosList;    // 攻撃対象の座標リスト
     private State _state = State.NONE;          // 現在の状態
     private float _stateTimer = 0.0f;           // タイマー
-
+    Animator animator;
     public override void StartAction()
     {
         _isAction = true;
         _state = State.STARTUP;
         _stateTimer = 0.0f;
-
+        animator = GetComponent<Animator>();
         SetTarget();
     }
 
@@ -98,8 +102,6 @@ public class EnemyActionRandam : EnemyAction
             return;
 
         // Playerの現在のマス座標を取得
-        // ※ GridPositionは仮の名前です
-        // 実際のPlayerクラスのプロパティ名に変更してください
         Vector2Int playerPos = _player.CurrnetPosition;
 
         List<Vector2Int> candidates = new();
@@ -132,6 +134,7 @@ public class EnemyActionRandam : EnemyAction
 
         for (int i = 0; i < count; i++)
         {
+           
             int randomIndex = Random.Range(i, candidates.Count);
 
             Vector2Int temp = candidates[i];
@@ -141,6 +144,7 @@ public class EnemyActionRandam : EnemyAction
             _targetPosList.Add(candidates[i]);
         }
 
+        animator.SetTrigger("Attack");
         // 攻撃予告を表示
         _attackIndicator?.ShowIndicators(_targetPosList);
     }
@@ -155,7 +159,7 @@ public class EnemyActionRandam : EnemyAction
             _tileGrid?.DestroyTile(pos);
             //_player?.TryAttack(pos);
         }
-
+     
         // 攻撃予告を非表示
         _attackIndicator?.ClearIndicators();
     }
