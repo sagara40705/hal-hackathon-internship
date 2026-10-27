@@ -628,7 +628,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 582a194e240c47a44ba78cc5ff6ecd27, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpeedMultiplier
+  m_EditorClassIdentifier: Assembly-CSharp::HightSpeedMode
   _activationKey: 51
   _speedMultiplier: 2.5
 --- !u!1 &639975039
