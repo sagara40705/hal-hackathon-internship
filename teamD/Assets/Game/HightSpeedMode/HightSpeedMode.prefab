@@ -66,6 +66,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _speedMultiplier: 2.5
+  _effectStrength: 1
+  _chromaticPixels: 12
+  _horizontalBlurPixels: 26
+  _lineStrength: 0.3
 --- !u!1 &4764339544243738276
 GameObject:
   m_ObjectHideFlags: 0

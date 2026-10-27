@@ -7,6 +7,16 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
     IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [SerializeField, Min(1f)] private float _speedMultiplier = 2.5f;
+    [Header("高速化エフェクト")]
+    [SerializeField, Range(0f, 1f)] private float _effectStrength = 1f;
+    [SerializeField, Range(0f, 20f)] private float _chromaticPixels = 12f;
+    [SerializeField, Range(0f, 32f)] private float _horizontalBlurPixels = 26f;
+    [SerializeField, Range(0f, 0.3f)] private float _lineStrength = 0.3f;
+    public static HightSpeedMode ActiveMode { get; private set; }
+    public Vector4 EffectParameters => new Vector4(_effectStrength, _chromaticPixels, _horizontalBlurPixels, _lineStrength);
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetActiveMode() => ActiveMode = null;
     private int? _pointerId;
     private bool _isHolding;
     private float _originalTimeScale;
@@ -20,6 +30,7 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
         if (!IsActive() || _pointerId.HasValue || eventData.button != PointerEventData.InputButton.Left)
             return;
         _pointerId = eventData.pointerId;
+        ActiveMode = this;
         ApplySpeed();
         SetVerticesDirty();
     }
@@ -58,6 +69,7 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
             Time.timeScale = _originalTimeScale;
         _isHolding = false;
         _pointerId = null;
+        if (ActiveMode == this) ActiveMode = null;
         SetVerticesDirty();
     }
 
