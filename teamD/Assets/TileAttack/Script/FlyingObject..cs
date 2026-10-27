@@ -20,6 +20,9 @@ public class FlyingObject: MonoBehaviour
     [SerializeField, Tooltip("アニメーションカーブ")]
     private AnimationCurve _animationCurve;
 
+    [SerializeField,Tooltip("ヒット判定を行う距離")]
+    private float _hitDistance = 1.0f;
+
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private float elapsedTime;
@@ -69,8 +72,9 @@ public class FlyingObject: MonoBehaviour
         if (direction.sqrMagnitude > 0.0001f)
             transform.rotation = Quaternion.LookRotation(direction);
 
-        // 飛行終了時に命中処理
-        if (t >= 1f)
+        // 命中処理
+        float distance = Vector3.Distance(targetPosition, position);
+        if (distance < _hitDistance)
         {
             EnemyHP enemyHP = FindEnemyHPAtTarget();
 
@@ -80,6 +84,7 @@ public class FlyingObject: MonoBehaviour
             _bulletEffect.Stop();
             Instantiate(_hitEffect, this.transform.position, Quaternion.identity);
             this.enabled = false;
+            Destroy(gameObject);
         }
 
        
