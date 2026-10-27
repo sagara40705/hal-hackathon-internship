@@ -1,37 +1,34 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// <summary>押している間だけゲーム全体を高速化する早送りUI。</summary>
+/// <summary>高速化ボタンの入力と描画。速度管理はHighSpeedControllerに委譲する。</summary>
 [DisallowMultipleComponent]
 public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
     IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
-    [SerializeField, Min(1f)] private float _speedMultiplier = 2.5f;
-    [Header("高速化エフェクト")]
-    [SerializeField, Range(0f, 1f)] private float _effectStrength = 1f;
-    [SerializeField, Range(0f, 20f)] private float _chromaticPixels = 12f;
-    [SerializeField, Range(0f, 32f)] private float _horizontalBlurPixels = 26f;
-    [SerializeField, Range(0f, 0.3f)] private float _lineStrength = 0.3f;
-    public static HightSpeedMode ActiveMode { get; private set; }
-    public Vector4 EffectParameters => new Vector4(_effectStrength, _chromaticPixels, _horizontalBlurPixels, _lineStrength);
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetActiveMode() => ActiveMode = null;
+    [SerializeField] private HighSpeedController _controller;
     private int? _pointerId;
-    private bool _isHolding;
-    private float _originalTimeScale;
-    private float _appliedTimeScale;
+    public bool CanSpeedUp => _controller != null && _controller.CanSpeedUp;
+    public bool IsSpeedModified => _controller != null && _controller.IsSpeedModified;
 
-    public bool IsSpeedModified => _isHolding && Time.timeScale > 0f
-        && Mathf.Approximately(Time.timeScale, _appliedTimeScale);
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        if (_controller != null) _controller.StateChanged += OnStateChanged;
+        OnStateChanged();
+    }
+
+    private void OnStateChanged()
+    {
+        if (_controller == null || !_controller.IsRequested) _pointerId = null;
+        SetVerticesDirty();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!IsActive() || _pointerId.HasValue || eventData.button != PointerEventData.InputButton.Left)
-            return;
+        if (!IsActive() || !CanSpeedUp || _pointerId.HasValue || eventData.button != PointerEventData.InputButton.Left) return;
+        if (!_controller.BeginSpeedUp()) return;
         _pointerId = eventData.pointerId;
-        ActiveMode = this;
-        ApplySpeed();
         SetVerticesDirty();
     }
 
@@ -45,48 +42,18 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
         if (_pointerId == eventData.pointerId) Release();
     }
 
-    private void Update()
-    {
-        if (_pointerId.HasValue) ApplySpeed();
-    }
-
-    private void ApplySpeed()
-    {
-        // ポーズやヒットストップは解除しない。
-        if (Time.timeScale <= 0f) return;
-        if (!_isHolding)
-        {
-            _originalTimeScale = Time.timeScale;
-            _appliedTimeScale = _originalTimeScale * Mathf.Max(1f, _speedMultiplier);
-            _isHolding = true;
-        }
-        Time.timeScale = _appliedTimeScale;
-    }
-
     private void Release()
     {
-        if (_isHolding && Mathf.Approximately(Time.timeScale, _appliedTimeScale))
-            Time.timeScale = _originalTimeScale;
-        _isHolding = false;
+        if (_pointerId.HasValue && _controller != null) _controller.EndSpeedUp();
         _pointerId = null;
-        if (ActiveMode == this) ActiveMode = null;
         SetVerticesDirty();
     }
 
     protected override void OnDisable()
     {
         Release();
+        if (_controller != null) _controller.StateChanged -= OnStateChanged;
         base.OnDisable();
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (!hasFocus) Release();
-    }
-
-    private void OnApplicationPause(bool paused)
-    {
-        if (paused) Release();
     }
 
     // 円の外側はクリックを通す。
@@ -107,6 +74,7 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
         Vector2 center = rect.center;
         float radius = Mathf.Min(rect.width, rect.height) * 0.5f;
         Color32 background = _pointerId.HasValue ? new Color(0.32f, 0.36f, 0.36f, 1f) : color;
+        if (!CanSpeedUp) background = new Color(0.35f, 0.35f, 0.35f, 0.4f);
         vh.AddVert(center, background, Vector2.zero);
         const int segments = 96;
         for (int i = 0; i <= segments; i++)
@@ -119,9 +87,10 @@ public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
         {
             float left = i == 0 ? -0.46f : 0.09f;
             int start = vh.currentVertCount;
-            vh.AddVert(center + new Vector2(left, 0.47f) * radius, Color.white, Vector2.zero);
-            vh.AddVert(center + new Vector2(left + 0.49f, 0f) * radius, Color.white, Vector2.zero);
-            vh.AddVert(center + new Vector2(left, -0.47f) * radius, Color.white, Vector2.zero);
+            Color iconColor = CanSpeedUp ? Color.white : new Color(1f, 1f, 1f, 0.35f);
+            vh.AddVert(center + new Vector2(left, 0.47f) * radius, iconColor, Vector2.zero);
+            vh.AddVert(center + new Vector2(left + 0.49f, 0f) * radius, iconColor, Vector2.zero);
+            vh.AddVert(center + new Vector2(left, -0.47f) * radius, iconColor, Vector2.zero);
             vh.AddTriangle(start, start + 1, start + 2);
         }
     }

@@ -3,11 +3,15 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
 
-/// <summary>Overlay UIより前にカメラ画像だけを加工するRender Graphパス。</summary>
+/// <summary>
+/// Overlay UIより前にカメラ画像だけを加工するRender Graphパス。
+/// </summary>
 public class HightSpeedRendererFeature : ScriptableRendererFeature
 {
     // 参照を保存してビルド時のShader strippingを防ぐ。
-    [SerializeField] private Shader _shader;
+    [SerializeField, Tooltip("高速化用のシェーダー")]
+    private Shader _shader;
+
     private Material _material;
     private SpeedPass _pass;
 
@@ -26,7 +30,7 @@ public class HightSpeedRendererFeature : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        var mode = HightSpeedMode.ActiveMode;
+        var mode = HighSpeedController.Active;
         var camera = renderingData.cameraData.camera;
         if (_pass == null || mode == null || !mode.IsSpeedModified || mode.EffectParameters.x <= 0f
             || camera.cameraType != CameraType.Game || !camera.CompareTag("MainCamera")) return;
@@ -53,7 +57,7 @@ public class HightSpeedRendererFeature : ScriptableRendererFeature
         public override void RecordRenderGraph(RenderGraph graph, ContextContainer frameData)
         {
             var resources = frameData.Get<UniversalResourceData>();
-            var mode = HightSpeedMode.ActiveMode;
+            var mode = HighSpeedController.Active;
             if (resources.isActiveTargetBackBuffer || mode == null || !mode.IsSpeedModified) return;
             var source = resources.activeColorTexture;
             var descriptor = graph.GetTextureDesc(source);

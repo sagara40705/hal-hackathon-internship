@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     [SerializeField, Tooltip("被弾時のイベント")]
     private UnityEvent _onDamageEvent;
 
+    [SerializeField, Tooltip("Stopによる停止時のイベント")]
+    private UnityEvent _onStoppedEvent = new();
+
   
 
     private Vector2Int _currentPosition;        // 現在のグリッド座標
@@ -292,6 +295,7 @@ public class Player : MonoBehaviour
     {
         _isGameOver = true;
         _isMoving = false;
+        _onStoppedEvent?.Invoke();
     }
 
     // ============================

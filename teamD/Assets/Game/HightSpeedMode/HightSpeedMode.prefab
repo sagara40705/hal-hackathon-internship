@@ -65,11 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  _speedMultiplier: 2.5
-  _effectStrength: 1
-  _chromaticPixels: 12
-  _horizontalBlurPixels: 26
-  _lineStrength: 0.3
+  _controller: {fileID: 817310001}
 --- !u!1 &4764339544243738276
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +75,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2436480190765152088}
+  - component: {fileID: 817310001}
   m_Layer: 5
   m_Name: HightSpeedMode
   m_TagString: Untagged
@@ -172,7 +169,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  _mode: {fileID: 4559200638150080520}
+  _controller: {fileID: 817310001}
   _cycleSeconds: 0.8
   _outlineWidth: 2
   _outlineColor: {r: 0, g: 0, b: 0, a: 0.4}
+--- !u!114 &817310001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4764339544243738276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136479c10acb4846bce56bc807623990, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::HighSpeedController
+  _speedMultiplier: 2.5
+  _effectStrength: 1
+  _chromaticPixels: 12
+  _horizontalBlurPixels: 26
+  _lineStrength: 0.3

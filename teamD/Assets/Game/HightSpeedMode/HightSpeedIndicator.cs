@@ -1,13 +1,24 @@
 using UnityEngine;
 
-/// <summary>高速化中だけ中央に表示する、入力を遮らない早送りアニメーション。</summary>
+/// <summary>
+/// 高速化中だけ中央に表示する、アニメーションUI
+/// 制作者：sagara
+/// </summary>
 [DisallowMultipleComponent]
 public class HightSpeedIndicator : UnityEngine.UI.MaskableGraphic
 {
-    [SerializeField] private HightSpeedMode _mode;
-    [SerializeField, Min(0.1f)] private float _cycleSeconds = 0.8f;
-    [SerializeField, Min(0f)] private float _outlineWidth = 2f;
-    [SerializeField] private Color _outlineColor = new Color(0f, 0f, 0f, 0.4f);
+    [SerializeField, Tooltip("高速化コントローラーへの参照")]
+    private HighSpeedController _controller;
+
+    [SerializeField, Min(0.1f), Tooltip("サイクル秒数")]
+    private float _cycleSeconds = 0.8f;
+
+    [SerializeField, Min(0f), Tooltip("アウトラインの幅")]
+    private float _outlineWidth = 2f;
+
+    [SerializeField, Tooltip("アウトラインの色")]
+    private Color _outlineColor = new Color(0f, 0f, 0f, 0.4f);
+
     private float _elapsed;
     private bool _wasVisible;
 
@@ -21,7 +32,7 @@ public class HightSpeedIndicator : UnityEngine.UI.MaskableGraphic
 
     private void LateUpdate()
     {
-        bool visible = _mode != null && _mode.isActiveAndEnabled && _mode.IsSpeedModified;
+        bool visible = _controller != null && _controller.isActiveAndEnabled && _controller.IsSpeedModified;
         if (visible)
         {
             _elapsed = _wasVisible ? _elapsed + Time.unscaledDeltaTime : 0f;
@@ -38,7 +49,7 @@ public class HightSpeedIndicator : UnityEngine.UI.MaskableGraphic
     protected override void OnPopulateMesh(UnityEngine.UI.VertexHelper vh)
     {
         vh.Clear();
-        if (_mode == null || !_mode.isActiveAndEnabled || !_mode.IsSpeedModified) return;
+        if (_controller == null || !_controller.isActiveAndEnabled || !_controller.IsSpeedModified) return;
         Rect rect = GetPixelAdjustedRect();
         float phase = _elapsed / Mathf.Max(0.1f, _cycleSeconds);
         float entrance = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(_elapsed / 0.12f));
