@@ -622,6 +622,7 @@ MonoBehaviour:
   _startupTime: 8
   _recoveryTime: 4
   _maxAttackCount: 3
+  _minTileCount: 3
   _attackRange: 3
 --- !u!4 &454976704 stripped
 Transform:

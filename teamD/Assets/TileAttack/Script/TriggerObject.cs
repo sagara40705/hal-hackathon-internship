@@ -14,11 +14,14 @@ public class TriggerObject : MonoBehaviour
     [Header("発射速度")]
     public float speed = 10f;
 
-    private bool _isActivated = true;       // 攻撃可能フラグ
+    [SerializeField, Tooltip("攻撃可能状態エフェクト")]
+    private ParticleSystem _activeEffect;
+
+    private bool _isAttackEnabled = true;       // 攻撃可能フラグ
 
     public void OnEnterPlayer(Player player)
     {
-        if (!_isActivated)
+        if (!_isAttackEnabled)
             return;
 
         // 敵を探す
@@ -55,7 +58,7 @@ public class TriggerObject : MonoBehaviour
         }
 
         // 攻撃可能フラグをリセット
-        _isActivated = false;
+        DisableAttack();
 
         TriggerObject[] triggers = FindObjectsByType<TriggerObject>(FindObjectsSortMode.None);
         foreach (TriggerObject trigger in triggers)
@@ -63,9 +66,23 @@ public class TriggerObject : MonoBehaviour
             // 自分以外のTriggerObjectの攻撃可能フラグをリセット
             if (trigger != this)
             {
-                trigger._isActivated = true;
+                trigger.EnableAttack();
             }
         }
+    }
+
+    public void DisableAttack()
+    {
+        _isAttackEnabled = false;
+        if (_activeEffect != null)
+            _activeEffect.Stop(true);
+    }
+
+    public void EnableAttack()
+    {
+        _isAttackEnabled = true;
+        if (_activeEffect != null)
+            _activeEffect.Play(true);
     }
 }
 
