@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// タイトルロゴの移動・回転中に残像を出し、
 /// 登場終了後に光沢を横切らせる。
+/// 作成者 : 酒井康佑
 /// </summary>
 public class TitleLogoEffects : MonoBehaviour
 {
