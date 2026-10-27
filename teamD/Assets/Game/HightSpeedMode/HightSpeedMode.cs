@@ -1,74 +1,116 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-/// <summary>
-/// 指定キーを押している間、ゲーム全体の時間を一定倍率で進める。
-/// 作成者：sagara
-/// </summary>
+/// <summary>押している間だけゲーム全体を高速化する早送りUI。</summary>
 [DisallowMultipleComponent]
-public class HightSpeedMode : MonoBehaviour
+public class HightSpeedMode : UnityEngine.UI.MaskableGraphic,
+    IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
-    [SerializeField, Tooltip("高速化するキー")]
-    private Key _activationKey = Key.LeftShift;
-
-    [SerializeField, Min(1f), Tooltip("キーを押している間の時間倍率")]
-    private float _speedMultiplier = 2f;
-
+    [SerializeField, Min(1f)] private float _speedMultiplier = 2.5f;
+    private int? _pointerId;
+    private bool _isHolding;
     private float _originalTimeScale;
     private float _appliedTimeScale;
-    private bool _isHolding;
 
-    // ヒットストップなどで停止中の場合はfalse。
     public bool IsSpeedModified => _isHolding && Time.timeScale > 0f
         && Mathf.Approximately(Time.timeScale, _appliedTimeScale);
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!IsActive() || _pointerId.HasValue || eventData.button != PointerEventData.InputButton.Left)
+            return;
+        _pointerId = eventData.pointerId;
+        ApplySpeed();
+        SetVerticesDirty();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (_pointerId == eventData.pointerId) Release();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_pointerId == eventData.pointerId) Release();
+    }
+
     private void Update()
     {
-        Keyboard keyboard = Keyboard.current;
-        bool isHeld = Application.isFocused && keyboard != null
-            && _activationKey != Key.None && keyboard[_activationKey].isPressed;
+        if (_pointerId.HasValue) ApplySpeed();
+    }
 
-        if (!isHeld)
-        {
-            RestoreTimeScale();
-            return;
-        }
-
-        // ポーズやヒットストップを解除しない。
-        if (Time.timeScale <= 0f)
-            return;
-
+    private void ApplySpeed()
+    {
+        // ポーズやヒットストップは解除しない。
+        if (Time.timeScale <= 0f) return;
         if (!_isHolding)
         {
             _originalTimeScale = Time.timeScale;
             _appliedTimeScale = _originalTimeScale * Mathf.Max(1f, _speedMultiplier);
             _isHolding = true;
         }
-
-        // ヒットストップから復帰した場合も、押下中は再適用する。
         Time.timeScale = _appliedTimeScale;
     }
 
-    private void OnDisable()
+    private void Release()
     {
-        RestoreTimeScale();
+        if (_isHolding && Mathf.Approximately(Time.timeScale, _appliedTimeScale))
+            Time.timeScale = _originalTimeScale;
+        _isHolding = false;
+        _pointerId = null;
+        SetVerticesDirty();
+    }
+
+    protected override void OnDisable()
+    {
+        Release();
+        base.OnDisable();
     }
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        if (!hasFocus)
-            RestoreTimeScale();
+        if (!hasFocus) Release();
     }
 
-    private void RestoreTimeScale()
+    private void OnApplicationPause(bool paused)
     {
-        if (!_isHolding)
-            return;
+        if (paused) Release();
+    }
 
-        // 別の処理による停止や時間変更は上書きしない。
-        if (Mathf.Approximately(Time.timeScale, _appliedTimeScale))
-            Time.timeScale = _originalTimeScale;
+    // 円の外側はクリックを通す。
+    public override bool Raycast(Vector2 screenPoint, Camera eventCamera)
+    {
+        if (!base.Raycast(screenPoint, eventCamera)) return false;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, eventCamera, out Vector2 local);
+        Rect rect = GetPixelAdjustedRect();
+        float radius = Mathf.Min(rect.width, rect.height) * 0.5f;
+        return (local - rect.center).sqrMagnitude <= radius * radius;
+    }
 
-        _isHolding = false;
+    // テクスチャ不要の円と二つの三角形。Prefabだけで表示できる。
+    protected override void OnPopulateMesh(UnityEngine.UI.VertexHelper vh)
+    {
+        vh.Clear();
+        Rect rect = GetPixelAdjustedRect();
+        Vector2 center = rect.center;
+        float radius = Mathf.Min(rect.width, rect.height) * 0.5f;
+        Color32 background = _pointerId.HasValue ? new Color(0.32f, 0.36f, 0.36f, 1f) : color;
+        vh.AddVert(center, background, Vector2.zero);
+        const int segments = 96;
+        for (int i = 0; i <= segments; i++)
+        {
+            float angle = i * Mathf.PI * 2f / segments;
+            vh.AddVert(center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius, background, Vector2.zero);
+            if (i > 0) vh.AddTriangle(0, i, i + 1);
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            float left = i == 0 ? -0.46f : 0.09f;
+            int start = vh.currentVertCount;
+            vh.AddVert(center + new Vector2(left, 0.47f) * radius, Color.white, Vector2.zero);
+            vh.AddVert(center + new Vector2(left + 0.49f, 0f) * radius, Color.white, Vector2.zero);
+            vh.AddVert(center + new Vector2(left, -0.47f) * radius, Color.white, Vector2.zero);
+            vh.AddTriangle(start, start + 1, start + 2);
+        }
     }
 }
