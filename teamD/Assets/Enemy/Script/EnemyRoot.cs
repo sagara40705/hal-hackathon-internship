@@ -44,7 +44,7 @@ public class EnemyRoot : MonoBehaviour
 
         // アクション間の待機
         _actionTimer -= Time.deltaTime;
-        if (_actionTimer < 0.0f)
+        if (_actionTimer > 0.0f)
             return;
 
         // 次のアクションを実行

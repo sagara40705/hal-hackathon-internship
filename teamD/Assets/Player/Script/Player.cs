@@ -25,11 +25,6 @@ public class Player : MonoBehaviour
 	[SerializeField, Tooltip("落下時のイベント")]
 	private UnityEvent _onFallEvent;
 
-    [SerializeField, Tooltip("被弾時のイベント")]
-    private UnityEvent _onDamageEvent;
-
-  
-
     private Vector2Int _currentPosition;        // 現在のグリッド座標
 	private Vector2Int _nextPosition;           // 次のグリッド座標
 	private Vector2Int _direction;              // 移動方向
@@ -145,16 +140,20 @@ public class Player : MonoBehaviour
 		return gridPosition == _currentPosition;
 	}
 
-    // プレイヤーへの攻撃処理
-    public void TryAttack(Vector2Int gridPos)
+    // 足元にタイルが存在するか判定
+    public void CheckGroundTile()
     {
         if (_isGameOver)
             return;
 
-        if (gridPos == _currentPosition)
+        if (_tileGrid == null)
+            return;
+
+        // 現在のプレイヤー位置にタイルが存在するか確認
+        if (_tileGrid.GetCell(_currentPosition) == null &&
+            _tileGrid.GetCell(_nextPosition) == null)
         {
-            _isGameOver = true;
-            _onDamageEvent?.Invoke();
+            OnFall();
         }
     }
 

@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// 敵の攻撃範囲を表示する
@@ -39,6 +40,26 @@ public class EnemyAttackIndicator : MonoBehaviour
 
             GameObject indicator = Instantiate(_indicatorPrefab, position, _tileGrid.transform.rotation, transform);
             _indicators.Add(indicator);
+        }
+    }
+
+    public void ShowIndicators(List<TileGroup> targetTiles)
+    {
+        ClearIndicators();
+
+        if (_tileGrid == null || _indicatorPrefab == null || targetTiles == null)
+            return;
+
+        // 攻撃範囲の表示オブジェクトを生成
+        foreach (TileGroup tileGroup in targetTiles)
+        {
+            if (tileGroup == null)
+                continue;
+
+            GameObject indicator = Instantiate(_indicatorPrefab, tileGroup.transform);
+            _indicators.Add(indicator);
+
+            indicator.transform.localPosition = tileGroup.PreviewOffset + Vector3.up * 0.5f;
         }
     }
 

@@ -20,19 +20,25 @@ public class EnemyRondomAttack : EnemyAction
     [SerializeField, Tooltip("タイルグリッド")]
     private TileGrid _tileGrid;
 
+    [SerializeField, Tooltip("タイルグリッドコントローラー")]
+    private TileGridController _tileDragController;
+
     [SerializeField, Tooltip("攻撃予告表示")]
     private EnemyAttackIndicator _attackIndicator;
 
     [SerializeField, Tooltip("攻撃の発生時間")]
-    private float _startupTime;
+    private float _startupTime = 5.0f;
 
     [SerializeField, Tooltip("攻撃の硬直")]
     private float _recoveryTime = 1.0f;
 
-    [SerializeField, Tooltip("攻撃するマス数")]
-    private int _attackCount = 3;
+    [SerializeField, Tooltip("攻撃する最大タイル数"), Min(0)]
+    private int _maxAttackCount = 3;
 
-    private List<Vector2Int> _targetPosList;    // 攻撃対象の座標リスト
+    [SerializeField, Tooltip("Playerを中心とした攻撃範囲（マス数）"), Min(0)]
+    private int _attackRange = 3;
+
+    private List<TileGroup> _targetTileList;    // 攻撃対象のタイルリスト
     private State _state = State.NONE;          // 現在の状態
     private float _stateTimer = 0.0f;           // タイマー
 
@@ -47,7 +53,7 @@ public class EnemyRondomAttack : EnemyAction
 
     private void Awake()
     {
-        _targetPosList = new List<Vector2Int>();
+        _targetTileList = new List<TileGroup>();
     }
 
     private void Update()
@@ -61,6 +67,7 @@ public class EnemyRondomAttack : EnemyAction
             case State.STARTUP:
                 UpdateStartUp();
                 break;
+
             case State.RECOVERY:
                 UpdateRecovery();
                 break;
@@ -93,52 +100,77 @@ public class EnemyRondomAttack : EnemyAction
     // 攻撃対象を設定
     private void SetTarget()
     {
-        _targetPosList.Clear();
+        _targetTileList.Clear();
 
-        if (_tileGrid == null)
+        if (_tileGrid == null || _player == null)
             return;
 
-        // グリッド内の全ての座標を候補として取得
-        Vector2Int gridSize = _tileGrid.GridSize;
-        List<Vector2Int> candidates = new();
-        for (int x = 0; x < gridSize.x; x++)
+        List<TileGroup> candidates = new();
+        Vector2Int playerPos = _player.CurrnetPosition;
+
+        // Playerを中心に指定範囲のタイルを取得
+        for (int x = -_attackRange; x <= _attackRange; x++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            for (int y = -_attackRange; y <= _attackRange; y++)
             {
-                if (_tileGrid.IsInPlacementArea(new Vector2Int(x, y)))
-                    candidates.Add(new Vector2Int(x, y));
+                Vector2Int targetPos = playerPos + new Vector2Int(x, y);
+                if (!_tileGrid.IsInPlacementArea(targetPos))
+                    continue;
+
+                // タイルが存在しない場合や静的タイルの場合は対象外
+                TileGroup tileGroup = _tileGrid.GetTileGroup(targetPos);
+                if (tileGroup == null || tileGroup.IsStatic)
+                    continue;
+
+                // 攻撃候補に追加
+                if (!candidates.Contains(tileGroup))
+                {
+                    candidates.Add(tileGroup);
+                }
             }
         }
 
         // 攻撃対象をランダムに選択
-        int count = Mathf.Min(_attackCount, candidates.Count);
+        int count = Mathf.Min(_maxAttackCount, candidates.Count);
         for (int i = 0; i < count; i++)
         {
             int randomIndex = Random.Range(i, candidates.Count);
 
-            Vector2Int temp = candidates[i];
+            TileGroup temp = candidates[i];
             candidates[i] = candidates[randomIndex];
             candidates[randomIndex] = temp;
 
-            _targetPosList.Add(candidates[i]);
+            _targetTileList.Add(candidates[i]);
         }
 
         // 攻撃予告を表示
-        _attackIndicator?.ShowIndicators(_targetPosList);
+        _attackIndicator?.ShowIndicators(_targetTileList);
     }
 
     private void Attack()
     {
-        if (_targetPosList == null || _targetPosList.Count == 0)
-            return;
-
-        foreach (Vector2Int pos in _targetPosList)
+        foreach (TileGroup tileGroup in _targetTileList)
         {
-            _tileGrid?.DestroyTile(pos);
-            _player?.TryAttack(pos);
+            if (tileGroup == null)
+                continue;
+
+            // タイルグリッドからタイルグループを破壊
+            if (_tileGrid != null && _tileGrid.DestroyTile(tileGroup))
+                continue;
+
+            // タイルグループが破壊できなかった場合、ドラッグ中タイルの破壊を試す
+            if (_tileDragController != null)
+            {
+                _tileDragController.DestroyDraggingTile(tileGroup);
+            }
         }
+
+        // プレイヤーの足元にタイルが存在するか確認
+        _player.CheckGroundTile();
 
         // 攻撃予告を非表示
         _attackIndicator?.ClearIndicators();
+
+        _targetTileList.Clear();
     }
 }

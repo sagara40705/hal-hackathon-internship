@@ -153,7 +153,7 @@ public class EnemyActionRandam : EnemyAction
         foreach (Vector2Int pos in _targetPosList)
         {
             _tileGrid?.DestroyTile(pos);
-            _player?.TryAttack(pos);
+            //_player?.TryAttack(pos);
         }
 
         // 攻撃予告を非表示
