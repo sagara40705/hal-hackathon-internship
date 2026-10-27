@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb44113da36a5754a9ee141302a3fc78, type: 3}
+  m_Name: StageThumbnailCaptureSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::StageThumbnailCaptureSettings
+  scenes:
+  - {fileID: 102900000, guid: 4499362c6450a1f498e29c3ec08f6068, type: 3}
+  - {fileID: 102900000, guid: f755290807619f949a8f6686f3efc402, type: 3}
+  - {fileID: 102900000, guid: 519db158239fd694da763b298cdbeb81, type: 3}
+  outputFolder: {fileID: 102900000, guid: 0c97979900d85ec4aa9d2f4291ff0a3b, type: 3}
+  width: 640
+  height: 360
+  cameraName: Main Camera
