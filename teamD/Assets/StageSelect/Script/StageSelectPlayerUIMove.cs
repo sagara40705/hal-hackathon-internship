@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 /// <summary>
 /// UIの矢印でプレイヤーが動くようになるスクリプト+マウスホイール移動
 /// 作成者：牛田大翔
@@ -19,6 +20,10 @@ public class StageSelectPlayerUIMove : MonoBehaviour
     [Header("矢印UI")]
     public GameObject leftArrowUI;
     public GameObject rightArrowUI;
+
+    [Header("ステージ画像")]
+    public Image stageImage;
+    public Sprite[] stageSprites;
 
     private int currentStageIndex = 0;
     private Coroutine moveCoroutine;
@@ -41,11 +46,11 @@ public class StageSelectPlayerUIMove : MonoBehaviour
         transform.position = stagePositions[currentStageIndex].position;
 
         UpdateArrowUI();
+        UpdateStageImage();
     }
 
     private void Update()
     {
-        // 移動中、またはマウスが使用できない場合は処理しない
         if (isMoving || Mouse.current == null)
             return;
 
@@ -53,22 +58,17 @@ public class StageSelectPlayerUIMove : MonoBehaviour
 
         if (scroll > wheelThreshold)
         {
-            // ホイール上：次のステージへ
             MoveRight();
         }
         else if (scroll < -wheelThreshold)
         {
-            // ホイール下：前のステージへ
             MoveLeft();
         }
     }
 
     public void MoveLeft()
     {
-        if (isMoving)
-            return;
-
-        if (currentStageIndex <= 0)
+        if (isMoving || currentStageIndex <= 0)
             return;
 
         currentStageIndex--;
@@ -77,10 +77,7 @@ public class StageSelectPlayerUIMove : MonoBehaviour
 
     public void MoveRight()
     {
-        if (isMoving)
-            return;
-
-        if (currentStageIndex >= stagePositions.Length - 1)
+        if (isMoving || currentStageIndex >= stagePositions.Length - 1)
             return;
 
         currentStageIndex++;
@@ -95,10 +92,13 @@ public class StageSelectPlayerUIMove : MonoBehaviour
             return;
         }
 
-        Vector3 targetPosition = stagePositions[currentStageIndex].position;
+        Vector3 targetPosition =
+            stagePositions[currentStageIndex].position;
 
         isMoving = true;
+
         UpdateArrowUI();
+        UpdateStageImage();
 
         moveCoroutine = StartCoroutine(MovePlayer(targetPosition));
     }
@@ -122,22 +122,35 @@ public class StageSelectPlayerUIMove : MonoBehaviour
         moveCoroutine = null;
 
         UpdateArrowUI();
-
-        Debug.Log("ステージ位置に到着しました！");
+        UpdateStageImage();
     }
 
     private void UpdateArrowUI()
     {
         if (leftArrowUI != null)
-        {
             leftArrowUI.SetActive(currentStageIndex > 0);
-        }
 
         if (rightArrowUI != null)
         {
             rightArrowUI.SetActive(
+                stagePositions != null &&
                 currentStageIndex < stagePositions.Length - 1
             );
         }
+    }
+
+    private void UpdateStageImage()
+    {
+        if (stageImage == null)
+            return;
+
+        if (stageSprites == null ||
+            currentStageIndex >= stageSprites.Length)
+        {
+            Debug.LogWarning("ステージ画像の配列が不足しています。");
+            return;
+        }
+
+        stageImage.sprite = stageSprites[currentStageIndex];
     }
 }

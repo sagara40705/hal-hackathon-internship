@@ -38,8 +38,9 @@ public class CameraFollow : MonoBehaviour
         if (player == null)
             return;
 
-        // 初期位置との差を保ちながら追従
+        // X軸とZ軸はPlayerを追従し、Y軸は固定
         Vector3 targetPosition = player.position + offset;
+        targetPosition.y = transform.position.y;
 
         transform.position = Vector3.Lerp(
             transform.position,

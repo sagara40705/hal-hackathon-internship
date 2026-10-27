@@ -5,44 +5,92 @@ using UnityEngine;
 /// </summary>
 public class StageSelectPlayerRolling : MonoBehaviour
 {
-    [Header("サイコロの半径（半分の大きさ）")]
+    [Header("サイコロの半径")]
     public float rollRadius = 0.5f;
 
-    private Vector3 previousPosition;
+    [Header("床の高さ（床の表面のY座標）")]
+    public float groundY = 0f;
 
-    void Start()
+    [Header("めり込み補正")]
+    public float correctionOffset = 0.01f;
+
+    private Vector3 previousPosition;
+    private BoxCollider boxCollider;
+
+    private void Start()
     {
         previousPosition = transform.position;
+        boxCollider = GetComponent<BoxCollider>();
+
+        if (boxCollider == null)
+        {
+            Debug.LogError("Box Colliderが見つかりません。");
+        }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        // 前回からの移動量を取得
+        // ほかのスクリプトによる移動量を取得
         Vector3 movement = transform.position - previousPosition;
-
-        // 上下方向の移動を除外
         movement.y = 0f;
 
         float distance = movement.magnitude;
 
         if (distance > 0.0001f && rollRadius > 0f)
         {
-            // 移動方向に対して垂直な回転軸を求める
             Vector3 direction = movement.normalized;
+
+            // 移動方向に対して垂直な回転軸
             Vector3 rotationAxis =
                 Vector3.Cross(Vector3.up, direction).normalized;
 
-            // 移動距離に応じて回転する
             float angle = distance / rollRadius * Mathf.Rad2Deg;
 
-            transform.Rotate(
-                rotationAxis,
-                angle,
-                Space.World
-            );
+            transform.Rotate(rotationAxis, angle, Space.World);
         }
 
-        // 現在位置を保存
+        // 回転後のBox Colliderの最下部を計算
+        if (boxCollider != null)
+        {
+            Vector3 center = boxCollider.center;
+            Vector3 halfSize = boxCollider.size * 0.5f;
+
+            float lowestY = float.MaxValue;
+
+            // Box Colliderの8つの頂点を調べる
+            for (int x = -1; x <= 1; x += 2)
+            {
+                for (int y = -1; y <= 1; y += 2)
+                {
+                    for (int z = -1; z <= 1; z += 2)
+                    {
+                        Vector3 localCorner = center + new Vector3(
+                            halfSize.x * x,
+                            halfSize.y * y,
+                            halfSize.z * z
+                        );
+
+                        Vector3 worldCorner =
+                            boxCollider.transform.TransformPoint(localCorner);
+
+                        if (worldCorner.y < lowestY)
+                        {
+                            lowestY = worldCorner.y;
+                        }
+                    }
+                }
+            }
+
+            // 最下部が床より低ければ上方向へ補正
+            if (lowestY < groundY + correctionOffset)
+            {
+                Vector3 position = transform.position;
+                position.y += groundY + correctionOffset - lowestY;
+                transform.position = position;
+            }
+        }
+
+        // 補正後の位置を保存
         previousPosition = transform.position;
     }
 }
