@@ -1151,23 +1151,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: orthographic size
-      value: 8.7
+      value: 9.3
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_BackGroundColor.a
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0.42
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.35
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5894698077782304637, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_CullingMask.m_Bits
@@ -1175,11 +1175,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19
+      value: 14.642137
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1187,19 +1187,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8571673
+      value: 0.8535535
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5150381
+      value: 0.35355338
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.35355338
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.1464466
       objectReference: {fileID: 0}
     - target: {fileID: 8722442888688778244, guid: b79a40c0ca94d4c4b88d8c94f1255bec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1552,7 +1552,7 @@ MonoBehaviour:
   - {x: 20, y: 10}
   - {x: 20, y: 11}
   - {x: 20, y: 12}
-  _drawGizmos: 0
+  _drawGizmos: 1
   _placementEffect: {fileID: 1209963420}
 --- !u!4 &1209963419
 Transform:
