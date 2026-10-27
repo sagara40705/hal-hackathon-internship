@@ -14,12 +14,15 @@ public sealed class GoalCell : MonoBehaviour
 
     public int RequiredKeyCount => Mathf.Max(1, _requiredKeyCount);
 
+    // UIとゴール表示も同じ条件を参照する。
+    public bool HasRequiredKeyCount(int count) => count >= RequiredKeyCount;
+
     // Playerが必要な鍵を持っているかどうかを判定する
     public bool HasRequiredKeys(Player player)
     {
         return player != null &&
             player.TryGetComponent(out PlayerInventory inventory) &&
-            inventory.KeyCount >= RequiredKeyCount;
+            HasRequiredKeyCount(inventory.KeyCount);
     }
 
     // TileCellの進入イベントから、動的なPlayer引数を渡して呼び出す。
