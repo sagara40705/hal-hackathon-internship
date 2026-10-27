@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 
 /// <summary>
 /// 配置可能範囲の外周エフェクト
+/// 作成者：石田怜
 /// </summary>
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class PlacementBoundaryEffect : MonoBehaviour

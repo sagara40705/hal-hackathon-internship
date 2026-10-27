@@ -423,6 +423,9 @@ public class TileGridController : MonoBehaviour
 
         foreach (Renderer renderer in _selectedRenderers)
         {
+            if(renderer == null)
+                continue;
+
             renderer.GetPropertyBlock(_propertyBlock);
             _propertyBlock.SetColor("_BaseColor", color);
             renderer.SetPropertyBlock(_propertyBlock);
@@ -437,8 +440,42 @@ public class TileGridController : MonoBehaviour
 
         foreach (Renderer renderer in _selectedRenderers)
         {
+            if (renderer == null)
+                continue;
+
             renderer.SetPropertyBlock(null);
         }
+    }
+
+    // 指定したタイルをドラッグ中か判定
+    public bool IsDraggingTile(TileGroup group)
+    {
+        return group != null && _selectedGroup == group;
+    }
+
+    // ドラッグ中の指定タイルを破壊
+    public bool DestroyDraggingTile(TileGroup group)
+    {
+        if (group == null || _selectedGroup != group)
+            return false;
+
+        // ドラッグ終了時のコールバックを退避
+        UnityAction<bool> callback = _onDragEndCallback;
+
+        // タイル破壊エフェクトを再生
+        _tileGrid.PlayBreakEffect(group);
+
+        // ドラッグ状態を解除
+        ClearSelection();
+        ClearHover();
+
+        // タイルグループを破壊
+        Destroy(group.gameObject);
+
+        // ドラッグ失敗として通知
+        callback?.Invoke(false);
+
+        return true;
     }
 
     // 選択状態を解除
