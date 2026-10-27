@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering.RenderGraphModule.Util;
 
 /// <summary>
 /// Overlay UIより前にカメラ画像だけを加工するRender Graphパス。
@@ -44,13 +45,6 @@ public class HightSpeedRendererFeature : ScriptableRendererFeature
         private readonly Material _material;
         private static readonly int ParametersId = Shader.PropertyToID("_SpeedParameters");
         private static readonly int PhaseId = Shader.PropertyToID("_SpeedPhase");
-        private class PassData
-        {
-            public TextureHandle source;
-            public Material material;
-            public Vector4 parameters;
-            public float phase;
-        }
 
         public SpeedPass(Material material) { _material = material; }
 
@@ -65,21 +59,13 @@ public class HightSpeedRendererFeature : ScriptableRendererFeature
             descriptor.clearBuffer = false;
             descriptor.depthBufferBits = 0;
             var destination = graph.CreateTexture(descriptor);
-            using (var builder = graph.AddRasterRenderPass<PassData>("Hight Speed Chromatic Horizontal Blur", out var data))
-            {
-                data.source = source;
-                data.material = _material;
-                data.parameters = mode.EffectParameters;
-                data.phase = Time.unscaledTime;
-                builder.UseTexture(source, AccessFlags.Read);
-                builder.SetRenderAttachment(destination, 0, AccessFlags.Write);
-                builder.SetRenderFunc(static (PassData d, RasterGraphContext context) =>
-                {
-                    d.material.SetVector(ParametersId, d.parameters);
-                    d.material.SetFloat(PhaseId, d.phase);
-                    Blitter.BlitTexture(context.cmd, d.source, new Vector4(1, 1, 0, 0), d.material, 0);
-                });
-            }
+            // 遅延実行まで値を保持し、別の描画によるMaterialの上書きを避ける。
+            var properties = new MaterialPropertyBlock();
+            properties.SetVector(ParametersId, mode.EffectParameters);
+            properties.SetFloat(PhaseId, Time.unscaledTime);
+            var blit = new RenderGraphUtils.BlitMaterialParameters(source, destination, _material, 0,
+                properties, RenderGraphUtils.FullScreenGeometryType.ProceduralTriangle);
+            graph.AddBlitPass(blit, passName: "Hight Speed Chromatic Horizontal Blur");
             resources.cameraColor = destination;
         }
     }
