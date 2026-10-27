@@ -61,8 +61,28 @@ public class TileGrid : MonoBehaviour
         RefreshPlacementBoundary();
     }
 
-	// ワールド座標をグリッド座標に変換
-	public Vector2Int WorldToGrid(Vector3 worldPosition)
+    // 破壊可能なタイルグループ数を取得
+    public int GetDestructibleTileCount()
+    {
+        List<TileGroup> groups = new();
+
+        foreach (TileCell cell in _cells.Values)
+        {
+            if (cell == null)
+                continue;
+
+            TileGroup group = cell.ParentGroup;
+            if (group == null || group.IsStatic || groups.Contains(group))
+                continue;
+
+            groups.Add(group);
+        }
+
+        return groups.Count;
+    }
+
+    // ワールド座標をグリッド座標に変換
+    public Vector2Int WorldToGrid(Vector3 worldPosition)
 	{
 		Vector3 localPosition = transform.InverseTransformPoint(worldPosition);
 		float halfWidth = (_gridSize.x - 1) * _tileSize * 0.5f;

@@ -35,6 +35,9 @@ public class EnemyRondomAttack : EnemyAction
     [SerializeField, Tooltip("攻撃する最大タイル数"), Min(0)]
     private int _maxAttackCount = 3;
 
+    [SerializeField, Tooltip("フィールドに残す最小タイル数"), Min(0)]
+    private int _minTileCount = 3;
+
     [SerializeField, Tooltip("Playerを中心とした攻撃範囲（マス数）"), Min(0)]
     private int _attackRange = 3;
 
@@ -130,8 +133,11 @@ public class EnemyRondomAttack : EnemyAction
             }
         }
 
-        // 攻撃対象をランダムに選択
         int count = Mathf.Min(_maxAttackCount, candidates.Count);
+        int tileCount = _tileGrid.GetDestructibleTileCount();
+        count = Mathf.Min(count, tileCount - _minTileCount);
+
+        // 攻撃対象をランダムに選択
         for (int i = 0; i < count; i++)
         {
             int randomIndex = Random.Range(i, candidates.Count);

@@ -14,8 +14,12 @@ public class TriggerObject : MonoBehaviour
     [Header("発射速度")]
     public float speed = 10f;
 
+    private bool _isActivated = true;       // 攻撃可能フラグ
+
     public void OnEnterPlayer(Player player)
     {
+        if (!_isActivated)
+            return;
 
         // 敵を探す
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -40,7 +44,6 @@ public class TriggerObject : MonoBehaviour
 
         // 敵に向かって発射
         FlyingObject flying = obj.GetComponent<FlyingObject>();
-
         if (flying != null)
         {
             flying.Launch(enemy.transform, speed);
@@ -51,6 +54,18 @@ public class TriggerObject : MonoBehaviour
             Destroy(obj);
         }
 
+        // 攻撃可能フラグをリセット
+        _isActivated = false;
+
+        TriggerObject[] triggers = FindObjectsByType<TriggerObject>(FindObjectsSortMode.None);
+        foreach (TriggerObject trigger in triggers)
+        {
+            // 自分以外のTriggerObjectの攻撃可能フラグをリセット
+            if (trigger != this)
+            {
+                trigger._isActivated = true;
+            }
+        }
     }
 }
 
