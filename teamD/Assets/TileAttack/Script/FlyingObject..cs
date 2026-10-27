@@ -17,6 +17,9 @@ public class FlyingObject: MonoBehaviour
     [SerializeField, Tooltip("ヒットエフェクト")]
     private GameObject _hitEffect;
 
+    [SerializeField, Tooltip("アニメーションカーブ")]
+    private AnimationCurve _animationCurve;
+
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private float elapsedTime;
@@ -50,6 +53,7 @@ public class FlyingObject: MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         float t = Mathf.Clamp01(elapsedTime / flightDuration);
+        t = _animationCurve.Evaluate(t);
 
         // 始点から終点へ移動し、途中で上昇する
         Vector3 position = Vector3.Lerp(

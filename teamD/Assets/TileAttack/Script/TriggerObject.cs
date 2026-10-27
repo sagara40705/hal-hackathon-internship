@@ -14,11 +14,15 @@ public class TriggerObject : MonoBehaviour
     [Header("発射速度")]
     public float speed = 10f;
 
-    private bool hasTriggered = false;
+    [SerializeField, Tooltip("攻撃可能状態エフェクト")]
+    private ParticleSystem _activeEffect;
+
+    private bool _isAttackEnabled = true;       // 攻撃可能フラグ
 
     public void OnEnterPlayer(Player player)
     {
-        hasTriggered = true;
+        if (!_isAttackEnabled)
+            return;
 
         // 敵を探す
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
@@ -26,7 +30,6 @@ public class TriggerObject : MonoBehaviour
         if (enemy == null)
         {
             Debug.Log("Enemyタグの敵が見つかりません");
-            hasTriggered = false;
             return;
         }
 
@@ -44,7 +47,6 @@ public class TriggerObject : MonoBehaviour
 
         // 敵に向かって発射
         FlyingObject flying = obj.GetComponent<FlyingObject>();
-
         if (flying != null)
         {
             flying.Launch(enemy.transform, speed);
@@ -55,6 +57,32 @@ public class TriggerObject : MonoBehaviour
             Destroy(obj);
         }
 
+        // 攻撃可能フラグをリセット
+        DisableAttack();
+
+        TriggerObject[] triggers = FindObjectsByType<TriggerObject>(FindObjectsSortMode.None);
+        foreach (TriggerObject trigger in triggers)
+        {
+            // 自分以外のTriggerObjectの攻撃可能フラグをリセット
+            if (trigger != this)
+            {
+                trigger.EnableAttack();
+            }
+        }
+    }
+
+    public void DisableAttack()
+    {
+        _isAttackEnabled = false;
+        if (_activeEffect != null)
+            _activeEffect.Stop(true);
+    }
+
+    public void EnableAttack()
+    {
+        _isAttackEnabled = true;
+        if (_activeEffect != null)
+            _activeEffect.Play(true);
     }
 }
 

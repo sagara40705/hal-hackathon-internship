@@ -148,16 +148,20 @@ public class Player : MonoBehaviour
 		return gridPosition == _currentPosition;
 	}
 
-    // プレイヤーへの攻撃処理
-    public void TryAttack(Vector2Int gridPos)
+    // 足元にタイルが存在するか判定
+    public void CheckGroundTile()
     {
         if (_isGameOver)
             return;
 
-        if (gridPos == _currentPosition)
+        if (_tileGrid == null)
+            return;
+
+        // 現在のプレイヤー位置にタイルが存在するか確認
+        if (_tileGrid.GetCell(_currentPosition) == null &&
+            _tileGrid.GetCell(_nextPosition) == null)
         {
-            _isGameOver = true;
-            _onDamageEvent?.Invoke();
+            OnFall();
         }
     }
 

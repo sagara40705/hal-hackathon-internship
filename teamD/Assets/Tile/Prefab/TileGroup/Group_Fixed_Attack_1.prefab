@@ -47,6 +47,73 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TileGroup
   _isStatic: 1
   _previewOffset: {x: 0, y: 0, z: 0}
+--- !u!1001 &3511361712206021029
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6338041170441958279}
+    m_Modifications:
+    - target: {fileID: 3406998508747150722, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_Name
+      value: VFX_AttackTileActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+--- !u!198 &6415128217928404010 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7619459448088006031, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+  m_PrefabInstance: {fileID: 3511361712206021029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8124356458672299814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4613198912170401411, guid: 730d2739bec2ef44a96e6140d97b47d3, type: 3}
+  m_PrefabInstance: {fileID: 3511361712206021029}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6695450970742900413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105,7 +172,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8124356458672299814}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7580375582259545971, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
       insertIndex: -1
@@ -160,7 +230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerObject
   attackPrefab: {fileID: 396296157679001473, guid: 5baa51fcf5a73d345bc18d620522fdf4, type: 3}
   spawnPoint: {fileID: 0}
-  speed: 10
+  speed: 15
+  _activeEffect: {fileID: 6415128217928404010}
 --- !u!4 &6338041170441958279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 801143694921217338, guid: 44e6814b63b5c3f4ea545e5e5648677d, type: 3}
