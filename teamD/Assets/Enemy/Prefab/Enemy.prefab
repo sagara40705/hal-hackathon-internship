@@ -226,7 +226,6 @@ GameObject:
   - component: {fileID: 1504552248434884108}
   - component: {fileID: 160913306765504706}
   - component: {fileID: 3155027693385056738}
-  - component: {fileID: 2865009502966819815}
   - component: {fileID: 2227478239926831216}
   m_Layer: 0
   m_Name: Enemy
@@ -266,6 +265,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   maxHP: 100
   hpSlider: {fileID: 0}
+  _onDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3155027693385056738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,27 +281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRoot
   _actions:
-  - {fileID: 2865009502966819815}
+  - {fileID: 0}
+  _startDelay: 5
   _actionInterval: 1
---- !u!114 &2865009502966819815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6652282871671863839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ce8edc87be95d24fa142158f59b9581, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyActionRandam
-  _player: {fileID: 0}
-  _tileGrid: {fileID: 0}
-  _attackIndicator: {fileID: 2227478239926831216}
-  _startupTime: 6
-  _recoveryTime: 1
-  _attackCount: 3
-  _attackRange: 3
 --- !u!114 &2227478239926831216
 MonoBehaviour:
   m_ObjectHideFlags: 0

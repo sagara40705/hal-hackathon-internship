@@ -126,11 +126,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a293ecf5a5dee4ebc6b851257e769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingObject
-  flightDuration: 1.5
+  flightDuration: 15
   arcHeight: 3
   damage: 10
   _bulletEffect: {fileID: 5540130983902462580}
   _hitEffect: {fileID: 4375217906149219937, guid: 9ff7192f5ad85f242b2ca5221cec9dce, type: 3}
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.76259756
+      outSlope: 0.76259756
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.06102003
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &4300009995507749380
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8175933422577377019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be1b0630762dca448d6551330215f4d, type: 3}
+  m_Name: HightSpeedRendererFeature
+  m_EditorClassIdentifier: Assembly-CSharp::HightSpeedRendererFeature
+  m_Active: 1
+  _shader: {fileID: 4800000, guid: ff820e03c18179041a22b8f7be375c2f, type: 3}
 --- !u!114 &-7162177973392589283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +59,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: -7162177973392589283}
-  m_RendererFeatureMap: ad6b866f10d7b46c1dbece7d14d59a9c
+  - {fileID: -8175933422577377019}
+  m_RendererFeatureMap: ad6b866f10d7b46c1dbece7d14d59a9c052108c0de3f898e
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}

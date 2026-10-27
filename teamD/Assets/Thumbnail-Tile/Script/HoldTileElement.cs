@@ -91,7 +91,6 @@ public class HoldTileElement : MonoBehaviour,
         _tilePrefab = null;
         _tilePreviewSlot.ClearPreviewObject();
 
-
         // 空にした後で、全枠の残数を確認してもらう
         _onConsumed?.Invoke();
     }

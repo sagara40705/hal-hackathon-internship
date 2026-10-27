@@ -17,7 +17,7 @@ public class TileGrid : MonoBehaviour
 	private float _tileHeight = 1.0f;
 
     [SerializeField, Tooltip("配置可能なグリッド座標")]
-    private List<Vector2Int> _placementPositions = new();
+    private List<Vector2Int> _placementPositions;
 
     [SerializeField, Tooltip("配置可能範囲の外周エフェクト")]
     private PlacementBoundaryEffect _placementBoundaryEffect;
@@ -25,12 +25,10 @@ public class TileGrid : MonoBehaviour
     [SerializeField, Tooltip("ギズモを表示")]
     private bool _drawGizmos = true;
 
-    private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
-
-    // --- 新しく追加 ---
     [SerializeField, Tooltip("タイル設置時のエフェクト")]
     private TilePlacementEffect _placementEffect;
-    // ------------------
+
+    private HashSet<Vector2Int> _placementPositionSet;      // 配置可能なグリッド座標の高速検索用セット
 
     // グリッド上の各セル
     private readonly Dictionary<Vector2Int, TileCell> _cells = new();
@@ -63,8 +61,28 @@ public class TileGrid : MonoBehaviour
         RefreshPlacementBoundary();
     }
 
-	// ワールド座標をグリッド座標に変換
-	public Vector2Int WorldToGrid(Vector3 worldPosition)
+    // 破壊可能なタイルグループ数を取得
+    public int GetDestructibleTileCount()
+    {
+        List<TileGroup> groups = new();
+
+        foreach (TileCell cell in _cells.Values)
+        {
+            if (cell == null)
+                continue;
+
+            TileGroup group = cell.ParentGroup;
+            if (group == null || group.IsStatic || groups.Contains(group))
+                continue;
+
+            groups.Add(group);
+        }
+
+        return groups.Count;
+    }
+
+    // ワールド座標をグリッド座標に変換
+    public Vector2Int WorldToGrid(Vector3 worldPosition)
 	{
 		Vector3 localPosition = transform.InverseTransformPoint(worldPosition);
 		float halfWidth = (_gridSize.x - 1) * _tileSize * 0.5f;
@@ -190,53 +208,15 @@ public class TileGrid : MonoBehaviour
 		return true;
     }
 
-    // 実行中に新しいタイルを生成して、グリッドへ登録する
-    public bool TryCreateAndPlaceTile(GameObject prefab, Vector3 worldPosition)
-    {
-        if (prefab == null)
-            return false;
-
-        // 生成したタイルをグリッドの子にする
-        GameObject instance = Instantiate
-        (
-            prefab,
-            worldPosition,
-            Quaternion.identity,
-            transform
-        );
-
-        // PrefabのルートにTileGroupがあることを確認する
-        TileGroup group = instance.GetComponent<TileGroup>();
-        if (group == null)
-        {
-            Debug.LogWarning("PrefabのルートにTileGroupがありません。", instance);
-            Destroy(instance);
-            return false;
-        }
-
-        // TileCellを取得して初期化する
-        group.InitGroup(_tileSize);
-
-        Vector2Int gridPosition = WorldToGrid(worldPosition);
-        if (!SetTile(group, gridPosition))
-        {
-            // 配置できなければ、未登録のPrefabを残さない
-            Destroy(instance);
-            return false;
-        }
-
-        //--- 新しく追加 ---
-        PlayPlacementEffect(group);
-        //------------------
-
-        return true;
-    }
-
     // 指定座標のタイルグループを破壊
     public bool DestroyTile(Vector2Int gridPosition)
     {
-        TileGroup group = GetTileGroup(gridPosition);
+        return DestroyTile(GetTileGroup(gridPosition));
+    }
 
+    // 指定したタイルグループを破壊
+    public bool DestroyTile(TileGroup group)
+    {
         if (group == null || group.IsStatic)
             return false;
 
@@ -244,6 +224,7 @@ public class TileGrid : MonoBehaviour
         if (!RemoveTile(group))
             return false;
 
+        // タイル破壊エフェクト
         PlayBreakEffect(group);
 
         Destroy(group.gameObject);

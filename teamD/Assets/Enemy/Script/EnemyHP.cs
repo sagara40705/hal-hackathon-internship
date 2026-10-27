@@ -49,7 +49,6 @@ public class EnemyHP : MonoBehaviour
         }
         if (currentHP <= 0)
         {
-            Destroy(gameObject);
             _onDestroy?.Invoke();
         }
     }
