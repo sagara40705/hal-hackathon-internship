@@ -29,6 +29,9 @@ public class EnemyRondomAttack : EnemyAction
     [SerializeField, Tooltip("生成する攻撃オブジェクト")]
     private EnemyProjectileEffect _enemyAttackPrefab;
 
+    [SerializeField, Tooltip("アニメーターコントローラー")]
+    private Animator _animator;
+
     [SerializeField, Tooltip("攻撃の発生時間")]
     private float _startupTime = 5.0f;
 
@@ -161,6 +164,9 @@ public class EnemyRondomAttack : EnemyAction
         if (_enemyAttackPrefab == null)
             return;
 
+        if(_targetTileList.Count == 0)
+            return;
+
         foreach (TileGroup tileGroup in _targetTileList)
         {
             if (tileGroup == null)
@@ -186,6 +192,8 @@ public class EnemyRondomAttack : EnemyAction
 
         // 攻撃予告を非表示
         _attackIndicator?.ClearIndicators();
+
+        _animator?.SetTrigger("Attack");
 
         _targetTileList.Clear();
     }

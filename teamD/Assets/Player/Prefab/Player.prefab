@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   _tileGrid: {fileID: 0}
-  _moveSpeed: 1
+  _moveSpeed: 0.5
   _startDelay: 0.5
   _startDirection: {x: 1, y: 0}
   _onFallEvent:
@@ -204,6 +204,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onStoppedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6343127046510427009
 MonoBehaviour:
   m_ObjectHideFlags: 0
