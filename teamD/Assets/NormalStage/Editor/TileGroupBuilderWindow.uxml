@@ -1,0 +1,59 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Style src="TileGroupBuilderWindow.uss" />
+    <ui:VisualElement class="builder-root">
+        <ui:Label text="タイルグループ作成" class="title" />
+        <ui:Label text="セルを選んで描く → 原点を決める → Prefabを保存" class="subtitle" />
+        <ui:VisualElement class="workspace">
+            <ui:VisualElement class="palette-panel">
+                <ui:Label text="1. セルパレット" class="section-title" />
+                <uie:ToolbarSearchField name="search" />
+                <ui:ScrollView name="paletteScroll" class="palette-scroll">
+                    <ui:VisualElement name="palette" />
+                </ui:ScrollView>
+                <ui:Button name="refreshPalette" text="パレットを更新" />
+                <uie:ObjectField name="customCell" label="追加セル" />
+                <ui:Label text="単独のTileCell Prefabを指定できます。" class="hint" />
+            </ui:VisualElement>
+            <ui:VisualElement class="canvas-panel">
+                <ui:VisualElement class="toolbar">
+                    <ui:Button name="paintMode" text="描く" />
+                    <ui:Button name="eraseMode" text="消す" />
+                    <ui:Button name="undo" text="元に戻す" />
+                    <ui:Button name="redo" text="やり直す" />
+                    <ui:Button name="clear" text="全消去" />
+                </ui:VisualElement>
+                <ui:Label name="brushLabel" class="brush-label" />
+                <ui:Label text="左ドラッグ：配置   右ドラッグ：削除   Shift＋クリック：原点   Alt＋クリック：スポイト" class="hint" />
+                <ui:VisualElement class="toolbar">
+                    <ui:SliderInt name="radius" label="表示範囲" low-value="2" high-value="12" show-input-field="true" />
+                    <ui:Toggle name="compact" label="小さく表示" />
+                </ui:VisualElement>
+                <ui:Label text="上：+Z   右：+X   ◎：Prefabの原点" class="axis-label" />
+                <ui:ScrollView name="boardScroll" mode="VerticalAndHorizontal" class="board-scroll">
+                    <ui:VisualElement name="board" class="board" focusable="true" />
+                </ui:ScrollView>
+                <ui:Label name="stats" class="stats" />
+            </ui:VisualElement>
+            <ui:ScrollView class="settings-panel">
+                <ui:Label text="2. グループ設定" class="section-title" />
+                <ui:TextField name="prefabName" label="Prefab名" />
+                <ui:Toggle name="fixed" label="固定タイル" />
+                <ui:Label text="OFFならプレイヤーがドラッグで動かせるグループになります。" class="hint" />
+                <ui:FloatField name="tileSize" label="1マスのサイズ" />
+                <ui:Label text="配置先TileGridのTile Sizeと合わせます。通常は1です。" class="hint" />
+                <uie:ObjectField name="outputFolder" label="保存先" />
+                <ui:Label name="folderPath" class="hint" />
+                <ui:HelpBox name="validation" />
+                <ui:Label text="3. 保存" class="section-title" />
+                <ui:Button name="save" text="Prefabを新規保存" class="save-button" />
+                <ui:Label text="Prefabと編集用レイアウト（.asset）を保存します。同名があれば連番になります。" class="hint" />
+                <ui:Label name="saveResult" class="hint" />
+                <ui:Button name="selectSaved" text="保存したPrefabを選択" />
+                <ui:Label text="レイアウトを再編集" class="section-title" />
+                <uie:ObjectField name="layoutAsset" label="レイアウト" />
+                <ui:Button name="load" text="レイアウトを読み込む" />
+                <ui:Label text="保存した.assetのダブルクリックでも開けます。読み込み前の編集はUndoで戻せます。" class="hint" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

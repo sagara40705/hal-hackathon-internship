@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f950f9f6732e94cba0efa65729d16e, type: 3}
+  m_Name: TestGroup
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::NormalStage.EditorTools.TileGroupLayout
+  data:
+    prefabName: TestGroup
+    outputFolder: Assets/NormalStage/Prefab/TileGroup
+    isStatic: 0
+    tileSize: 1
+    origin: {x: 0, y: 0}
+    cells:
+    - position: {x: 0, y: 0}
+      prefab: {fileID: 3056304937081298057, guid: 600d5b5022860914fb565b34e10dba01, type: 3}
+    - position: {x: -1, y: 0}
+      prefab: {fileID: 3056304937081298057, guid: 600d5b5022860914fb565b34e10dba01, type: 3}
+    - position: {x: 0, y: 1}
+      prefab: {fileID: 3056304937081298057, guid: 600d5b5022860914fb565b34e10dba01, type: 3}
+    - position: {x: 1, y: 0}
+      prefab: {fileID: 3056304937081298057, guid: 600d5b5022860914fb565b34e10dba01, type: 3}
+    - position: {x: 0, y: -1}
+      prefab: {fileID: 3056304937081298057, guid: 600d5b5022860914fb565b34e10dba01, type: 3}
