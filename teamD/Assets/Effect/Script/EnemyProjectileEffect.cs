@@ -137,6 +137,9 @@ public class EnemyProjectileEffect : MonoBehaviour
             Destroy(explosion, _explosionLifetime);
         }
 
+        // カメラ振動
+        CameraShake.Instance.Shake();
+
         Action callback = _onArrived;
         _onArrived = null;
 
