@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MT_EnemyRing
-  m_Shader: {fileID: -6465566751694194690, guid: 32290f529f1916748b72e87016cc2f02, type: 3}
+  m_Name: MAT_EnemyEnergyGlow
+  m_Shader: {fileID: -6465566751694194690, guid: 45b3b77782f50dc45aa6130788f3e365, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -102,6 +102,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Opacity: 0.6
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -119,11 +120,11 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GlowColor: {r: 0.87576, g: 0.1156567, b: 1.977358, a: 1}
+    - _GlowColor: {r: 2.126337, g: 0.1389806, b: 2.728142, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &5278118628588292204
+--- !u!114 &6174115744627992949
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
