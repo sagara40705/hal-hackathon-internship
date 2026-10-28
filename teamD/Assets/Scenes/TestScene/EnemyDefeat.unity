@@ -624,6 +624,7 @@ MonoBehaviour:
   _tileGrid: {fileID: 1650181587}
   _tileDragController: {fileID: 1650181586}
   _attackIndicator: {fileID: 394145857}
+  _enemyAttackPrefab: {fileID: 8387608875787398584, guid: 2fe55d9041232604291178a4343a2ee1, type: 3}
   _startupTime: 8
   _recoveryTime: 4
   _maxAttackCount: 3

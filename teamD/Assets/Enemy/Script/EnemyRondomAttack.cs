@@ -26,6 +26,9 @@ public class EnemyRondomAttack : EnemyAction
     [SerializeField, Tooltip("攻撃予告表示")]
     private EnemyAttackIndicator _attackIndicator;
 
+    [SerializeField, Tooltip("生成する攻撃オブジェクト")]
+    private EnemyProjectileEffect _enemyAttackPrefab;
+
     [SerializeField, Tooltip("攻撃の発生時間")]
     private float _startupTime = 5.0f;
 
@@ -155,24 +158,31 @@ public class EnemyRondomAttack : EnemyAction
 
     private void Attack()
     {
+        if (_enemyAttackPrefab == null)
+            return;
+
         foreach (TileGroup tileGroup in _targetTileList)
         {
             if (tileGroup == null)
                 continue;
 
-            // タイルグリッドからタイルグループを破壊
-            if (_tileGrid != null && _tileGrid.DestroyTile(tileGroup))
-                continue;
-
-            // タイルグループが破壊できなかった場合、ドラッグ中タイルの破壊を試す
-            if (_tileDragController != null)
+            EnemyProjectileEffect bullet = Instantiate(_enemyAttackPrefab, transform.position, Quaternion.identity);
+            bullet.Launch(tileGroup.transform, () =>
             {
-                _tileDragController.DestroyDraggingTile(tileGroup);
-            }
-        }
+                // タイルグリッドからタイルグループを破壊
+                if (_tileGrid != null && _tileGrid.DestroyTile(tileGroup))
+                    return;
 
-        // プレイヤーの足元にタイルが存在するか確認
-        _player.CheckGroundTile();
+                // タイルグループが破壊できなかった場合、ドラッグ中タイルの破壊を試す
+                if (_tileDragController != null)
+                {
+                    _tileDragController.DestroyDraggingTile(tileGroup);
+                }
+
+                // プレイヤーの足元にタイルが存在するか確認
+                _player.CheckGroundTile();
+            });
+        }
 
         // 攻撃予告を非表示
         _attackIndicator?.ClearIndicators();
