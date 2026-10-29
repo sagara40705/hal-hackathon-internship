@@ -44,6 +44,8 @@ public class PlayerGameOverEffect : MonoBehaviour
 			return;
 
 		_isPlaying = true;
+        // ゲームオーバー演出開始時に一度だけ再生する。
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.GameOver);
 		_fallVelocity = 0.0f;
 		_fallTimer = 0.0f;
 	}

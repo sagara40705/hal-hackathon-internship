@@ -91,6 +91,12 @@ public class HoldTileSpawner : MonoBehaviour
                 OnTileConsumed
             );
         }
+
+        // 初回生成を含め、補充できたときに一度だけ再生する。
+        if (_holdTileElements.Exists(element => element != null && element.HasTile))
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.TileRefill);
+        }
     }
 
     /// <summary>

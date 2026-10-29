@@ -33,10 +33,16 @@ public class EnemyHP : MonoBehaviour
     // ダメージを受ける
     public void TakeDamage(float damage)
     {
+        float hpBeforeDamage = currentHP;
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         UpdateHPBar();
+        // HPが実際に減った場合だけ再生する。
+        if (currentHP < hpBeforeDamage)
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.EnemyDamage);
+        }
         // カメラシェイク
         if (CameraShake.Instance != null)
         {

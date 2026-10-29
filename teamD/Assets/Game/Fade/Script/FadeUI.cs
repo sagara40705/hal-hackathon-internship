@@ -75,7 +75,6 @@ public class FadeUI : MonoBehaviour
         s_hasNextFadeIn = false;
 
         IsBusy = true;
-
         // 開く演出の準備ができるまで画面を覆う。
         SetNormalImage(1f, true);
     }
@@ -146,6 +145,8 @@ public class FadeUI : MonoBehaviour
         }
 
         IsBusy = true;
+        // フェード開始が受け付けられたときだけ再生する。
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.Fade);
 
         // 完全に覆った後、次のシーンへ渡す種類を記録する。
         UnityAction completed = () =>

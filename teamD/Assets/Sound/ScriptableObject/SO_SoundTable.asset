@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efb0dfcabbc2864a8a3ca510e0a13a3, type: 3}
+  m_Name: SO_SoundTable
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTableData
+  _entries:
+  - id: 0
+    clip: {fileID: 8300000, guid: 54c8cd040d530434a9214d777136d147, type: 3}
+    volume: 0.046
+  - id: 1
+    clip: {fileID: 8300000, guid: 63adcc60e58524043a820238d36530a1, type: 3}
+    volume: 0.029
+  - id: 2
+    clip: {fileID: 8300000, guid: ca6eab262ffc50a4791c61fa527188b7, type: 3}
+    volume: 0.042
+  - id: 3
+    clip: {fileID: 8300000, guid: 89a1b0d16d4e86144af9506c862ee8d7, type: 3}
+    volume: 0.059
+  - id: 4
+    clip: {fileID: 8300000, guid: 0cba1a872b2776a48aa9da6e934b4c39, type: 3}
+    volume: 0.055
+  - id: 5
+    clip: {fileID: 8300000, guid: c283de99e463a964b86b9c5738d85a92, type: 3}
+    volume: 0.051
+  - id: 6
+    clip: {fileID: 8300000, guid: 3f75866e4a405524796861ba737b5079, type: 3}
+    volume: 0.064
+  - id: 7
+    clip: {fileID: 8300000, guid: 1c39e242297a70d49bca8a4fec045d05, type: 3}
+    volume: 0.064
+  - id: 8
+    clip: {fileID: 0}
+    volume: 0.099
+  - id: 9
+    clip: {fileID: 0}
+    volume: 0.09
+  - id: 10
+    clip: {fileID: 0}
+    volume: 0.077
+  - id: 11
+    clip: {fileID: 8300000, guid: 1c39e242297a70d49bca8a4fec045d05, type: 3}
+    volume: 0.064
+  - id: 12
+    clip: {fileID: 8300000, guid: eb5f71273e9aecb4ab93436690e9fe33, type: 3}
+    volume: 0.086
+  - id: 13
+    clip: {fileID: 8300000, guid: eb5f71273e9aecb4ab93436690e9fe33, type: 3}
+    volume: 0.112
+  - id: 14
+    clip: {fileID: 0}
+    volume: 0.13
+  - id: 15
+    clip: {fileID: 8300000, guid: 81cdc1b773d046a4cbb23a92b47ed089, type: 3}
+    volume: 0.148
+  - id: 16
+    clip: {fileID: 8300000, guid: 13ca752bfb049484397bf060ab3af9af, type: 3}
+    volume: 0.161

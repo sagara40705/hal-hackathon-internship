@@ -324,6 +324,8 @@ public class TileGridController : MonoBehaviour
         if (canPlace && _tileGrid.SetTile(_selectedGroup, _targetPosition))
         {
             _tileGrid.PlayPlacementEffect(_selectedGroup);
+            // 配置成功時の音。
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.TilePlacement);
 
             // 新規配置時の処理
             if (_dragType == DragType.PLACE)

@@ -37,6 +37,7 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
     private float _phase;
     private float _elapsed;
     private bool _initialized;
+    private bool _lockSoundPlayed;
 
     private void Awake()
     {
@@ -74,6 +75,7 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
     private void OnEnable()
     {
         _elapsed = 0f;
+        _lockSoundPlayed = false;
         _initialized = false;
         if (_viewCamera == null) _viewCamera = FindViewCamera();
     }
@@ -126,6 +128,12 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
         }
         else
         {
+            // ロック状態に入った最初の一度だけ音を鳴らす。
+            if (!_lockSoundPlayed)
+            {
+                _lockSoundPlayed = true;
+                if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.EnemyLockOn);
+            }
             // ロック後は漂わせず、中心を対象タイルに固定する。
             center = target;
             roll = 0f;

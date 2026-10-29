@@ -235,6 +235,11 @@ public class Player : MonoBehaviour
     // ダメージを受けたときの処理(sagara)
     public void Damage()
     {
+        // ゲームオーバー確定後の重複通知では鳴らさない。
+        if (!_isGameOver)
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.PlayerDamage);
+        }
         OnFall();
     }
 

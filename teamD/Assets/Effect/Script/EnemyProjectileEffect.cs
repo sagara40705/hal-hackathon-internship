@@ -67,6 +67,8 @@ public class EnemyProjectileEffect : MonoBehaviour
         _startPosition = transform.position;
         _elapsedTime = 0f;
         _isFlying = true;
+        // 有効な対象へ発射したときの音。
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.EnemyShot);
 
         if (_visualRoot != null)
             _visualRoot.SetActive(true);
@@ -118,6 +120,8 @@ public class EnemyProjectileEffect : MonoBehaviour
     // 着弾したときの処理
     private void Arrive()
     {
+        // 対象への着弾時に再生する。
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.EnemyExplosion);
         // 同じ弾から着弾通知が複数回でないようにする
         _isFlying = false;
 

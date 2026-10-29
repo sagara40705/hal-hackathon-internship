@@ -54,6 +54,11 @@ namespace TeamD.Effects
                 system.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
                 system.Play(false);
             }
+            // SetActiveからOnEnableが呼ばれた場合も音を重複させない。
+            if (!playing)
+            {
+                if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.Goal);
+            }
             playing = true;
         }
 
