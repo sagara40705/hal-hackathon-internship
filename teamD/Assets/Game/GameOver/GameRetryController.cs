@@ -13,7 +13,8 @@ public class GameRetryController : MonoBehaviour
     // リトライ処理
     public void Retry()
 	{
-		if (_fadeUI != null)
+        Time.timeScale = 1f;
+        if (_fadeUI != null)
 		{
 			_fadeUI.StartFadeOut(() =>
 			{

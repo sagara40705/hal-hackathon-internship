@@ -75,7 +75,7 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
     {
         _elapsed = 0f;
         _initialized = false;
-        if (_viewCamera == null) _viewCamera = Camera.main;
+        if (_viewCamera == null) _viewCamera = FindViewCamera();
     }
 
     private Vector3 SearchPosition(float time)
@@ -88,7 +88,7 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
     private void LateUpdate()
     {
         if (_faceMesh == null) return;
-        if (_viewCamera == null) _viewCamera = Camera.main;
+        if (_viewCamera == null) _viewCamera = FindViewCamera();
         if (_viewCamera == null) return;
 
         // Instantiate後、呼び出し元が配置位置を設定し終えてから記録する。
@@ -174,5 +174,18 @@ public sealed class EnemyTargetLockOnEffect : MonoBehaviour
     {
         if (_faceMesh != null) Destroy(_faceMesh);
         if (_outlineMesh != null) Destroy(_outlineMesh);
+    }
+
+    private static Camera FindViewCamera()
+    {
+        Camera main = Camera.main;
+        // Render Texture に描画するカメラ(プレビュー用など)は除外
+        if (main != null && main.targetTexture == null) return main;
+
+        foreach (Camera cam in Camera.allCameras)
+        {
+            if (cam.targetTexture == null && cam.enabled) return cam;
+        }
+        return null;
     }
 }
