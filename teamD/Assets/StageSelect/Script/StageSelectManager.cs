@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
-using TMPro;
 /// <summary>
 /// 設定した位置にあるオブジェクトの場所でUIのボタンを押すとそのステージにいくスクリプト
 /// 作成者：牛田大翔
@@ -15,8 +14,6 @@ public class StageSelectManager : MonoBehaviour
     {
         [Header("ステージ情報")]
         public string stageName;
-
-        public string difficulty;
 
         [Header("ステージの位置")]
         public Transform stagePosition;
@@ -30,10 +27,6 @@ public class StageSelectManager : MonoBehaviour
 
     [Header("Canvasの開始ボタン")]
     [SerializeField] private Button startButton;
-
-    [SerializeField] private StageSelectPlayerUIMove stageSelector;
-    [SerializeField] private TMP_Text stageTitle;
-    [SerializeField] private TMP_Text difficultyLabel;
 
     [Header("ステージ設定")]
     [SerializeField] private StageInfo[] stages;
@@ -63,20 +56,9 @@ public class StageSelectManager : MonoBehaviour
     {
         currentStage = null;
 
-        if (player == null || stages == null)
+        if (player == null)
         {
             SetButtonEnabled(false);
-            return;
-        }
-
-        // 写真・見出しは移動先に揃え、移動中の開始ボタンは無効にする。
-        if (stageSelector != null)
-        {
-            int index = stageSelector.CurrentStageIndex;
-            if (index >= 0 && index < stages.Length)
-                currentStage = stages[index];
-            UpdateStageLabels();
-            SetButtonEnabled(currentStage != null && !stageSelector.IsMoving);
             return;
         }
 
@@ -113,15 +95,6 @@ public class StageSelectManager : MonoBehaviour
 
         // ステージの近くにいるときだけ押せる
         SetButtonEnabled(currentStage != null);
-        UpdateStageLabels();
-    }
-
-    private void UpdateStageLabels()
-    {
-        if (stageTitle != null)
-            stageTitle.text = currentStage?.stageName ?? "";
-        if (difficultyLabel != null)
-            difficultyLabel.text = currentStage?.difficulty ?? "";
     }
 
     private void SetButtonEnabled(bool enabled)
@@ -135,9 +108,6 @@ public class StageSelectManager : MonoBehaviour
     // Canvasのボタンを押したときに実行
     public void StartSelectedStage()
     {
-        UpdateStageSelection();
-        if (stageSelector != null && stageSelector.IsMoving)
-            return;
         if (currentStage == null)
             return;
 
