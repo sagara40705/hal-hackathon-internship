@@ -11,6 +11,7 @@ public sealed class OnOffSwitch : MonoBehaviour
     [SerializeField] private Renderer _buttonRenderer;
     [SerializeField] private Transform _button;
     [SerializeField] private TextMesh _stateLabel;
+    [SerializeField] private OnOffVisual _visual;
     [SerializeField] private Color _offColor = new(0.1f, 0.45f, 1f);
     [SerializeField] private Color _onColor = new(1f, 0.4f, 0.05f);
 
@@ -49,10 +50,16 @@ public sealed class OnOffSwitch : MonoBehaviour
             return;
 
         _controller.Toggle();
+        _visual?.Press();
     }
 
     internal void RefreshAppearance(bool isOn)
     {
+        if (_visual != null)
+        {
+            _visual.ShowSwitch(isOn);
+            return;
+        }
         if (_buttonRenderer != null)
         {
             _properties ??= new MaterialPropertyBlock();

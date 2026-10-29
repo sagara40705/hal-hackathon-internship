@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b891422e4384c949b77f0566dc4c9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileGroup
-  _isStatic: 0
+  _isStatic: 1
+  _previewOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &4206719772973696490
 PrefabInstance:
   m_ObjectHideFlags: 0
