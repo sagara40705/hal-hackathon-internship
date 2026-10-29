@@ -20,20 +20,21 @@
       "id": "first_stage",
       "image": "../FirstStage.png",
       "source": "BasicOverview.png",
-      "sourceScene": "Assets/NormalStage/stage1-1.unity",
+      "sourceScene": "Assets/NormalStage/stage1-1/stage1-1.unity",
       "capture": "開始時のキューブ、動かせるタイル、カギ、ゴール。",
       "cropInSourcePixelsFromTopLeft": [
-        360,
-        90,
-        1469.9059561128527,
-        900
+        405,
+        190,
+        1190,
+        728.6180422264875
       ],
       "screenshotArea": [
         94,
         232,
         1042,
         638
-      ]
+      ],
+      "sourceSceneSha256": "A5C754E207CE5281EB60F67F9AE611F31113EA327D0576618354CF9D3FD8F724"
     },
     {
       "id": "boss_stage",
@@ -72,8 +73,8 @@
       "id": "jump",
       "image": "../Jump.png",
       "source": "JumpLesson.png",
-      "sourceScene": "Assets/NormalStage/stage2-1.unity",
-      "capture": "配置判定に通るマス(6,5)にジャンプ台を移動し、既存セル進入処理で自動ジャンプ。約0.16秒後の空中を撮影。",
+      "sourceScene": "Assets/NormalStage/stage2-1/stage2-1.unity",
+      "capture": "最新2-1の配置判定に通るマス(11,14)にジャンプ台を移動し、既存セル進入処理で自動ジャンプ。トゲ(12,14)を越え、着地タイル(13,14)へ向かう約0.16秒後を撮影。",
       "camera": "ゲームカメラの向きを維持。通過マス+高さ0.45へ画角中心を移動。orthographicSize=3.5。撮影用コピーのみ変更。",
       "cropInSourcePixelsFromTopLeft": [
         350,
@@ -93,34 +94,36 @@
       ],
       "cells": {
         "start": [
-          6,
-          5
+          11,
+          14
         ],
         "skipped": [
-          7,
-          5
+          12,
+          14
         ],
         "landing": [
-          8,
-          5
+          13,
+          14
         ]
       },
       "screenProjectionAtCellSurfaceHeightPoint5": {
         "start": [
-          850.90686,
-          611.694
+          850.9068,
+          611.684448
         ],
         "skipped": [
-          960.0033,
-          534.5511
+          960.0032,
+          534.541565
         ],
         "landing": [
-          1069.09985,
-          457.4082
+          1069.09973,
+          457.398743
         ]
       },
-      "hasLandingTile": true
+      "hasLandingTile": true,
+      "sourceSceneSha256": "82E12FDB3335C944A6DE3AFFB4106EB1D00BC9C2961B646DDB6971D1CDAE4BBA"
     }
   ],
-  "retainedSources": "過去の撮影・生成素材は保持。現行画像は上記3枚の撮影とGameStyle素材を使用。"
+  "retainedSources": "過去の撮影・生成素材は保持。現行画像は上記3枚の撮影とGameStyle素材を使用。",
+  "normalStageCaptureTool": "Tools/Popup/CapturePopupStages.cs"
 }
