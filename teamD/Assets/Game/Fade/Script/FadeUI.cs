@@ -43,6 +43,9 @@ public class FadeUI : MonoBehaviour
     [SerializeField]
     private UnityEvent _onFadeOutCompleted = new UnityEvent();
 
+    [SerializeField]
+    private DirectionIndicator directionIndicator;
+
     // 次のシーンのFadeUIへ引き継ぐ情報。
     // シーン内のオブジェクト自体は保持しない。
     private static bool s_hasNextFadeIn;
@@ -242,7 +245,7 @@ public class FadeUI : MonoBehaviour
 
             yield return null;
         }
-
+      
         // 最後は指定した透明度に正確に合わせる。
         SetNormalImage(to, true);
     }
@@ -258,6 +261,7 @@ public class FadeUI : MonoBehaviour
 
         _image.enabled = visible;
         _image.raycastTarget = visible;
+       
     }
 
     private void ResolveTransition()
