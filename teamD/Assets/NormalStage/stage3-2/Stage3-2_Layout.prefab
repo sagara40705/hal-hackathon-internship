@@ -152,7 +152,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294947814
+    rgba: 4290740223
 --- !u!1 &623746214626322520
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +306,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294947814
+    rgba: 4294961766
 --- !u!1 &929904747582322950
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +850,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294947814
+    rgba: 4294961766
 --- !u!1 &7104284372802108796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1001,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294947814
+    rgba: 4290740223
 --- !u!1 &8752383498342776816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,6 +3545,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8053267094545901925}
     m_Modifications:
+    - target: {fileID: 407814349647370058, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 407814349647370058, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 407814349647370058, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3056304937081298057, guid: cb52b50896b115140a1992e5ce491046, type: 3}
       propertyPath: m_Name
       value: Cell_Warp_0_0
@@ -3598,9 +3610,33 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: _color.b
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: _color.g
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: _color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
       propertyPath: _receiver
       value: 
       objectReference: {fileID: 6190442351857935222}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: _pairLabels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: '_pairLabels.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3716090233077561349}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: '_pairLabels.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1405446466305581918}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3885,6 +3921,18 @@ PrefabInstance:
       propertyPath: _receiver
       value: 
       objectReference: {fileID: 464527106390982305}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: _pairLabels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: '_pairLabels.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6431854323925696416}
+    - target: {fileID: 8248063516461999922, guid: cb52b50896b115140a1992e5ce491046, type: 3}
+      propertyPath: '_pairLabels.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6064258919894371583}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

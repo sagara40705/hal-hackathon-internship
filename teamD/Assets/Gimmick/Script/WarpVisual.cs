@@ -3,15 +3,75 @@ using UnityEngine;
 /// <summary>Marks the actual landing cell and flashes only after a successful teleport.</summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Warp))]
+[ExecuteAlways]
 public sealed class WarpVisual : MonoBehaviour
 {
     [SerializeField] private GimmickPulse _departure;
     [SerializeField] private GimmickPulse _receiver;
     [SerializeField] private GameObject _receiverPrefab;
     [SerializeField] private Color _color = new Color(.72f, .42f, 1f);
+    [SerializeField] private Renderer[] _rings;
+    [SerializeField] private Renderer _inlay;
+    [SerializeField] private ParticleSystem[] _ambient;
+    [SerializeField] private TextMesh[] _pairLabels;
     private GameObject _ownedReceiver;
+    private MaterialPropertyBlock _properties;
+    private bool _refreshAppearance;
 
-    private void Start() => PositionReceiver();
+    public Color PairColor => _color;
+
+    private void OnEnable() => ApplyPairAppearance();
+    private void OnValidate() => _refreshAppearance = true;
+    private void Update()
+    {
+        if (_refreshAppearance) ApplyPairAppearance();
+    }
+
+    private void Start()
+    {
+        if (Application.IsPlaying(gameObject)) PositionReceiver();
+    }
+
+    public void SetPairColor(Color color)
+    {
+        _color = color;
+        ApplyPairAppearance();
+    }
+
+    private void Tint(Renderer target, Color color, float emission)
+    {
+        if (target == null) return;
+        _properties ??= new MaterialPropertyBlock();
+        target.GetPropertyBlock(_properties);
+        _properties.SetColor("_BaseColor", color);
+        _properties.SetColor("_EmissionColor", color * emission);
+        target.SetPropertyBlock(_properties);
+    }
+
+    private void ApplyPairAppearance()
+    {
+        _refreshAppearance = false;
+        if (_rings != null)
+            foreach (var ring in _rings) Tint(ring, _color, 1.25f);
+        Tint(_inlay, _color * .26f, .3f);
+        if (_ambient != null)
+            foreach (var system in _ambient)
+                if (system != null)
+                {
+                    var main = system.main;
+                    if (main.startColor.color != _color) main.startColor = _color;
+                }
+        if (_receiver != null)
+            foreach (var ring in _receiver.GetComponentsInChildren<MeshRenderer>(true))
+                Tint(ring, _color, 1.25f);
+        if (_pairLabels != null)
+            foreach (var label in _pairLabels)
+                if (label != null)
+                {
+                    Color color = Color.Lerp(_color, Color.white, .32f);
+                    if (label.color != color) label.color = color;
+                }
+    }
 
     private void PositionReceiver()
     {
@@ -32,6 +92,7 @@ public sealed class WarpVisual : MonoBehaviour
             root.position = grid.GridToWorld(destination);
             root.rotation = grid.transform.rotation;
         }
+        ApplyPairAppearance();
     }
 
     public void PlayTransfer()
@@ -43,6 +104,8 @@ public sealed class WarpVisual : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_ownedReceiver != null) Destroy(_ownedReceiver);
+        if (_ownedReceiver == null) return;
+        if (Application.IsPlaying(gameObject)) Destroy(_ownedReceiver);
+        else DestroyImmediate(_ownedReceiver);
     }
 }
