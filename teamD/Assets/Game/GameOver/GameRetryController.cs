@@ -24,6 +24,6 @@ public class GameRetryController : MonoBehaviour
 
             SceneManager.LoadScene(
                 SceneManager.GetActiveScene().buildIndex);
-        });
+        }, transitionSound: null);
     }
 }

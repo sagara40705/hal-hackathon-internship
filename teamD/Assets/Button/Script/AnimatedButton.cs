@@ -89,6 +89,8 @@ public class AnimatedButton : MonoBehaviour,
             return;
 
         _isExiting = true;
+        // 決定が受け付けられたときだけ再生する。
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.ButtonClick);
         _button.interactable = false;
         _animator.SetTrigger("Exit");
     }

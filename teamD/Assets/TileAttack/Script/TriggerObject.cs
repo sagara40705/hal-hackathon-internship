@@ -54,6 +54,8 @@ public class TriggerObject : MonoBehaviour
         if (flying != null)
         {
             flying.Launch(enemy.transform, speed);
+            // 攻撃を発射したときの音。
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.PlayerAttack);
             if (cannon != null)
                 cannon.PlayFire();
         }

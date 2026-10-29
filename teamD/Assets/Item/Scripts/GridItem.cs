@@ -87,6 +87,11 @@ public sealed class GridItem : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        // 取得成功後、鍵の場合だけ音を鳴らす。
+        if (_itemType == ItemType.Key)
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.GetKey);
+        }
         _onCollected?.Invoke(player);
         return true;
     }

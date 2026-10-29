@@ -13,6 +13,7 @@ public sealed class HighSpeedController : MonoBehaviour
     [SerializeField, Range(0f, 0.3f)] private float _lineStrength = 0.3f;
     private bool _allowed = true;
     private bool _applied;
+    private bool _speedSoundPlayed;
     private float _originalTimeScale;
     private float _appliedTimeScale;
 
@@ -53,14 +54,26 @@ public sealed class HighSpeedController : MonoBehaviour
             _appliedTimeScale = _originalTimeScale * Mathf.Max(1f, _speedMultiplier);
             _applied = true;
         }
+        // ヒットストップからの復帰では再生し直さず、開始時に一度だけ鳴らす。
+        if (!_speedSoundPlayed && _appliedTimeScale > _originalTimeScale)
+        {
+            _speedSoundPlayed = true;
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySpeedSE();
+        }
         Time.timeScale = _appliedTimeScale;
     }
 
     public void EndSpeedUp()
     {
+        // このControllerが開始した倍速音だけを解除時に停止する。
+        if (Active == this && _speedSoundPlayed && SoundManager.Instance != null)
+            SoundManager.Instance.StopSpeedSE();
+
         if (_applied && Mathf.Approximately(Time.timeScale, _appliedTimeScale))
             Time.timeScale = _originalTimeScale;
         _applied = false;
+        _speedSoundPlayed = false;
         IsRequested = false;
         if (Active == this) Active = null;
         StateChanged?.Invoke();

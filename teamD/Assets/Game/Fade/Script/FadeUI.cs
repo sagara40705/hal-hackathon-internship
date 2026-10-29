@@ -75,7 +75,6 @@ public class FadeUI : MonoBehaviour
         s_hasNextFadeIn = false;
 
         IsBusy = true;
-
         // 開く演出の準備ができるまで画面を覆う。
         SetNormalImage(1f, true);
     }
@@ -122,7 +121,8 @@ public class FadeUI : MonoBehaviour
     public bool StartFadeOut(
         FadeType fadeOut,
         FadeType nextFadeIn,
-        UnityAction action)
+        UnityAction action,
+        SoundId? transitionSound = SoundId.Fade)
     {
         if (!isActiveAndEnabled || !_started || IsBusy)
             return false;
@@ -146,6 +146,9 @@ public class FadeUI : MonoBehaviour
         }
 
         IsBusy = true;
+        // フェード開始が受け付けられたときだけ再生する。
+        // null指定の場合は遷移音を鳴らさない。
+        if (transitionSound.HasValue && SoundManager.Instance != null) SoundManager.Instance.PlaySEById(transitionSound.Value);
 
         // 完全に覆った後、次のシーンへ渡す種類を記録する。
         UnityAction completed = () =>

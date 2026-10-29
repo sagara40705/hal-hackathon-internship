@@ -123,6 +123,9 @@ public class Player : MonoBehaviour
 			return;
 		}
 
+		// 次の足場に着地した瞬間に一度だけ再生する。
+        PlayLandingSound();
+
 		// セルの効果を発動
 		NotifyCellArrived();
 		cell.OnEnterPlayer(this);
@@ -197,6 +200,10 @@ public class Player : MonoBehaviour
         enabled = false;
         try
         {
+            // ジャンプ開始時に一度だけ再生する。
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySEById(SoundId.PlayerJump);
+
             while (elapsed < duration)
             {
                 if (_isGameOver)
@@ -222,6 +229,8 @@ public class Player : MonoBehaviour
                 OnFall();
             else
             {
+                // 空中では鳴らさず、着地先に床がある場合だけ再生する。
+                PlayLandingSound();
                 NotifyCellArrived();
                 cell.OnEnterPlayer(this);
             }
@@ -232,9 +241,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 初期配置・ワープの通知とは分け、実際の着地箇所から呼ぶ。
+    private void PlayLandingSound()
+    {
+        if (!_isGameOver && SoundManager.Instance != null)
+            SoundManager.Instance.PlaySEById(SoundId.PlayerLand);
+    }
+
     // ダメージを受けたときの処理(sagara)
     public void Damage()
     {
+        // ゲームオーバー確定後の重複通知では鳴らさない。
+        if (!_isGameOver)
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.PlayerDamage);
+        }
         OnFall();
     }
 

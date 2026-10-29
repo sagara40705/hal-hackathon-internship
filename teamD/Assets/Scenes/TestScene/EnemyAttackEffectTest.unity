@@ -629,9 +629,12 @@ MonoBehaviour:
   _tileGrid: {fileID: 1650181587}
   _tileDragController: {fileID: 1650181586}
   _attackIndicator: {fileID: 394145857}
+  _enemyAttackPrefab: {fileID: 0}
+  _animator: {fileID: 0}
   _startupTime: 8
   _recoveryTime: 4
   _maxAttackCount: 3
+  _minTileCount: 3
   _attackRange: 3
 --- !u!4 &454976704 stripped
 Transform:

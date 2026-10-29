@@ -332,6 +332,11 @@ public class TileGrid : MonoBehaviour
 
     public void PlayBreakEffect(TileGroup group)
     {
+        // 破片の個数にかかわらず、破壊するグループごとに一度再生する。
+        if (group != null)
+        {
+            if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.TileBreak);
+        }
         BreakEffectRequested?.Invoke(group);
     }
 
