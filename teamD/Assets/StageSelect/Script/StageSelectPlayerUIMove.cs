@@ -29,6 +29,18 @@ public class StageSelectPlayerUIMove : MonoBehaviour
     private Coroutine moveCoroutine;
     private bool isMoving = false;
 
+    public int CurrentStageIndex => currentStageIndex;
+    public bool IsMoving => isMoving;
+
+    public void SelectWorld(int world)
+    {
+        int index = (world - 1) * 5;
+        if (isMoving || stagePositions == null || index < 0 || index >= stagePositions.Length)
+            return;
+        currentStageIndex = index;
+        StartMove();
+    }
+
     private void Start()
     {
         if (stagePositions == null || stagePositions.Length == 0)
