@@ -68,7 +68,12 @@ public class FadeUI : MonoBehaviour
         ResolveTransition();
 
         if (_transition == null || !_transition.isActiveAndEnabled)
+        {
+            // 演出を置かないステージでも、リトライなどの完了処理は実行する。
+            _closingRequested = true;
+            action?.Invoke();
             return;
+        }
 
         _closingRequested = true;
 

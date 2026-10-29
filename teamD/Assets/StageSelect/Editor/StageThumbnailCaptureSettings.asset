@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: StageThumbnailCaptureSettings
   m_EditorClassIdentifier: Assembly-CSharp-Editor::StageThumbnailCaptureSettings
   scenes:
-  - {fileID: 102900000, guid: 4499362c6450a1f498e29c3ec08f6068, type: 3}
-  - {fileID: 102900000, guid: f755290807619f949a8f6686f3efc402, type: 3}
-  - {fileID: 102900000, guid: 519db158239fd694da763b298cdbeb81, type: 3}
+  - {fileID: 102900000, guid: 3a89c4d326c10344ca209df431377ae3, type: 3}
+  - {fileID: 102900000, guid: cb7d65c6fd709a64c834215713091963, type: 3}
+  - {fileID: 102900000, guid: ac6962a3a2d719143b9265e8208fee34, type: 3}
+  - {fileID: 102900000, guid: 6921060a00cd2c743a0135ff19229a8f, type: 3}
+  - {fileID: 102900000, guid: 4ef8de6acdac0734cb5d6679a9a6133d, type: 3}
+  - {fileID: 102900000, guid: 84185c6b53ad5244ea36be627632c135, type: 3}
+  - {fileID: 102900000, guid: e7da0fe55d54e904e9736f5b6dafa3b5, type: 3}
+  - {fileID: 102900000, guid: 8d9c21c7d235c46409d641a904532fe9, type: 3}
+  - {fileID: 102900000, guid: 60a9fb8002fe0be4c9834b18c94aa684, type: 3}
+  - {fileID: 102900000, guid: dfcaffd8f36b0b2418b929b318028fc3, type: 3}
+  - {fileID: 102900000, guid: f0e327d9bcdcdba4c8046fb4616dbbc9, type: 3}
+  - {fileID: 102900000, guid: e5ce7688474010a44b9b669fb04a5e1b, type: 3}
+  - {fileID: 102900000, guid: cde0b55b8dbe25542be7a9f335837ad5, type: 3}
+  - {fileID: 102900000, guid: 5a154111cbff6e54787209df161a1e27, type: 3}
+  - {fileID: 102900000, guid: d348782decea35845ba98e866b8f9550, type: 3}
   outputFolder: {fileID: 102900000, guid: 0c97979900d85ec4aa9d2f4291ff0a3b, type: 3}
   width: 640
   height: 360
