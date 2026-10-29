@@ -1,96 +1,128 @@
 using UnityEngine;
+using UnityEngine.Events;
+using System.Collections;
+
 /// <summary>
 ///オブジェクトの半径を計算して転がすスクリプト
 /// 作成者：牛田大翔
 /// </summary>
 public class StageSelectPlayerRolling : MonoBehaviour
 {
-    [Header("サイコロの半径")]
-    public float rollRadius = 0.5f;
+    [SerializeField, Tooltip("グリッドの1マスの大きさ")]
+    private float _gridSize = 1.0f;
 
-    [Header("床の高さ（床の表面のY座標）")]
-    public float groundY = 0f;
+    [SerializeField, Tooltip("1マス移動する時間")]
+    private float _rollDuration = 0.25f;
 
-    [Header("めり込み補正")]
-    public float correctionOffset = 0.01f;
+    [SerializeField, Tooltip("回転の補間カーブ")]
+    private AnimationCurve _rollCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    private Vector3 previousPosition;
-    private BoxCollider boxCollider;
+    [SerializeField, Tooltip("初期グリッド座標")]
+    private int _startGridPosition = 0;
 
-    private void Start()
+    [SerializeField, Tooltip("目的地への移動完了時のイベント")]
+    private UnityEvent _onMoveComplete = new UnityEvent();
+
+    public bool IsRolling => _isRolling;
+    public int GridPosition => _gridPosition;
+    public int TargetGridPosition => _targetGridPosition;
+
+    private Vector3 _originPosition;
+    private int _gridPosition;
+    private int _targetGridPosition;
+
+    private Coroutine _moveCoroutine;
+    private bool _isRolling;
+
+
+    private void Awake()
     {
-        previousPosition = transform.position;
-        boxCollider = GetComponent<BoxCollider>();
+        _originPosition = transform.position - Vector3.right * (_startGridPosition * _gridSize);
 
-        if (boxCollider == null)
-        {
-            Debug.LogError("Box Colliderが見つかりません。");
-        }
+        _gridPosition = _startGridPosition;
+        _targetGridPosition = _gridPosition;
     }
 
-    private void LateUpdate()
+    // 指定したグリッド座標まで移動する
+    public void MoveTo(int targetGridPosition)
     {
-        // ほかのスクリプトによる移動量を取得
-        Vector3 movement = transform.position - previousPosition;
-        movement.y = 0f;
+        _targetGridPosition = targetGridPosition;
 
-        float distance = movement.magnitude;
+        // 移動処理が実行中なら目標だけ更新
+        if (_isRolling)
+            return;
 
-        if (distance > 0.0001f && rollRadius > 0f)
+        if (_gridPosition == _targetGridPosition)
+            return;
+
+        _moveCoroutine = StartCoroutine(MoveCoroutine());
+    }
+
+    // 目標グリッド座標まで移動する
+    private IEnumerator MoveCoroutine()
+    {
+        _isRolling = true;
+
+        while (_gridPosition != _targetGridPosition)
         {
-            Vector3 direction = movement.normalized;
+            int direction = _targetGridPosition > _gridPosition ? 1 : -1;
+            yield return RollCoroutine(direction);
 
-            // 移動方向に対して垂直な回転軸
-            Vector3 rotationAxis =
-                Vector3.Cross(Vector3.up, direction).normalized;
+            _gridPosition += direction;
 
-            float angle = distance / rollRadius * Mathf.Rad2Deg;
-
-            transform.Rotate(rotationAxis, angle, Space.World);
+            // 移動終了位置をグリッドに補正
+            transform.position = _originPosition
+                + Vector3.right * (_gridPosition * _gridSize);
         }
 
-        // 回転後のBox Colliderの最下部を計算
-        if (boxCollider != null)
+        _isRolling = false;
+        _moveCoroutine = null;
+
+        _onMoveComplete.Invoke();
+    }
+
+    // 1マス分転がる
+    private IEnumerator RollCoroutine(int direction)
+    {
+        Vector3 moveDirection = Vector3.right * direction;
+
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+
+        // 移動方向側の接地辺を支点にする
+        Vector3 pivot = startPosition
+            + moveDirection * (_gridSize * 0.5f)
+            + Vector3.down * (_gridSize * 0.5f);
+
+        Vector3 rotationAxis = Vector3.Cross(
+            Vector3.up,
+            moveDirection
+        );
+
+        float timer = 0.0f;
+        while (timer < _rollDuration)
         {
-            Vector3 center = boxCollider.center;
-            Vector3 halfSize = boxCollider.size * 0.5f;
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(
+                timer / Mathf.Max(_rollDuration, 0.0001f)
+            );
 
-            float lowestY = float.MaxValue;
+            float angle = 90.0f * Mathf.Clamp01(_rollCurve.Evaluate(t));
+            Quaternion rotation = Quaternion.AngleAxis(angle, rotationAxis);
 
-            // Box Colliderの8つの頂点を調べる
-            for (int x = -1; x <= 1; x += 2)
-            {
-                for (int y = -1; y <= 1; y += 2)
-                {
-                    for (int z = -1; z <= 1; z += 2)
-                    {
-                        Vector3 localCorner = center + new Vector3(
-                            halfSize.x * x,
-                            halfSize.y * y,
-                            halfSize.z * z
-                        );
+            // 接地辺を中心に位置と回転を更新
+            transform.position = pivot
+                + rotation * (startPosition - pivot);
 
-                        Vector3 worldCorner =
-                            boxCollider.transform.TransformPoint(localCorner);
+            transform.rotation = rotation * startRotation;
 
-                        if (worldCorner.y < lowestY)
-                        {
-                            lowestY = worldCorner.y;
-                        }
-                    }
-                }
-            }
-
-            // 最下部が床より低ければ上方向へ補正
-            if (lowestY < groundY + correctionOffset)
-            {
-                Vector3 position = transform.position;
-                position.y += groundY + correctionOffset - lowestY;
-                transform.position = position;
-            }
+            yield return null;
         }
 
-        // 補正後の位置を保存
-        previousPosition = transform.position;
+        // 回転終了時の姿勢を確定
+        transform.rotation = Quaternion.AngleAxis(
+            90.0f,
+            rotationAxis
+        ) * startRotation;
     }
 }
