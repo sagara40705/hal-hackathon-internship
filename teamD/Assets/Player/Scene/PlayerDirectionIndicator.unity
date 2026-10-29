@@ -483,6 +483,14 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _startDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      propertyPath: _startDirection.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4203050672297893034, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       propertyPath: _onFallEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -577,6 +585,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4618278131466255927, guid: 6baa12a280981064d84a81435baf6949, type: 3}
       insertIndex: -1
       addedObject: {fileID: 543070219}
+    - targetCorrespondingSourceObject: {fileID: 4618278131466255927, guid: 6baa12a280981064d84a81435baf6949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 543070223}
   m_SourcePrefab: {fileID: 100100000, guid: 6baa12a280981064d84a81435baf6949, type: 3}
 --- !u!1 &543070215 stripped
 GameObject:
@@ -614,6 +625,24 @@ MonoBehaviour:
   _onCountChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &543070223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543070215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c2b8ab2961172429acd6f31c077cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveDirection
+  player: {fileID: 543070216}
+  objectPrefab: {fileID: 6594184303092565267, guid: 5c323e1a5f06a184d965e3af42b443b6, type: 3}
+  targetObject: {fileID: 543070217}
+  spawnDistance: 1
+  spawnHeight: 1
+  spawnRotation: {x: 90, y: 0, z: 180}
 --- !u!1 &639975039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1033,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1237,6 +1266,9 @@ MonoBehaviour:
   _dragHeight: 0.3
   _validColor: {r: 0, g: 1, b: 1, a: 1}
   _invalidColor: {r: 1, g: 0, b: 0, a: 1}
+  _rendererData: {fileID: 0}
+  _hoverValidColor: {r: 0, g: 1, b: 0, a: 1}
+  _hoverInvalidColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1209963418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1609,6 +1641,7 @@ MonoBehaviour:
   - {x: 19, y: 17}
   - {x: 18, y: 18}
   - {x: 17, y: 19}
+  _placementBoundaryEffect: {fileID: 0}
   _drawGizmos: 1
   _placementEffect: {fileID: 1209963420}
 --- !u!4 &1209963419
@@ -1652,6 +1685,8 @@ MonoBehaviour:
   _effectHeight: 0.3
   _surfaceHeight: -0.52
   _duration: 0.4
+  _sparkHeight: 0.2
+  _outlineWave: {fileID: 0}
 --- !u!1001 &1218315062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2415,6 +2450,34 @@ PrefabInstance:
     - target: {fileID: 1213178461768688933, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CancelInvoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DirectionIndicator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281558202680158990, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
+      propertyPath: _onFadeOutCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8863456566595969355, guid: 13bf24c57f42928499655311ce8e3fec, type: 3}
       propertyPath: m_Name
