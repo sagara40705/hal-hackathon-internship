@@ -16,6 +16,8 @@ public class HitStop : MonoBehaviour
 
     public void Stop()
     {
+        if (StageStartPopup.IsShowing) return;
+
         if (stopCoroutine != null)
         {
             StopCoroutine(stopCoroutine);
@@ -31,12 +33,12 @@ public class HitStop : MonoBehaviour
         // Time.timeScale = 0でも待機できる
         yield return new WaitForSecondsRealtime(stopDuration);
 
-        Time.timeScale = 1f;
+        if (!StageStartPopup.IsShowing) Time.timeScale = 1f;
         stopCoroutine = null;
     }
 
     void OnDisable()
     {
-        Time.timeScale = 1f;
+        if (!StageStartPopup.IsShowing) Time.timeScale = 1f;
     }
 }

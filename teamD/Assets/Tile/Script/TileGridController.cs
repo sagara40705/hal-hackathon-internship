@@ -111,6 +111,12 @@ public class TileGridController : MonoBehaviour
 
     private void Update()
     {
+        if (StageStartPopup.BlocksGameplayInput)
+        {
+            if (_hoveredGroup != null) ClearHover();
+            return;
+        }
+
         Mouse mouse = Mouse.current;
         if (mouse == null)
             return;
@@ -235,6 +241,9 @@ public class TileGridController : MonoBehaviour
     // ドラッグ開始の共通処理
     private bool StartDragging(TileGroup group)
     {
+        if (StageStartPopup.BlocksGameplayInput)
+            return false;
+
         if (_selectedGroup != null || group == null || group.IsStatic)
             return false;
 
