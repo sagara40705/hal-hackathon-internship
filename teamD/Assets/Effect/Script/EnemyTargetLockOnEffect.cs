@@ -2,189 +2,177 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 /// <summary>
-/// 攻撃予告の四隅を収束させ、逆三角形を浮かせる表示専用の演出。
-/// 攻撃やタイル破壊の処理は行わず、親の生成・削除に従う。
+/// 照準画像をカメラに向け、漂う→移動→縮小→固定の順で表示する。
+/// 対象の選択・攻撃タイミングは既存の敵処理に任せる。
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class EnemyTargetLockOnEffect : MonoBehaviour
 {
-    [Header("表示")]
+    [Header("画像の表示")]
     [SerializeField] private Material _visualMaterial;
     [SerializeField] private Camera _viewCamera;
-    [SerializeField] private Color _frameColor = new Color(1f, 0.32f, 0.07f, 1f);
-    [SerializeField] private Color _markerColor = new Color(1f, 0.78f, 0.35f, 1f);
-    [SerializeField] private Color _outlineColor = new Color(0.09f, 0.012f, 0.025f, 0.95f);
+    [SerializeField, Min(0.01f)] private float _size = 1.15f;
+    [SerializeField] private Color _searchColor = new Color(0.08f, 0.65f, 1f, 0.85f);
+    [SerializeField] private Color _lockedColor = new Color(1f, 0.24f, 0.06f, 1f);
+    [SerializeField] private Color _outlineColor = new Color(0.035f, 0.015f, 0.035f, 0.8f);
+    [Header("漂ってからロックオンするまで")]
+    [SerializeField, Min(0f)] private float _searchDuration = 0.65f;
+    [SerializeField, Min(0.01f)] private float _moveDuration = 0.3f;
+    [SerializeField, Min(0.01f)] private float _lockDuration = 0.18f;
+    [SerializeField, Min(0f)] private float _driftRadius = 0.55f;
+    [SerializeField, Min(0f)] private float _searchLift = 0.45f;
+    [SerializeField, Min(1f)] private float _searchScale = 1.35f;
+    [SerializeField, Tooltip("ロック後の中心位置。ワールド座標の上方向")]
+    private float _targetHeight = 0.02f;
 
-    [Header("四隅のロックオン")]
-    [SerializeField, Min(0.1f)] private float _frameSize = 1.06f;
-    [SerializeField, Min(0.01f)] private float _cornerLength = 0.2f;
-    [SerializeField, Min(0.001f)] private float _lineWidth = 0.035f;
-    [SerializeField, Min(0.001f)] private float _outlineWidth = 0.06f;
-    [SerializeField, Min(0.01f)] private float _appearDuration = 0.25f;
-    [SerializeField, Min(1f)] private float _appearScale = 1.45f;
-
-    [Header("浮かぶ逆三角形")]
-    [SerializeField, Min(0.01f)] private float _markerWidth = 0.26f;
-    [SerializeField, Min(0.01f)] private float _markerHeight = 0.23f;
-    [SerializeField] private float _markerLift = 0.43f;
-    [SerializeField, Min(0f)] private float _bobAmount = 0.035f;
-    [SerializeField, Min(0f)] private float _bobSpeed = 3f;
-
-    private readonly LineRenderer[] _frames = new LineRenderer[4];
-    private readonly LineRenderer[] _outlines = new LineRenderer[4];
-    private readonly Color[] _markerColors = new Color[6];
-    private Transform _marker;
-    private Mesh _markerMesh;
+    private Mesh _faceMesh;
+    private Mesh _outlineMesh;
+    private MeshRenderer _faceRenderer;
+    private MeshRenderer _outlineRenderer;
+    private readonly Vector3[] _vertices = new Vector3[4];
+    private readonly Color[] _colors = new Color[4];
+    private Vector3 _searchOrigin;
+    private Vector3 _searchRight;
+    private Vector3 _searchUp;
+    private float _phase;
     private float _elapsed;
-    private bool _ready;
+    private bool _initialized;
 
     private void Awake()
     {
         if (_visualMaterial == null)
         {
-            Debug.LogError("ロックオン用Materialを設定してください。", this);
+            Debug.LogError("照準用Materialを設定してください。", this);
             enabled = false;
             return;
         }
+        _outlineMesh = CreateQuad("TargetOutline", 4, out _outlineRenderer);
+        _faceMesh = CreateQuad("TargetImage", 5, out _faceRenderer);
+    }
 
-        // コライダーを作らないため、タイル選択のRaycastを妨げない。
-        for (int i = 0; i < 4; i++)
-        {
-            _outlines[i] = CreateLine($"CornerOutline_{i}", 1);
-            _frames[i] = CreateLine($"CornerLight_{i}", 2);
-        }
-
-        CreateMarker();
-        _ready = true;
+    private Mesh CreateQuad(string objectName, int order, out MeshRenderer renderer)
+    {
+        GameObject obj = new GameObject(objectName);
+        obj.layer = gameObject.layer;
+        obj.transform.SetParent(transform, false);
+        Mesh mesh = new Mesh { name = objectName + "_Runtime" };
+        mesh.vertices = new Vector3[4];
+        mesh.uv = new[] { new Vector2(0, 0), new Vector2(1, 0),
+            new Vector2(1, 1), new Vector2(0, 1) };
+        mesh.triangles = new[] { 0, 2, 1, 0, 3, 2 };
+        mesh.MarkDynamic();
+        obj.AddComponent<MeshFilter>().sharedMesh = mesh;
+        renderer = obj.AddComponent<MeshRenderer>();
+        renderer.sharedMaterial = _visualMaterial;
+        renderer.shadowCastingMode = ShadowCastingMode.Off;
+        renderer.receiveShadows = false;
+        renderer.sortingOrder = order;
+        renderer.enabled = false;
+        return mesh;
     }
 
     private void OnEnable()
     {
         _elapsed = 0f;
-        if (_viewCamera == null)
-            _viewCamera = Camera.main;
-
-        if (_ready)
-            UpdateVisual();
+        _initialized = false;
+        if (_viewCamera == null) _viewCamera = Camera.main;
     }
 
-    private LineRenderer CreateLine(string objectName, int order)
+    private Vector3 SearchPosition(float time)
     {
-        GameObject obj = new GameObject(objectName);
-        obj.layer = gameObject.layer;
-        obj.transform.SetParent(transform, false);
-        LineRenderer line = obj.AddComponent<LineRenderer>();
-        line.sharedMaterial = _visualMaterial;
-        line.useWorldSpace = false;
-        line.positionCount = 3;
-        line.alignment = LineAlignment.View;
-        line.widthCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
-        line.numCornerVertices = 3;
-        line.numCapVertices = 2;
-        line.shadowCastingMode = ShadowCastingMode.Off;
-        line.receiveShadows = false;
-        line.sortingOrder = order;
-        return line;
-    }
-
-    private void CreateMarker()
-    {
-        GameObject obj = new GameObject("FloatingTriangle");
-        obj.layer = gameObject.layer;
-        obj.transform.SetParent(transform, false);
-        _marker = obj.transform;
-
-        // 外側3頂点と内側3頂点で、暗い縁と明るい三角形を描く。
-        Vector3 a = new Vector3(-_markerWidth * 0.5f, _markerHeight / 3f, 0f);
-        Vector3 b = new Vector3(_markerWidth * 0.5f, _markerHeight / 3f, 0f);
-        Vector3 c = new Vector3(0f, -_markerHeight * 2f / 3f, 0f);
-        _markerMesh = new Mesh { name = "EnemyTargetTriangle_Runtime" };
-        _markerMesh.vertices = new[] { a, b, c, a * 0.68f, b * 0.68f, c * 0.68f };
-        _markerMesh.triangles = new[]
-        {
-            0, 1, 4, 0, 4, 3,
-            1, 2, 5, 1, 5, 4,
-            2, 0, 3, 2, 3, 5,
-            3, 4, 5
-        };
-        _markerMesh.MarkDynamic();
-        _markerMesh.RecalculateBounds();
-        obj.AddComponent<MeshFilter>().sharedMesh = _markerMesh;
-        MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
-        renderer.sharedMaterial = _visualMaterial;
-        renderer.shadowCastingMode = ShadowCastingMode.Off;
-        renderer.receiveShadows = false;
-        renderer.sortingOrder = 3;
+        return _searchOrigin + Vector3.up * _searchLift
+            + _searchRight * (Mathf.Sin(_phase + time * 2.2f) * _driftRadius)
+            + _searchUp * (Mathf.Cos(_phase + time * 1.7f) * _driftRadius * 0.35f);
     }
 
     private void LateUpdate()
     {
-        if (!_ready)
-            return;
+        if (_faceMesh == null) return;
+        if (_viewCamera == null) _viewCamera = Camera.main;
+        if (_viewCamera == null) return;
+
+        // Instantiate後、呼び出し元が配置位置を設定し終えてから記録する。
+        if (!_initialized)
+        {
+            _searchOrigin = transform.position;
+            _searchRight = _viewCamera.transform.right;
+            _searchUp = _viewCamera.transform.up;
+            // ゲーム本体のRandomの状態を変更しない。
+            _phase = (GetInstanceID() & 1023) * 0.017f;
+            _initialized = true;
+        }
 
         _elapsed += Time.deltaTime;
-        UpdateVisual();
-    }
+        Vector3 target = transform.position + Vector3.up * _targetHeight;
+        Vector3 center;
+        float scale = _searchScale;
+        float roll = Mathf.Sin(_phase + _elapsed * 2f) * 8f;
+        Color color = _searchColor;
+        float moveTime = Mathf.Max(0.01f, _moveDuration);
+        float lockTime = Mathf.Max(0.01f, _lockDuration);
+        float lockStart = _searchDuration + moveTime;
 
-    private void UpdateVisual()
-    {
-        float t = Mathf.Clamp01(_elapsed / Mathf.Max(0.01f, _appearDuration));
-        float eased = 1f - Mathf.Pow(1f - t, 3f);
-        float half = _frameSize * 0.5f * Mathf.Lerp(_appearScale, 1f, eased);
-        float arm = Mathf.Min(_cornerLength, half);
-        float fade = Mathf.Clamp01(_elapsed / 0.06f);
+        if (_elapsed < _searchDuration)
+        {
+            center = SearchPosition(_elapsed);
+        }
+        else if (_elapsed < lockStart)
+        {
+            float t = Mathf.Clamp01((_elapsed - _searchDuration) / moveTime);
+            float eased = t * t * (3f - 2f * t);
+            center = Vector3.Lerp(SearchPosition(_searchDuration), target, eased);
+            roll = Mathf.Sin(_phase + _searchDuration * 2f) * 8f * (1f - eased);
+            color = Color.Lerp(_searchColor, _lockedColor, eased);
+        }
+        else
+        {
+            // ロック後は漂わせず、中心を対象タイルに固定する。
+            center = target;
+            roll = 0f;
+            float t = Mathf.Clamp01((_elapsed - lockStart) / lockTime);
+            float eased = 1f - Mathf.Pow(1f - t, 3f);
+            scale = Mathf.Lerp(_searchScale, 1f, eased);
+            float flash = Mathf.Sin(t * Mathf.PI);
+            color = Color.Lerp(_lockedColor, Color.white, flash * 0.85f);
+        }
 
-        // 収束した瞬間だけ小さく光る。攻撃時刻を推測した点滅は行わない。
-        float flashTime = (_elapsed - _appearDuration) / 0.075f;
-        float flash = Mathf.Exp(-flashTime * flashTime);
-        Color light = Color.Lerp(_frameColor, new Color(1f, 0.92f, 0.7f, 1f), flash);
-        light.a *= fade * (0.92f + 0.08f * Mathf.Sin(_elapsed * 3f));
+        float fade = Mathf.Clamp01(_elapsed / 0.1f);
+        color.a *= fade;
         Color outline = _outlineColor;
         outline.a *= fade;
+        Quaternion facing = _viewCamera.transform.rotation * Quaternion.Euler(0f, 0f, roll);
+        Vector3 right = facing * Vector3.right;
+        Vector3 up = facing * Vector3.up;
+        float size = _size * scale;
 
-        for (int i = 0; i < 4; i++)
-        {
-            float sx = i % 2 == 0 ? -1f : 1f;
-            float sz = i < 2 ? -1f : 1f;
-            Vector3 corner = new Vector3(sx * half, 0f, sz * half);
-            DrawCorner(_outlines[i], corner, sx, sz, arm, _outlineWidth, outline);
-            DrawCorner(_frames[i], corner, sx, sz, arm,
-                _lineWidth * (1f + flash * 0.25f), light);
-        }
-
-        // ブロックに追従しながら、画面から読める向きで上下する。
-        float lift = _markerLift + Mathf.Sin(_elapsed * _bobSpeed) * _bobAmount;
-        _marker.localPosition = Vector3.up * (lift + (1f - eased) * 0.12f);
-        _marker.localScale = Vector3.one * Mathf.Lerp(0.65f, 1f, eased);
-        if (_viewCamera == null)
-            _viewCamera = Camera.main;
-        if (_viewCamera != null)
-            _marker.rotation = _viewCamera.transform.rotation;
-
-        Color markerColor = Color.Lerp(_markerColor, Color.white, flash * 0.65f);
-        markerColor.a *= fade;
-        for (int i = 0; i < 3; i++)
-        {
-            _markerColors[i] = outline;
-            _markerColors[i + 3] = markerColor;
-        }
-        _markerMesh.colors = _markerColors;
+        // ワールド座標で板を作り、薄い親CubeのScaleに潰されるのを防ぐ。
+        DrawQuad(_outlineMesh, center + _viewCamera.transform.forward * 0.002f,
+            right, up, size * 1.045f, outline);
+        DrawQuad(_faceMesh, center, right, up, size, color);
+        bool visible = Vector3.Dot(center - _viewCamera.transform.position,
+            _viewCamera.transform.forward) > 0f;
+        _faceRenderer.enabled = visible;
+        _outlineRenderer.enabled = visible;
     }
 
-    private static void DrawCorner(LineRenderer line, Vector3 corner,
-        float sx, float sz, float arm, float width, Color color)
+    private void DrawQuad(Mesh mesh, Vector3 center, Vector3 right,
+        Vector3 up, float size, Color color)
     {
-        line.SetPosition(0, corner - Vector3.right * sx * arm);
-        line.SetPosition(1, corner);
-        line.SetPosition(2, corner - Vector3.forward * sz * arm);
-        line.widthMultiplier = width;
-        line.startColor = color;
-        line.endColor = color;
+        Vector3 x = right * (size * 0.5f);
+        Vector3 y = up * (size * 0.5f);
+        _vertices[0] = transform.InverseTransformPoint(center - x - y);
+        _vertices[1] = transform.InverseTransformPoint(center + x - y);
+        _vertices[2] = transform.InverseTransformPoint(center + x + y);
+        _vertices[3] = transform.InverseTransformPoint(center - x + y);
+        for (int i = 0; i < 4; i++) _colors[i] = color;
+        mesh.vertices = _vertices;
+        mesh.colors = _colors;
+        mesh.RecalculateBounds();
     }
 
     private void OnDestroy()
     {
-        if (_markerMesh != null)
-            Destroy(_markerMesh);
+        if (_faceMesh != null) Destroy(_faceMesh);
+        if (_outlineMesh != null) Destroy(_outlineMesh);
     }
 }

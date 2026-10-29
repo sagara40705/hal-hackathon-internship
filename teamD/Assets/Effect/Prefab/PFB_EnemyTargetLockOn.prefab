@@ -44,19 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56df05cfb0714cb38bd804f7932e8729, type: 3}
   m_Name:
   m_EditorClassIdentifier:
-  _visualMaterial: {fileID: 2100000, guid: 0564469c553c4bf289b1d2604c38c698, type: 2}
+  _visualMaterial: {fileID: 2100000, guid: 59753ac469824ed7a31ed2cf3fb1f46b, type: 2}
   _viewCamera: {fileID: 0}
-  _frameColor: {r: 1, g: 0.32, b: 0.07, a: 1}
-  _markerColor: {r: 1, g: 0.78, b: 0.35, a: 1}
-  _outlineColor: {r: 0.09, g: 0.012, b: 0.025, a: 0.95}
-  _frameSize: 1.06
-  _cornerLength: 0.2
-  _lineWidth: 0.035
-  _outlineWidth: 0.06
-  _appearDuration: 0.25
-  _appearScale: 1.45
-  _markerWidth: 0.26
-  _markerHeight: 0.23
-  _markerLift: 0.43
-  _bobAmount: 0.035
-  _bobSpeed: 3
+  _size: 1.15
+  _searchColor: {r: 0.08, g: 0.65, b: 1, a: 0.85}
+  _lockedColor: {r: 1, g: 0.24, b: 0.06, a: 1}
+  _outlineColor: {r: 0.035, g: 0.015, b: 0.035, a: 0.8}
+  _searchDuration: 0.65
+  _moveDuration: 0.3
+  _lockDuration: 0.18
+  _driftRadius: 0.55
+  _searchLift: 0.45
+  _searchScale: 1.35
+  _targetHeight: 0.02
