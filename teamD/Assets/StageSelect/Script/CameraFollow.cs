@@ -1,13 +1,11 @@
 using UnityEngine;
+
 /// <summary>
 /// 特定のタグ(今回はプレイヤー)を探して動くスクリプト
 /// 作成者：牛田大翔
 /// </summary>
 public class CameraFollow : MonoBehaviour
 {
-    [Header("追従速度")]
-    [SerializeField] private float followSpeed = 5f;
-
     private Transform player;
 
     // カメラとPlayerの初期位置の差
@@ -42,10 +40,6 @@ public class CameraFollow : MonoBehaviour
         Vector3 targetPosition = player.position + offset;
         targetPosition.y = transform.position.y;
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            targetPosition,
-            followSpeed * Time.deltaTime
-        );
+        transform.position = targetPosition;
     }
 }
