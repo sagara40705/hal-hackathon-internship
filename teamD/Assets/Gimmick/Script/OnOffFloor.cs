@@ -18,6 +18,8 @@ public sealed class OnOffFloor : MonoBehaviour
     [SerializeField, Tooltip("消えているときの枠。Colliderは付けない")]
     private GameObject _inactiveVisual;
 
+    [SerializeField] private OnOffVisual _visual;
+
     private TileGrid _grid;
     private TileGroup _group;
     private Collider[] _colliders;
@@ -141,13 +143,14 @@ public sealed class OnOffFloor : MonoBehaviour
         }
     }
 
-    private void SetAppearance(bool solid)
+    private void SetAppearance(bool solid, bool animate = true)
     {
         IsSolid = solid;
         if (_solidVisual != null)
             _solidVisual.SetActive(solid);
         if (_inactiveVisual != null)
             _inactiveVisual.SetActive(!solid);
+        _visual?.ShowFloor(solid, animate && isActiveAndEnabled);
         foreach (Collider tileCollider in _colliders)
         {
             if (tileCollider != null)
@@ -184,7 +187,7 @@ public sealed class OnOffFloor : MonoBehaviour
             else if (_grid.GetCell(_positions[0]) == _group.Cells[0])
                 _grid.RemoveTile(_group);
         }
-        SetAppearance(true);
+        SetAppearance(true, false);
         _ready = false;
     }
 }

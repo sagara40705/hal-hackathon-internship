@@ -9,8 +9,12 @@ public class Warp : MonoBehaviour
 
     public void OnEnterPlayer(Player player)
     {
+        if (player == null) return;
+        Vector2Int before = player.CurrnetPosition;
         player.MoveByGridOffset(_warpAmount);
         PeriodicBlockContacts.OnTeleported(player);
+        if (player.CurrnetPosition != before)
+            GetComponent<WarpVisual>()?.PlayTransfer();
     }
 
     private void OnDrawGizmos()
