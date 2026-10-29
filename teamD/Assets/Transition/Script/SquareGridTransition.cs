@@ -147,8 +147,8 @@ public class SquareGridTransition : MonoBehaviour
         {
             BuildGrid();
 
-            // シーン開始時は覆われた状態。
-            SetAllScales(1.02f);
+            // 閉じる演出を初めて使う場合にも備え、0から作る。
+            SetAllScales(0f);
         }
     }
 
@@ -156,7 +156,9 @@ public class SquareGridTransition : MonoBehaviour
     {
         PrepareGrid();
 
-        // 四角で覆えているので、背景だけ透明にする。
+        // 開くときは、四角で覆った状態から始める。
+        SetAllScales(1.02f);
+
         SetBlockerOpaque(false);
 
         yield return AnimateSquares(false);
@@ -355,4 +357,24 @@ public class SquareGridTransition : MonoBehaviour
         if (Instance == this)
             Instance = null;
     }
+
+
+    /// <summary>
+    /// 四角の演出と入力ブロックを解除する。
+    /// 通常フェードへ切り替えるときにも使用する。
+    /// </summary>
+    public void ResetVisual()
+    {
+        StopAllCoroutines();
+
+        _closing = false;
+        IsTransitioning = false;
+
+        SetAllScales(0f);
+        _gridRoot.gameObject.SetActive(false);
+
+        SetBlockerOpaque(false);
+        _inputBlocker.raycastTarget = false;
+    }
+
 }
