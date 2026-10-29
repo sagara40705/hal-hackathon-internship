@@ -26,7 +26,12 @@ public enum SoundId
     GameOver,
     Fade,
     Goal,
-    TileBreak, // タイル破壊音。既存IDをずらさないよう末尾に追加
+    TileBreak, 
+    RetryFade,
+    DoubleSpeed,
+    DoubleSpeedButton,
+    PlayerLand, // 転がり移動・ジャンプ後の着地音
+    PlayerJump, // ジャンプ開始時の音
 
 }
 

@@ -40,6 +40,9 @@ public class HightSpeedMode : MonoBehaviour,
     {
         if (!isActiveAndEnabled || _controller == null || _pointerId.HasValue || eventData.button != PointerEventData.InputButton.Left) return;
         if (!_controller.BeginSpeedUp()) return;
+        // 操作が受け付けられた場合だけ、倍速ボタン専用の音を鳴らす。
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySEById(SoundId.DoubleSpeedButton);
         _pointerId = eventData.pointerId;
         UpdateAppearance();
     }

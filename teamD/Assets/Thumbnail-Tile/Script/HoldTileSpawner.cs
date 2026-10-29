@@ -27,15 +27,21 @@ public class HoldTileSpawner : MonoBehaviour
 
     private void Start()
     {
-        // 最初の手持ちは待ち時間なしで補充する。
+        // ゲーム開始・リトライ直後の初期配置では補充音を鳴らさない。
         if (_spawnOnStart)
-            Refill();
+            RefillInternal(false);
     }
 
     /// <summary>
     /// SOの一覧からランダムに選び、各枠に補充する。
     /// </summary>
     public void Refill()
+    {
+        RefillInternal(true);
+    }
+
+    // 初期配置と通常補充で、音を再生するかを切り替える。
+    private void RefillInternal(bool playSound)
     {
         if (_tileGroupTable == null ||
             _holdTileElements == null ||
@@ -92,8 +98,8 @@ public class HoldTileSpawner : MonoBehaviour
             );
         }
 
-        // 初回生成を含め、補充できたときに一度だけ再生する。
-        if (_holdTileElements.Exists(element => element != null && element.HasTile))
+        // 通常補充が成功したときだけ、一度再生する。
+        if (playSound && _holdTileElements.Exists(element => element != null && element.HasTile))
         {
             if (SoundManager.Instance != null) SoundManager.Instance.PlaySEById(SoundId.TileRefill);
         }
