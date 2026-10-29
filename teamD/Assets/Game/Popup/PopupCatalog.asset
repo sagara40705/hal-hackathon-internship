@@ -15,3 +15,7 @@ MonoBehaviour:
   _entries:
   - _id: first_stage
     _image: {fileID: 21300000, guid: d66683a4573f2534c9bd893e5fe3a1e9, type: 3}
+  - _id: boss_stage
+    _image: {fileID: 21300000, guid: fdc0aaf9c533bc64c8679a2300c6a6c5, type: 3}
+  - _id: jump
+    _image: {fileID: 21300000, guid: cf804db934204fc43986094283421fd6, type: 3}

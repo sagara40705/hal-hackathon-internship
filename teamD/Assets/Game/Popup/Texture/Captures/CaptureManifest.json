@@ -1,0 +1,126 @@
+{
+  "capturedOn": "2026-10-29",
+  "captureMethod": "Unity Editor Play Mode / Game View / 1920x1080",
+  "sceneHandling": "ステージの一時コピーで撮影。元のゲームシーンは変更していません。",
+  "artworkMethod": "組み込みimage_genでタイトルUIに合わせた3素材を生成。Unity Canvasで実ゲーム画面・日本語・図を合成。1枚1920x1080。",
+  "generatedUi": {
+    "materials": [
+      "../Generated/GameStyle/TutorialPanel.png",
+      "../Generated/GameStyle/StartButton.png",
+      "../Generated/GameStyle/MouseLeft.png"
+    ],
+    "prompts": "../Generated/GameStyle/GenerationManifest.json",
+    "layout": "基本操作はマウス入力と実物ラベル、ボスは攻撃タイルの循環、ジャンプは3マスの位置関係。共通開始ボタンはPrefab。",
+    "builder": "Tools/Popup/BuildPopupArtwork.cs",
+    "captureImport": "NPOT None、最大2048、非圧縮、MipMapなし。",
+    "button": "PopupCloseButton.prefab / はじめる"
+  },
+  "guides": [
+    {
+      "id": "first_stage",
+      "image": "../FirstStage.png",
+      "source": "BasicOverview.png",
+      "sourceScene": "Assets/NormalStage/stage1-1.unity",
+      "capture": "開始時のキューブ、動かせるタイル、カギ、ゴール。",
+      "cropInSourcePixelsFromTopLeft": [
+        360,
+        90,
+        1469.9059561128527,
+        900
+      ],
+      "screenshotArea": [
+        94,
+        232,
+        1042,
+        638
+      ]
+    },
+    {
+      "id": "boss_stage",
+      "image": "../BossStage.png",
+      "source": "BossAttack.png",
+      "sourceScene": "Assets/Scenes/Stage/BossStage.unity",
+      "capture": "TriggerObjectの攻撃が命中し、ボス体力が減った瞬間。右の循環図も同じ実撮影の攻撃タイルを使用。",
+      "cropInSourcePixelsFromTopLeft": [
+        410,
+        40,
+        1510,
+        854.1970802919708
+      ],
+      "screenshotArea": [
+        94,
+        254,
+        1096,
+        620
+      ],
+      "cycleCrops": [
+        [
+          675,
+          548,
+          270,
+          240
+        ],
+        [
+          1260,
+          565,
+          270,
+          240
+        ]
+      ]
+    },
+    {
+      "id": "jump",
+      "image": "../Jump.png",
+      "source": "JumpLesson.png",
+      "sourceScene": "Assets/NormalStage/stage2-1.unity",
+      "capture": "配置判定に通るマス(6,5)にジャンプ台を移動し、既存セル進入処理で自動ジャンプ。約0.16秒後の空中を撮影。",
+      "camera": "ゲームカメラの向きを維持。通過マス+高さ0.45へ画角中心を移動。orthographicSize=3.5。撮影用コピーのみ変更。",
+      "cropInSourcePixelsFromTopLeft": [
+        350,
+        40,
+        1450,
+        844.0693430656934
+      ],
+      "screenshotArea": [
+        94,
+        244,
+        1096,
+        638
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "cells": {
+        "start": [
+          6,
+          5
+        ],
+        "skipped": [
+          7,
+          5
+        ],
+        "landing": [
+          8,
+          5
+        ]
+      },
+      "screenProjectionAtCellSurfaceHeightPoint5": {
+        "start": [
+          850.90686,
+          611.694
+        ],
+        "skipped": [
+          960.0033,
+          534.5511
+        ],
+        "landing": [
+          1069.09985,
+          457.4082
+        ]
+      },
+      "hasLandingTile": true
+    }
+  ],
+  "retainedSources": "過去の撮影・生成素材は保持。現行画像は上記3枚の撮影とGameStyle素材を使用。"
+}

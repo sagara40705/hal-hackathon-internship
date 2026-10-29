@@ -1,0 +1,23 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "file": "PanelSurface.png",
+      "prompt": "Use case: ui-mockup. Production game UI sprite, a SINGLE completely blank large rectangular tutorial panel surface for a minimalist isometric tile puzzle game. Wide 16:9 landscape composition, front-on orthographic, rectangular corners clipped by a tiny precise 45 degree chamfer. The subject fills 94% of canvas. Real transparent outside background. Face is uniformly warm ivory #F4F1E8, matte ceramic-like solid low-poly toy material, perfectly flat and almost uniform for overlaying typography and screenshots. A narrow 3 pixel light top bevel, subtle warm gray edge, only a very shallow dark charcoal bottom extrusion (about 1% of overall height). A restrained soft contact shadow. Refined commercial videogame UI, precise planar geometry, extremely clean and minimal. No internal compartments, no internal lines, no screenshot windows, no text or numbers, no icons, no props, no gold frame, no thick border, no roughness/grain, no stone, no rounded pills, no perspective angle, no outer environment. The entire face must remain empty; it is a scalable reusable panel sprite."
+    },
+    {
+      "file": "InstructionSurface.png",
+      "prompt": "Use case: ui-mockup. Make ONE blank instruction card background sprite for a premium minimalist isometric block puzzle game tutorial. Single front-facing wide horizontal rectangle about 3:1. Near-white warm surface #FFFEF8 with tiny chamfered corners, extremely slender warm-gray lower edge, subtle one pixel ivory bevel, shallow soft ambient shadow below. Restrained matte low-poly geometry, clean crisp no texture. The panel must be equally bright across the face so dark Japanese text can be placed on top. True transparent background; card occupies at least 92% width. No text, icons, numbers, decorative squares, screws, pictures, insets, gradients on the face, internal strokes, stripes, multiple panels, or angled perspective. This is a game UI COMPONENT, deliberately quiet and elegant, not a mockup in an environment."
+    },
+    {
+      "file": "ActionButton.png",
+      "prompt": "Use case: ui-mockup. One standalone front-facing gold game button background sprite on true transparency. Minimal premium isometric tile puzzle game style. Wide about 4.5:1 physical button, centered and occupying most of the canvas width, generous transparent padding vertically is OK. Main face a beautiful clean warm yellow #F5C84C, almost flat uniform color, very thin pale-yellow bevel top-left, precise tiny clipped 45-degree corners. Short solid dark warm-charcoal extrusion underneath (only about 8% of button height), restrained soft shadow. Subtle material depth, crisp geometry, matte tactile toy block, no texture. No letters, no symbols, no icon, no glow, no decorative corners, no metallic chrome, no stone, no multiple components. The entire top face must be blank for a dark Japanese label. No overall perspective distortion. This should read as one clear clickable control in an elegant commercially polished game, visually more restrained than a mobile loot button."
+    },
+    {
+      "file": "NumberToken.png",
+      "prompt": "Use case: ui-mockup. One SQUARE warm-white solid matte UI tile, on true transparent background. Like a small blank ivory keyboard key, completely blank and flat front-on, perfectly square, tiny clipped 45-degree corners, very shallow warm-gray bottom edge, very narrow pale bevel, subtle clean short shadow. The entire face must be solid off-white #FFFCF3, opaque and uniform, no central void. Object fills 80% of canvas. Crisp minimal low-poly puzzle videogame component. Absolutely no text, letters, numbers, symbols, holes, colored center, gradient vignette, texture or environment. This asset will be tinted blue in a game engine, so keep the face off-white."
+    }
+  ],
+  "composition": "Four separately generated UI materials. Actual Unity screenshots and Japanese typography composed in Unity; no AI-redrawn gameplay. See Tools/Popup/BuildPopupArtwork.cs.",
+  "rejected": "Blue number token variants had unwanted transparency and were rejected; the solid ivory token is tinted by Unity."
+}

@@ -1,0 +1,111 @@
+{
+  "verifiedOn": "2026-10-29",
+  "scene": "Assets/Game/Popup/PopupTest.unity",
+  "unity": "6000.3.7f1",
+  "result": {
+    "success": true,
+    "previews": [
+      {
+        "id": "first_stage",
+        "resolution": "(1920, 1080)",
+        "panel": "(x:57.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1331.30, y:66.24, width:432.40, height:105.28)"
+      },
+      {
+        "id": "boss_stage",
+        "resolution": "(1920, 1080)",
+        "panel": "(x:57.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1331.30, y:66.24, width:432.40, height:105.28)"
+      },
+      {
+        "id": "jump",
+        "resolution": "(1920, 1080)",
+        "panel": "(x:57.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1331.30, y:66.24, width:432.40, height:105.28)"
+      },
+      {
+        "id": "first_stage",
+        "resolution": "(1280, 720)",
+        "panel": "(x:38.40, y:21.60, width:1203.20, height:676.80)",
+        "button": "(x:887.53, y:44.16, width:288.27, height:70.19)"
+      },
+      {
+        "id": "boss_stage",
+        "resolution": "(1280, 720)",
+        "panel": "(x:38.40, y:21.60, width:1203.20, height:676.80)",
+        "button": "(x:887.53, y:44.16, width:288.27, height:70.19)"
+      },
+      {
+        "id": "jump",
+        "resolution": "(1280, 720)",
+        "panel": "(x:38.40, y:21.60, width:1203.20, height:676.80)",
+        "button": "(x:887.53, y:44.16, width:288.27, height:70.19)"
+      },
+      {
+        "id": "first_stage",
+        "resolution": "(1024, 768)",
+        "panel": "(x:30.72, y:113.28, width:962.56, height:541.44)",
+        "button": "(x:710.03, y:131.33, width:230.61, height:56.15)"
+      },
+      {
+        "id": "boss_stage",
+        "resolution": "(1024, 768)",
+        "panel": "(x:30.72, y:113.28, width:962.56, height:541.44)",
+        "button": "(x:710.03, y:131.33, width:230.61, height:56.15)"
+      },
+      {
+        "id": "jump",
+        "resolution": "(1024, 768)",
+        "panel": "(x:30.72, y:113.28, width:962.56, height:541.44)",
+        "button": "(x:710.03, y:131.33, width:230.61, height:56.15)"
+      },
+      {
+        "id": "first_stage",
+        "resolution": "(2560, 1080)",
+        "panel": "(x:377.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1651.30, y:66.24, width:432.40, height:105.28)"
+      },
+      {
+        "id": "boss_stage",
+        "resolution": "(2560, 1080)",
+        "panel": "(x:377.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1651.30, y:66.24, width:432.40, height:105.28)"
+      },
+      {
+        "id": "jump",
+        "resolution": "(2560, 1080)",
+        "panel": "(x:377.60, y:32.40, width:1804.80, height:1015.20)",
+        "button": "(x:1651.30, y:66.24, width:432.40, height:105.28)"
+      }
+    ],
+    "interactions": [
+      {
+        "id": "first_stage",
+        "catalogSelection": true,
+        "pausedMovement": true,
+        "outsideClickBlocked": true,
+        "closeFrameBlocked": true,
+        "mouseResume": true
+      },
+      {
+        "id": "boss_stage",
+        "catalogSelection": true,
+        "pausedMovement": true,
+        "outsideClickBlocked": true,
+        "closeFrameBlocked": true,
+        "mouseResume": true
+      },
+      {
+        "id": "jump",
+        "catalogSelection": true,
+        "pausedMovement": true,
+        "outsideClickBlocked": true,
+        "closeFrameBlocked": true,
+        "mouseResume": true
+      }
+    ],
+    "keyboard": "Enter submit and resume passed"
+  },
+  "inputMethod": "Input System temporary mouse and keyboard through InputSystemUIInputModule; settings cloned and restored",
+  "console": "Final run: compilationFailed=false and current console errors=0. Pipeline retained an older capture error from 04:06 UTC; this run was 05:16 UTC."
+}

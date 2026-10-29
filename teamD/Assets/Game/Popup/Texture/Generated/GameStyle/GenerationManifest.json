@@ -1,0 +1,25 @@
+{
+  "createdOn": "2026-10-29",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "name": "TutorialPanel",
+      "prompt": "Use case: ui-mockup. Create ONE production game UI sprite, a blank rectangular tutorial panel for a Japanese low-poly block puzzle game. The two input images are STYLE REFERENCES ONLY: title game's mint-green button and gold/turquoise block logo. Match their crisp, playful, geometric cut corners and flat faceted depth, NOT realistic metal, paper, stone or glossy plastic. Panel front is almost-white very pale mint (#f3faf5), uniformly opaque, completely EMPTY and flat. A restrained mint bevel edge with a darker teal bottom/right side gives shallow block thickness. Front view, no perspective distortion; long horizontal rectangular panel, ratio 16:9, little border, huge uninterrupted empty writing area. Four corners clipped 45 degrees, no round corners. No ornaments, no pattern, no inner divisions, no icons, no text, no gold frame, no screws, no gradient or shine across the writing area. The blank center must be SOLID OPAQUE, only the exterior is transparent. Centered isolated full object, small transparent margin. Intended as a 9-slice Unity sprite. Transparent background.",
+      "refs": [
+        "C:/HAL/Unity/hal-hackathon-internship/teamD/Assets/Title/Texture/TEX_Start_Button.png",
+        "C:/HAL/Unity/hal-hackathon-internship/teamD/Assets/Title/Texture/TEX_Logo.png"
+      ]
+    },
+    {
+      "name": "StartButton",
+      "prompt": "Use case: ui-mockup. Create ONE game button sprite, no text. Input image is the style reference: the existing Japanese game's green START button. Redraw a cleaner production-ready BLANK version with the same simple mint green front, darker teal extruded bottom side, crisp faceted clipped corners and playful block geometry. Front is solid vivid pastel mint #82f4bd, bottom side muted deep teal #25846b, thin subtle bright bevel. Front view, symmetric horizontal rectangle approximately 3.8:1 aspect ratio. LARGE completely blank central writing area. Shallow thickness occupying only lower 15 percent of overall height. Full silhouette in frame with small margin. Flat solid colors, precise crisp edges, NO illustration, NO letters, NO X or play icon, NO texture, no metallic or photographic shading. Transparent exterior background, opaque solid button center. Intended Unity 9-slice sprite.",
+      "refs": [
+        "C:/HAL/Unity/hal-hackathon-internship/teamD/Assets/Title/Texture/TEX_Start_Button.png"
+      ]
+    },
+    {
+      "name": "MouseLeft",
+      "prompt": "Use case: infographic-diagram. A single clear mouse control pictogram for a friendly Japanese block puzzle tutorial UI. Top-down upright computer mouse with cord extending a little from its top, simple clipped polygon silhouette with broad softly chamfered corners, white/off-white body, thick dark charcoal outline, tiny dark central scroll wheel. LEFT mouse button (viewer upper LEFT half) is filled bright mint green; right button remains white. Clearly separated left and right buttons. Compact clean vector-like flat game UI art, modest deep-teal lower side depth matching a low-poly block game, not photorealistic. No letters, no words, no arrow, no hand, no check mark, no glow, no decorative background. One isolated object, centered, transparent exterior. Large readable simple shapes."
+    }
+  ]
+}
