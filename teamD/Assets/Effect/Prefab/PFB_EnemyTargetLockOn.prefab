@@ -42,13 +42,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56df05cfb0714cb38bd804f7932e8729, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _visualMaterial: {fileID: 2100000, guid: 59753ac469824ed7a31ed2cf3fb1f46b, type: 2}
   _viewCamera: {fileID: 0}
   _size: 1.15
   _searchColor: {r: 0.08, g: 0.65, b: 1, a: 0.85}
-  _lockedColor: {r: 1, g: 0.24, b: 0.06, a: 1}
+  _lockedColor: {r: 0.4113207, g: 0.043013927, b: 0, a: 1}
   _outlineColor: {r: 0.035, g: 0.015, b: 0.035, a: 0.8}
   _searchDuration: 0.65
   _moveDuration: 0.3
