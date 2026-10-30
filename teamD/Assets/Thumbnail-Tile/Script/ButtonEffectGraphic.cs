@@ -9,6 +9,14 @@ using UnityEngine.UI;
 public class ButtonEffectGraphic : MaskableGraphic
 {
     private bool _isRing;
+    private float _fillAmount = 1f;
+
+    // クールタイム表示では輪を0～1の割合で描く。通常の輪は1のまま。
+    public void SetFillAmount(float value)
+    {
+        _fillAmount = Mathf.Clamp01(value);
+        SetVerticesDirty();
+    }
     private float _lineWidth = 4f;
 
     /// <summary>
@@ -50,8 +58,8 @@ public class ButtonEffectGraphic : MaskableGraphic
 
         for (int i = 0; i < segments; i++)
         {
-            float angleA = i * Mathf.PI * 2f / segments;
-            float angleB = (i + 1) * Mathf.PI * 2f / segments;
+            float angleA = Mathf.PI * 0.5f - i * Mathf.PI * 2f / segments * _fillAmount;
+            float angleB = Mathf.PI * 0.5f - (i + 1) * Mathf.PI * 2f / segments * _fillAmount;
 
             Vector2 directionA =
                 new Vector2(Mathf.Cos(angleA), Mathf.Sin(angleA));

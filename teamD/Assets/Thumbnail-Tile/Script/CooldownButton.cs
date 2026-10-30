@@ -23,6 +23,9 @@ public class CooldownButton : MonoBehaviour
     [SerializeField, Tooltip("クールタイム完了時に再生するエフェクト")]
     private ButtonClickEffect _completionEffect;
 
+    // 個別枠への移行時にも、既存Inspectorの設定を利用する。
+    public float CooldownSeconds => _cooldownSeconds;
+    public ButtonClickEffect CompletionEffect => _completionEffect;
     private bool _isCoolingDown;
 
 

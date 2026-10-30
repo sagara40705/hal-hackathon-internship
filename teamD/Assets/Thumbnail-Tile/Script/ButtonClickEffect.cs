@@ -37,8 +37,14 @@ public class ButtonClickEffect : MonoBehaviour
     /// </summary>
     public void Play()
     {
+        PlayAt(_buttonRect);
+    }
+
+    // 指定された枠の中央から、同じ設定の輪を再生する。
+    public void PlayAt(RectTransform origin)
+    {
         if (!isActiveAndEnabled ||
-            _buttonRect == null ||
+            origin == null ||
             _effectRoot == null ||
             !_effectRoot.gameObject.activeInHierarchy)
         {
@@ -47,7 +53,7 @@ public class ButtonClickEffect : MonoBehaviour
 
         // 同じCanvas内で、ボタンの中央をエフェクト用の座標へ変換する。
         Vector3 worldCenter =
-            _buttonRect.TransformPoint(_buttonRect.rect.center);
+            origin.TransformPoint(origin.rect.center);
 
         Vector3 localCenter =
             _effectRoot.InverseTransformPoint(worldCenter);

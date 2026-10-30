@@ -72,10 +72,10 @@ MonoBehaviour:
     volume: 0.033
   - id: 21
     clip: {fileID: 8300000, guid: 9967b33092111ea40a07ac9708945564, type: 3}
-    volume: 0.033
+    volume: 0.007
   - id: 22
     clip: {fileID: 8300000, guid: 42a4ca7952715504f8a37b80f5a00962, type: 3}
-    volume: 0.033
+    volume: 0.024
   - id: 14
     clip: {fileID: 8300000, guid: d590e5878dd251b41a3ff3c77dd2ae76, type: 3}
     volume: 0.033
