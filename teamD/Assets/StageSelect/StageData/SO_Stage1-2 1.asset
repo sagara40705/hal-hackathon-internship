@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SO_Stage1-2 1
   m_EditorClassIdentifier: Assembly-CSharp::StageData
   _stageName: 1-3
-  _stageThumbnail: {fileID: 21300000, guid: 28df23fd988c8eb439d34c332e8df9da, type: 3}
-  _scene: {fileID: 0}
+  _stageThumbnail: {fileID: 21300000, guid: c356b736dd2e7d8408598134487b9c8f, type: 3}
+  _scene: {fileID: 102900000, guid: ac6962a3a2d719143b9265e8208fee34, type: 3}
