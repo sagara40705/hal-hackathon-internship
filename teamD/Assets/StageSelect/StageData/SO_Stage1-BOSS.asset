@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SO_Stage1-BOSS
   m_EditorClassIdentifier: Assembly-CSharp::StageData
   _stageName: BOSS
-  _stageThumbnail: {fileID: 21300000, guid: 1af6c9823b361bc4690f57008ed2cb8d, type: 3}
+  _stageThumbnail: {fileID: 21300000, guid: 2eadbc50b31491a489e90c92b0d926bf, type: 3}
   _scene: {fileID: 102900000, guid: 277551f3d2cccb84d813788208fdab19, type: 3}
