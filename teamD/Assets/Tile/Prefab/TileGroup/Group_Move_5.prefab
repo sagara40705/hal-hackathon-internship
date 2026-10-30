@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileGroup
   _isStatic: 0
-  _previewOffset: {x: 0, y: 0, z: 0}
+  _previewOffset: {x: 1, y: -1.4, z: 0}
 --- !u!1001 &224343510655661147
 PrefabInstance:
   m_ObjectHideFlags: 0
