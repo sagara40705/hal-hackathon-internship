@@ -1017,6 +1017,10 @@ PrefabInstance:
       propertyPath: _fadeUI
       value: 
       objectReference: {fileID: 1236509699}
+    - target: {fileID: 3910770763842566942, guid: e9e76a48d4af1a640910d0a6ac40e88d, type: 3}
+      propertyPath: _targetScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 8d9c21c7d235c46409d641a904532fe9, type: 3}
     - target: {fileID: 7398146769060542926, guid: e9e76a48d4af1a640910d0a6ac40e88d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

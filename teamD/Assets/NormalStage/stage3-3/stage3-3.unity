@@ -911,6 +911,10 @@ PrefabInstance:
       propertyPath: _fadeUI
       value: 
       objectReference: {fileID: 1236509699}
+    - target: {fileID: 3910770763842566942, guid: e9e76a48d4af1a640910d0a6ac40e88d, type: 3}
+      propertyPath: _targetScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 5a154111cbff6e54787209df161a1e27, type: 3}
     - target: {fileID: 7398146769060542926, guid: e9e76a48d4af1a640910d0a6ac40e88d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2079,37 +2083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f621214bfcc1a640b408a30d468ebfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamD.Effects.GoldenGoalEffect
---- !u!114 &8201251653466430141
-MonoBehaviour:
-  m_ObjectHideFlags: 8
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9429df4c98684b441998ff8f5d55bd30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GoalCell
-  _requiredKeyCount: 1
-  _onKeyRequirementMet:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &8201251653466430142
-MonoBehaviour:
-  m_ObjectHideFlags: 8
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee858ae50cded3447b13cb0c14c7734c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TileCell
-  _onEnterPlayerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
