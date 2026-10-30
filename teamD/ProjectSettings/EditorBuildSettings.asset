@@ -56,6 +56,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StageTemplate/BossStageTemplate.unity
     guid: a54c719cf250d494a9ab1186cf1adf1a
+  - enabled: 1
+    path: Assets/Scenes/Boss/BossStage1.unity
+    guid: 277551f3d2cccb84d813788208fdab19
+  - enabled: 1
+    path: Assets/Scenes/Boss/BossStage2.unity
+    guid: 75f10326e1cf0934eab6c6c1ae1e4ade
+  - enabled: 1
+    path: Assets/Scenes/Boss/BossStage3.unity
+    guid: 968d4f6c77edadc4c8b4127fb69aff80
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
