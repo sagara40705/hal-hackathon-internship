@@ -17,8 +17,8 @@ public sealed class DamageHitEffect : MonoBehaviour
         }
 
         _material = new Material(shader);
-        CreateBurst("Flash", 1, 0.14f, 0f, 0.8f, new Color(1f, 0.92f, 0.82f, 1f));
-        CreateBurst("Sparks", 12, 0.4f, 2.5f, 0.13f, new Color(1f, 0.16f, 0.06f, 1f));
+        CreateBurst("Flash", 1, 0.14f, 0f, 1.6f, new Color(1f, 0.92f, 0.82f, 1f));
+        CreateBurst("Sparks", 12, 0.4f, 4.5f, 0.26f, new Color(1f, 0.16f, 0.06f, 1f));
         Destroy(gameObject, 0.8f);
     }
 
@@ -44,7 +44,7 @@ public sealed class DamageHitEffect : MonoBehaviour
         emission.SetBursts(new[] { new ParticleSystem.Burst(0f, count) });
         var shape = particles.shape;
         shape.shapeType = ParticleSystemShapeType.Circle;
-        shape.radius = 0.06f;
+        shape.radius = 0.12f;
         var sizeOverLifetime = particles.sizeOverLifetime;
         sizeOverLifetime.enabled = true;
         sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
